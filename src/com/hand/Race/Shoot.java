@@ -29,9 +29,5 @@ public class Shoot implements Listener
     {
         Entity e = event.getEntity();
         Projectile p = (Projectile) event.getProjectile();
-        while(!p.isOnGround())
-        {
-            //ParticleEffect.displayBlockDust();
-        }
     }    
 }
