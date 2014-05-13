@@ -1,0 +1,10 @@
+name: Equestrian Dash
+main: com.hand.Race.Main
+version: 1.0
+author: TheHandfish
+commands:
+  edmarker:
+    description: §3Used to edit markers.
+    usage: §3/edmarker §bon integer §3or /edmarker §boff
+    permission: equestriandash.editor
+    permission-message: §4You don't have permission to use the §cEquestrian Dash §4editor.
