@@ -10,8 +10,9 @@ package com.hand.Race;
  *
  * @author Robert
  */
-import org.bukkit.*;
-import org.bukkit.entity.*;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -21,15 +22,16 @@ public class TrackTask extends BukkitRunnable {
  
         private static final double MaxRotationAngle = 0.12D;
         private static final double TargetSpeed = 1.3999999999999999D;
-        Arrow arrow;
+        Projectile arrow;
         LivingEntity target;
  
-        public TrackTask(Arrow arrow, LivingEntity target, Plugin plugin) {
+        public TrackTask(Projectile arrow, LivingEntity target, Plugin plugin) {
                 this.arrow = arrow;
                 this.target = target;
                 runTaskTimer(plugin, 1L, 1L);
         }
  
+        @Override
         public void run() {
                 double speed = arrow.getVelocity().length();
                 if (arrow.isOnGround() || arrow.isDead() || target.isDead()) {

@@ -6,6 +6,8 @@
 
 package com.hand.Race;
 
+import static com.hand.Race.Join.Prefix;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -78,18 +80,21 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
         getServer().getPluginManager().registerEvents(new Sprint(this), this);
         getServer().getPluginManager().registerEvents(new Shoot(this), this);
         getServer().getPluginManager().registerEvents(new Customization(this), this);
-        this.saveDefaultConfig();
-        
- 
-
-
-        
-    }
-
+        plugin = this;
+        this.saveDefaultConfig();       
+    }    
+    
     @Override
     public void onDisable()
     {
-        
+        for(Player p : Bukkit.getOnlinePlayers())
+        {
+            if(p.getVehicle() != null)
+            {
+                p.getVehicle().remove();
+                p.getInventory().clear();
+            }
+        }
     }
 
 
@@ -199,42 +204,97 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
         Shoot.onShoot(event);
     }
     
-    public static boolean edmark = false;
     
-    @Override 
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("edmarker")) { // If the player typed /basic then do the following...   
-            if (sender instanceof Player) {
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) 
+    {
+	if (cmd.getName().equalsIgnoreCase("edspawn"))  // If the player typed /basic then do the following...
+        {
+            if (sender instanceof Player) 
+            {
                 Player p = (Player) sender;
-                if (args.length >= 1 && args[0].equalsIgnoreCase("on")) {
-                    if (p.hasPermission("equestriandash.editor")) {
-                        p.sendMessage("§9Equestrian Dash §aedit mode §benabled§a.");
-                        if (args.length > 1) {
-                            p.setMetadata("editorNumber", new FixedMetadataValue(plugin, args[1]));
-                        } else if (args.length == 1) {
-                            p.sendMessage("§6WARNING: §eNo start number was stated. Using \"§a1§e.\"");
-                            p.setMetadata("editorNumber", new FixedMetadataValue(plugin, 1));
-                        }
-                        p.setMetadata("editorEnabled", new FixedMetadataValue(plugin, true));
-                        return true;
-                    } else {
-                        p.sendMessage("§4ERROR: §cInsufficient permissions.");
+                if(args.length >= 1)
+                {
+                    if(args[0].equalsIgnoreCase("FlareSpawn"))
+                    {
+                    plugin.getConfig().set("Config.Fw.X", p.getLocation().getX());
+                    plugin.getConfig().set("Config.Fw.Y", p.getLocation().getY());
+                    plugin.getConfig().set("Config.Fw.Z", p.getLocation().getZ());
+                    }
+                    else if(args[0].equalsIgnoreCase("Spawn1"))
+                    {
+                    plugin.getConfig().set("Config.Spawn1.X", p.getLocation().getX());
+                    plugin.getConfig().set("Config.Spawn1.Y", p.getLocation().getY());
+                    plugin.getConfig().set("Config.Spawn1.Z", p.getLocation().getZ());
+                    }
+                    else if(args[0].equalsIgnoreCase("Spawn2"))
+                    {
+                    plugin.getConfig().set("Config.Spawn2.X", p.getLocation().getX());
+                    plugin.getConfig().set("Config.Spawn2.Y", p.getLocation().getY());
+                    plugin.getConfig().set("Config.Spawn2.Z", p.getLocation().getZ());
+                    }
+                    else if(args[0].equalsIgnoreCase("Spawn3"))
+                    {
+                    plugin.getConfig().set("Config.Spawn3.X", p.getLocation().getX());
+                    plugin.getConfig().set("Config.Spawn3.Y", p.getLocation().getY());
+                    plugin.getConfig().set("Config.Spawn3.Z", p.getLocation().getZ());
+                    }
+                    else if(args[0].equalsIgnoreCase("Spawn4"))
+                    {
+                    plugin.getConfig().set("Config.Spawn4.X", p.getLocation().getX());
+                    plugin.getConfig().set("Config.Spawn4.Y", p.getLocation().getY());
+                    plugin.getConfig().set("Config.Spawn4.Z", p.getLocation().getZ());
+                    }
+                    else if(args[0].equalsIgnoreCase("Spawn5"))
+                    {
+                    plugin.getConfig().set("Config.Spawn5.X", p.getLocation().getX());
+                    plugin.getConfig().set("Config.Spawn5.Y", p.getLocation().getY());
+                    plugin.getConfig().set("Config.Spawn5.Z", p.getLocation().getZ());
+                    }
+                    else if(args[0].equalsIgnoreCase("Spawn6"))
+                    {
+                    plugin.getConfig().set("Config.Spawn6.X", p.getLocation().getX());
+                    plugin.getConfig().set("Config.Spawn6.Y", p.getLocation().getY());
+                    plugin.getConfig().set("Config.Spawn6.Z", p.getLocation().getZ());
+                    }
+                    else if(args[0].equalsIgnoreCase("Spawn7"))
+                    {
+                    plugin.getConfig().set("Config.Spawn7.X", p.getLocation().getX());
+                    plugin.getConfig().set("Config.Spawn7.Y", p.getLocation().getY());
+                    plugin.getConfig().set("Config.Spawn7.Z", p.getLocation().getZ());
+                    }
+                    else if(args[0].equalsIgnoreCase("Spawn8"))
+                    {
+                    plugin.getConfig().set("Config.Spawn8.X", p.getLocation().getX());
+                    plugin.getConfig().set("Config.Spawn8.Y", p.getLocation().getY());
+                    plugin.getConfig().set("Config.Spawn8.Z", p.getLocation().getZ());
+                    }
+                    else
+                    {
+                        p.sendMessage("§4Error: §6\"§e" + args[0] + "§6\" is not a valid spawnpoint.");
                         return false;
                     }
-                } else if (p.hasPermission("equestriandash.editor")) {
- 
-                    p.setMetadata("editorEnabled", new FixedMetadataValue(plugin, false));
-                    p.setMetadata("editorNumber", new FixedMetadataValue(plugin, 1));
-                    p.sendMessage("§9Equestrian Dash §aedit mode §bdisabled§a.");
+                    
+                    p.sendMessage(Prefix + "§3Spawnpoint for §b" + args[0] + " §3saved.");
+                    
+                    this.saveConfig();
                     return true;
-                    }
-            } else {
-                sender.sendMessage("You must be a player!");
+                }
+                else
+                {
+                   p.sendMessage("§4Error: §6Specifiy spawn type! §aExample: §6Spawn1, Spawn2, FlareSpawn");
+                   return false;
+                }
+            } 
+            else 
+            {
+                sender.sendMessage("§4You must be a player!");
                 return false;
             }
+            // do something
+            
+    
         }
-        // do something
         return false;
     }
-
 }

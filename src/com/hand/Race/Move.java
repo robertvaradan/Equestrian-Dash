@@ -149,6 +149,13 @@ public class Move implements Listener
                     p.setMetadata("lastLocPitch", new FixedMetadataValue(plugin, p.getLocation().getPitch()));
                     p.setMetadata("lastLocYaw", new FixedMetadataValue(plugin, p.getLocation().getYaw()));
             }
+            else
+            {
+                if(p.getLocation().getYaw() < 90 && p.getLocation().getYaw() > -90)
+                {
+                    p.sendMessage("§aThis is a test.");
+                }
+            }
             }
             }
         }
@@ -225,7 +232,7 @@ public class Move implements Listener
                         if("#".equals(signline1) && isInteger(replace)) 
                         {
                             //p.sendMessage("Debug: Line 2 is int.");
-                            int markers = plugin.getConfig().getInt("Path.Editor.Markers");
+                            int markers = plugin.getConfig().getInt("Config.Editor.Markers");
                             int pllap = p.getMetadata("playerLap").get(0).asInt();
                             
                             int racenum = 0;

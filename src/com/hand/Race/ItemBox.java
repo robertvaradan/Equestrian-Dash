@@ -58,7 +58,7 @@ public class ItemBox implements Listener
                 data.setPower(0);
                 fw.setFireworkMeta(data);  
                     
-    int random = (int )(Math.random() * 16 + 1);
+    int random = (int )(Math.random() * 19 + 1);
     if(random == 1)
     {
     ItemStack it = new ItemStack(Material.NETHER_STALK);
@@ -191,8 +191,25 @@ public class ItemBox implements Listener
     p.getInventory().setItemInHand(it);  
     String rewardname = "some Netherwart (what?)";
     p.sendMessage(Join.Prefix + "§6You got " + ChatColor.GREEN + "" + rewardname + "§6!");
-    }    
-
+    }
+    else if(random == 17 || random == 18)
+    {
+    ItemStack it = new ItemStack(Material.SKULL_ITEM, 1, (byte) 1);
+    setName(it, "§8§l§oMake Them Wither!");    
+    p.getInventory().setItemInHand(it);  
+    String rewardname = "a Wither Head";
+    p.sendMessage(Join.Prefix + "§6You got " + ChatColor.GREEN + "" + rewardname + "§6!");        
+    }
+    else if(random == 19)
+    {
+    ItemStack it = new ItemStack(Material.SKULL_ITEM, 1, (byte) 1);
+    setName(it, "§1§l§oGive 'Em Nether!");
+    it.addUnsafeEnchantment(Enchantment.KNOCKBACK, 0);
+    p.getInventory().setItemInHand(it);  
+    String rewardname = "a Charged Wither Head";
+    p.sendMessage(Join.Prefix + "§6You got " + ChatColor.GREEN + "" + rewardname + "§6!");                
+    }
+    
     e.remove();
     new BukkitRunnable() 
     {

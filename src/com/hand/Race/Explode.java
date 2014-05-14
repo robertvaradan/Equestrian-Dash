@@ -37,9 +37,9 @@ public class Explode implements Listener
         event.blockList().clear();        
         if(event.getEntity() instanceof EnderCrystal)
         {
-            e.getServer().broadcastMessage("Debug: Explosion!");
+            //e.getServer().broadcastMessage("Debug: Explosion!");
             event.setYield(0);
-            e.getServer().broadcastMessage("Explosive yield is now: " + event.getYield());
+            //e.getServer().broadcastMessage("Explosive yield is now: " + event.getYield());
             event.setCancelled(true); 
             int random = (int )(Math.random() * 6 + 1);
             randomDrop(e.getLocation(), random);

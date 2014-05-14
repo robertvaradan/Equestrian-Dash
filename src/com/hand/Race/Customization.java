@@ -93,7 +93,7 @@ public class Customization implements Listener
                         cancel(); //Cancels the timer
                     }
 
-                }.runTaskTimer(plugin, 10L /* The amount of time until the timer starts */, 20L /*  The delay of each call */);
+                }.runTaskTimer(plugin, 3L /* The amount of time until the timer starts */, 20L /*  The delay of each call */);
 
                 p.setMetadata("choosingColor", new FixedMetadataValue(plugin, false));
                 p.setMetadata("colorKey", new FixedMetadataValue(plugin, res));

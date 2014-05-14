@@ -215,7 +215,7 @@ new BukkitRunnable() {
   @Override
   public void run() 
   {
-      if(p.getServer().getOnlinePlayers().length < plugin.getConfig().getInt("Path.Players.Min"))
+      if(p.getServer().getOnlinePlayers().length < plugin.getConfig().getInt("Config.Players.Min"))
         {
         cancel();
         plugin.getServer().broadcastMessage(Prefix + "§6§oToo many players have left. Waiting for more players to join...");
@@ -227,9 +227,9 @@ new BukkitRunnable() {
       {
     
           //Start game method
-        int fx = plugin.getConfig().getInt("Path.Fw.X");
-        int fy = plugin.getConfig().getInt("Path.Fw.Y");
-        int fz = plugin.getConfig().getInt("Path.Fw.Z");
+        int fx = plugin.getConfig().getInt("Config.Fw.X");
+        int fy = plugin.getConfig().getInt("Config.Fw.Y");
+        int fz = plugin.getConfig().getInt("Config.Fw.Z");
         Location flareloc = new Location(p.getWorld(), fx, fy, fz);
           
                 Firework fw = p.getWorld().spawn(flareloc, Firework.class);
@@ -301,7 +301,7 @@ new BukkitRunnable() {
         event.setJoinMessage(Prefix + "" + ChatColor.AQUA + "" + player.getDisplayName() + " §3is now competing!");
         int players = player.getServer().getOnlinePlayers().length;
         player.sendMessage(Prefix + ChatColor.GOLD + "Joined! §c§l§oSneak to customize horse colors!");
-        int maxplayers = plugin.getConfig().getInt("Path.Players.Max");
+        int maxplayers = plugin.getConfig().getInt("Config.Players.Max");
         //Player[] players = player.getServer().getOnlinePlayers().equals();
         //player.sendMessage("§6Thanks for joining!");
         if(players < maxplayers)
@@ -322,10 +322,10 @@ new BukkitRunnable() {
         player.sendMessage(Prefix + ChatColor.GOLD + "Mounting. You are racer number: " + ChatColor.BLUE + "1");
         player.setMetadata("playerID", new FixedMetadataValue(plugin, id));
 
-        int sx = plugin.getConfig().getInt("Path.Spawn" + id + ".X");
-        int sy = plugin.getConfig().getInt("Path.Spawn" + id + ".Y");
-        int sz = plugin.getConfig().getInt("Path.Spawn" + id + ".Z");
-        int minplayers = plugin.getConfig().getInt("Path.Players.Min");
+        int sx = plugin.getConfig().getInt("Config.Spawn" + id + ".X");
+        int sy = plugin.getConfig().getInt("Config.Spawn" + id + ".Y");
+        int sz = plugin.getConfig().getInt("Config.Spawn" + id + ".Z");
+        int minplayers = plugin.getConfig().getInt("Config.Players.Min");
         Location startpoint = new Location(player.getWorld(), sx, sy, sz);
 
         player.teleport(startpoint);
@@ -351,9 +351,9 @@ new BukkitRunnable() {
 
     public static void startRace(Player p)
     {
-    int minplayers = plugin.getConfig().getInt("Path.Players.Min");
-    int maxplayers = plugin.getConfig().getInt("Path.Players.Max");
-    int countto = plugin.getConfig().getInt("Path.Countdown");
+    int minplayers = plugin.getConfig().getInt("Config.Players.Min");
+    int maxplayers = plugin.getConfig().getInt("Config.Players.Max");
+    int countto = plugin.getConfig().getInt("Config.Countdown");
     p.sendMessage(Prefix + "§6" + minplayers + " out of a maximum of " + maxplayers + ChatColor.GOLD + " have been gathered." + ChatColor.GREEN + " Starting race!");
 
     

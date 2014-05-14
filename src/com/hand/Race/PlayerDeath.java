@@ -40,6 +40,5 @@ public class PlayerDeath implements Listener
         }
 
         event.setDeathMessage(Prefix + ChatColor.DARK_RED + event.getDeathMessage() + ".");
-        //p.sendMessage(p.getMetadata("lastLocX").get(0).asFloat() + ", " + p.getMetadata("lastLocY").get(0).asFloat() + ", " + p.getMetadata("lastLocZ").get(0).asFloat());
-        }
+    }
 }
