@@ -1,0 +1,67 @@
+Config:
+  # Edit mode?
+  EditMode: false
+  # All raceline settings.
+  Raceline:
+    # Where should the first corner of the raceline be?
+    Lap1:
+      X: 0
+      Y: 0
+      Z: 0
+    # Where should the second corner of the raceline be?
+    Lap2:
+      X: 0
+      Y: 0
+      Z: 0
+  # These are the player settings.
+  Players:
+    # Minimum players to start a game.
+    Min: 2
+    # Maximum players allowed at a time.
+    Max: 8
+  # From where should the firework launch?
+  Fw:
+    X: 0
+    Y: 0
+    Z: 0
+  # From where should the screen count down from before the game begins?
+  Countdown: 30
+  # How many laps does this level have?
+  Laps: 3
+  # Editor settings.
+  Editor:
+    # How many markers does this level have? (IMPORTANT!)
+    Markers: 0
+  # The following are spawnpoint location settings.
+  Spawn1:
+    X: 0
+    Y: 0
+    Z: 0
+  Spawn2:
+    X: 0
+    Y: 0
+    Z: 0
+  Spawn3:
+    X: 0
+    Y: 0
+    Z: 0
+  Spawn4:
+    X: 0
+    Y: 0
+    Z: 0
+  Spawn5:
+    X: 0
+    Y: 0
+    Z: 0
+  Spawn6:
+    X: 0
+    Y: 0
+    Z: 0
+  Spawn7:
+    X: 0
+    Y: 0
+    Z: 0
+  Spawn8:
+    X: 0
+    Y: 0
+    Z: 0

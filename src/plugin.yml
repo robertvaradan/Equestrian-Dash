@@ -1,10 +1,9 @@
-name: Equestrian Dash
-main: com.hand.Race.Main
+name: EquestrianDash
+main: tk.ColonelHedgehog.Dash.Core.Main
 version: 1.0
 author: TheHandfish
 commands:
-  edspawn:
-    description: Use this command to designate certain spawn points.
-    usage: /edspawn (spawn[1-8], flarespawn)
-    permission: EquestrianDash.SetSpawns
-    permission-message: §4Error; §6Insufficient permissions.
+  ed:
+    description: ED Base Command. Do /ed help for help.
+    permission: equestriandash.ed
+    permission-message: '§4Error: §6Insufficient permissions.'
