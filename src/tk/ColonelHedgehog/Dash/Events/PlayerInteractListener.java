@@ -19,7 +19,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
-import tk.ColonelHedgehog.Dash.Assets.Powerups;
+import tk.ColonelHedgehog.Dash.API.Entity.Racer;
+import tk.ColonelHedgehog.Dash.API.Powerup.Powerup;
 import tk.ColonelHedgehog.Dash.Core.Main;
 
 import java.util.ArrayList;
@@ -120,21 +121,30 @@ public class PlayerInteractListener implements Listener
         }
         else if(p.getGameMode() != GameMode.CREATIVE)
         {
+            for (Powerup powerup : Main.getPowerupsRegistery().getPowerups())
+            {
+                if (powerup.getItem().equals(p.getItemInHand()))
+                {
+                    if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
+                    {
+                        powerup.doOnRightClick((Racer) p);
+                    }
+                    else if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK)
+                    {
+                        powerup.doOnRightClick((Racer) p);
+                    }
 
-            if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
-            {
-                Powerups.evalEffect(p);
-            }
-            else if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK)
-            {
-                Powerups.specialTnT(p);
+                    ItemStack newItem = powerup.getItem();
+                    newItem.setAmount(newItem.getAmount() - powerup.getItemAmountReduction());
+                    return; // Whichever powerup was loaded first is used. THE-EARLY-BIRD-GETS-THE-WORM RULE IN MOTION! You should be smart enough to make your itemstack different in some respect anyway though.
+                }
             }
         }
     }
 
     public static void addLore(ItemStack is, String lore)
     {
-    ItemMeta meta = (ItemMeta) is.getItemMeta();
+    ItemMeta meta = is.getItemMeta();
     List<String> newlore = new ArrayList<String>();
     newlore.add(lore);
     meta.setLore(newlore);

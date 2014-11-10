@@ -12,6 +12,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import tk.ColonelHedgehog.Dash.API.Powerup.PowerupsRegistery;
+import tk.ColonelHedgehog.Dash.API.Powerup.Stock.LaunchPowerup;
 import tk.ColonelHedgehog.Dash.Assets.Commands.EDCmd;
 import tk.ColonelHedgehog.Dash.Assets.Powerups;
 import tk.ColonelHedgehog.Dash.Events.*;
@@ -35,7 +37,6 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
     public static Location Lap2;
     public static Cuboid LapCuboid;
     public static String Prefix = "§9§l[§3Equestrian§bDash§9§l]§r: ";
-
 
     @Override
     public void onEnable()
@@ -95,11 +96,25 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
             p.getInventory().clear();
         }
     }
+
+    @Override
+    public void onLoad()
+    {
+        powerupsRegistery = new PowerupsRegistery();
+        getPowerupsRegistery().registerPowerup(new LaunchPowerup());
+    }
     
     public static void buildRaceline(Player p)
     {
         Lap1 = new Location(p.getWorld(), plugin.getConfig().getDouble("Config.Raceline.Lap1.X"), plugin.getConfig().getDouble("Config.Raceline.Lap1.Y"), plugin.getConfig().getDouble("Config.Raceline.Lap1.Z"));
         Lap2 = new Location(p.getWorld(), plugin.getConfig().getDouble("Config.Raceline.Lap2.X"), plugin.getConfig().getDouble("Config.Raceline.Lap2.Y"), plugin.getConfig().getDouble("Config.Raceline.Lap2.Z"));
         LapCuboid = new Cuboid(Lap1, Lap2);
+    }
+
+    private static PowerupsRegistery powerupsRegistery;
+
+    public static PowerupsRegistery getPowerupsRegistery()
+    {
+        return powerupsRegistery;
     }
 }

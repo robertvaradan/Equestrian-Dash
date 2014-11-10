@@ -6,7 +6,10 @@
 
 package tk.ColonelHedgehog.Dash.Assets;
 
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -15,12 +18,8 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 import tk.ColonelHedgehog.Dash.Core.Main;
-import tk.ColonelHedgehog.Dash.Events.EntityShootBowListener;
 import tk.ColonelHedgehog.Dash.Events.PlayerJoinListener;
-
-import java.util.Random;
 
 /**
  *
@@ -70,7 +69,7 @@ public class Powerups implements Listener
     }
 
     public static void evalEffect(Player p)
-    {
+    {/*
 
         Material i = p.getItemInHand().getType();
         if(i == Material.SUGAR || i == Material.SKULL_ITEM || i == Material.FERMENTED_SPIDER_EYE || i == Material.DIAMOND || i == Material.SLIME_BALL || i == Material.TNT || i == Material.IRON_BARDING || i == Material.NETHER_STALK || i == Material.DIAMOND_BARDING || i == Material.GRASS)
@@ -191,7 +190,7 @@ public class Powerups implements Listener
 
             p.getInventory().removeItem(p.getInventory().getItemInHand());
         }
-        }
+        }*/
     }
 
     public static void activateSuperCharged(final Player p)
