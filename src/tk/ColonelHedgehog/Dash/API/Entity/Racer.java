@@ -11,41 +11,67 @@ import tk.ColonelHedgehog.Dash.Events.PlayerMoveListener;
  * You have freedom to modify given sources. Please credit me as original author.
  * Keep in mind that this is not for sale.
  */
-public abstract class Racer implements Player
+public class Racer
 {
+    private Player p;
+
+    public Racer(Player p)
+    {
+        this.p = p;
+    }
 
     public Horse getHorse()
     {
-        return getVehicle() != null && getVehicle() instanceof Horse ? (Horse) getVehicle() : null;
+        return p.getVehicle() != null && p.getVehicle() instanceof Horse ? (Horse) p.getVehicle() : null;
+    }
+
+    public Player getPlayer()
+    {
+        return p;
     }
 
     public int getScore()
     {
-        return PlayerMoveListener.evalPlace(this);
+        return PlayerMoveListener.evalPlace(p);
     }
 
     public int getLap()
     {
-        return getMetadata("playerLap").get(0).asInt();
+        return p.getMetadata("playerLap").get(0).asInt();
     }
 
     public int getMarkerPosition()
     {
-        return getMetadata("markerPos").get(0).asInt();
+        return p.getMetadata("markerPos").get(0).asInt();
     }
 
     public void setLap(int lap)
     {
-        setMetadata("playerLap", new FixedMetadataValue(Main.plugin, lap));
+        p.setMetadata("playerLap", new FixedMetadataValue(Main.plugin, lap));
     }
 
     public void setMarkerPostion(int position)
     {
-        setMetadata("markerPos", new FixedMetadataValue(Main.plugin, position));
+        p.setMetadata("markerPos", new FixedMetadataValue(Main.plugin, position));
     }
 
     public boolean isInLine()
     {
-        return getMetadata("playerInLine").get(0).asBoolean();
+        return p.getMetadata("playerInLine").get(0).asBoolean();
+    }
+
+    public Racer getRacer()
+    {
+        return this;
+    }
+
+    public boolean inventoryIsSpinning()
+    {
+        return p.getMetadata("invSpinning").get(0).asBoolean();
+    }
+
+    public int getRank()
+    {
+        return -1;
     }
 }

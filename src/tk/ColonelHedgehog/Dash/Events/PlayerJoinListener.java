@@ -6,10 +6,8 @@
 
 package tk.ColonelHedgehog.Dash.Events;
 
-import tk.ColonelHedgehog.Dash.Core.Main;
 import org.bukkit.*;
 import org.bukkit.FireworkEffect.Type;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
@@ -23,14 +21,15 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
+import tk.ColonelHedgehog.Dash.Core.Main;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static tk.ColonelHedgehog.Dash.Events.PlayerInteractListener.addLore;
-import static tk.ColonelHedgehog.Dash.Events.PlayerInteractEntityListener.setName;
 import static org.bukkit.entity.EntityType.HORSE;
+import static tk.ColonelHedgehog.Dash.Events.PlayerInteractEntityListener.setName;
+import static tk.ColonelHedgehog.Dash.Events.PlayerInteractListener.addLore;
 
 /**
  *
@@ -110,31 +109,31 @@ public class PlayerJoinListener implements Listener
 public static void getHorseColor(Player p, Horse horse, int res)
 {
     
-    if(res == 1 && p.hasPermission("EquestrianDash.HorseColors.White"))
+    if(res == 1 && p.hasPermission("equestriandash.horsecolors.white"))
     {
         horse.setColor(Horse.Color.WHITE);
     }
-    else if(res == 2 && p.hasPermission("EquestrianDash.HorseColors.Black"))
+    else if(res == 2 && p.hasPermission("equestriandash.horsecolors.black"))
     {
         horse.setColor(Horse.Color.BLACK);                
     }
-    else if(res == 3 && p.hasPermission("EquestrianDash.HorseColors.Brown"))
+    else if(res == 3 && p.hasPermission("equestriandash.horsecolors.brown"))
     {
         horse.setColor(Horse.Color.BROWN);                                
     }
-    else if(res == 4 && p.hasPermission("EquestrianDash.HorseColors.Chestnut"))
+    else if(res == 4 && p.hasPermission("equestriandash.horsecolors.chestnut"))
     {
         horse.setColor(Horse.Color.CHESTNUT);                                                
     }
-    else if(res == 5 && p.hasPermission("EquestrianDash.HorseColors.Creamy"))
+    else if(res == 5 && p.hasPermission("equestriandash.horsecolors.creamy"))
     {
         horse.setColor(Horse.Color.CREAMY);                                                
     }
-    else if(res == 6 && p.hasPermission("EquestrianDash.HorseColors.Dark_Brown"))
+    else if(res == 6 && p.hasPermission("equestriandash.horsecolors.dark_brown"))
     {
         horse.setColor(Horse.Color.DARK_BROWN);                                                           
     }
-    else if(res == 7 && p.hasPermission("EquestrianDash.HorseColors.Gray"))
+    else if(res == 7 && p.hasPermission("equestriandash.horsecolors.gray"))
     {
         horse.setColor(Horse.Color.GRAY);                                                                           
     }
@@ -146,31 +145,31 @@ public static void getHorseColor(Player p, Horse horse, int res)
 
 public static void getHorsePattern(Player p, Horse horse, int res)
 {
-    if(res == 1 && p.hasPermission("EquestrianDash.HorseStyles.Black_Dots"))
+    if(res == 1 && p.hasPermission("equestriandash.horsestyles.black_dots"))
     {
         horse.setStyle(Horse.Style.BLACK_DOTS);
     }
-    else if(res == 2 && p.hasPermission("EquestrianDash.HorseStyles.None"))
+    else if(res == 2 && p.hasPermission("equestriandash.horsestyles.none"))
     {
         horse.setStyle(Horse.Style.NONE);                
     }
-    else if(res == 3 && p.hasPermission("EquestrianDash.HorseStyles.White"))
+    else if(res == 3 && p.hasPermission("equestriandash.horsestyles.white"))
     {
         horse.setStyle(Horse.Style.WHITE);                                
     }
-    else if(res == 4 && p.hasPermission("EquestrianDash.HorseStyles.Whitefield"))
+    else if(res == 4 && p.hasPermission("equestriandash.horsestyles.whitefield"))
     {
         horse.setStyle(Horse.Style.WHITEFIELD);                                                
     }
-    else if(res == 5 && p.hasPermission("EquestrianDash.HorseStyles.White_Dots"))
+    else if(res == 5 && p.hasPermission("equestriandash.horsestyles.white_Dots"))
     {
         horse.setStyle(Horse.Style.WHITE_DOTS);                                                
     }
-    else if(res == 6 && p.hasPermission("EquestrianDash.HorseStyles.Skeleton"))
+    else if(res == 6 && p.hasPermission("equestriandash.horsestyles.skeleton"))
     {
         horse.setVariant(Horse.Variant.SKELETON_HORSE);                                                           
     }
-    else if(res == 7 && p.hasPermission("EquestrianDash.HorseStyles.Zombie"))
+    else if(res == 7 && p.hasPermission("equestriandash.horsestyles.zombie"))
     {
         horse.setVariant(Horse.Variant.UNDEAD_HORSE);                                                           
     }
@@ -182,12 +181,11 @@ public static void getHorsePattern(Player p, Horse horse, int res)
 
 public static int tries = 1;
 
-public void startCounter(final Player p, Horse h, final int countTo)
+public void startCounter(final Player p, final int countTo)
 {
     final Objective o; //Creates a objective called o
-    Scoreboard timerBoard = null; //Creates a scoreboard called timerBoard(You will see what thats used for later)
-    Objective timerObj = null; // Same as above but it creates a objective called timerObj
-        final Scoreboard board = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
+    Scoreboard timerBoard; //Creates a scoreboard called timerBoard(You will see what thats used for later)
+    final Scoreboard board = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
         board.clearSlot(DisplaySlot.SIDEBAR);
         o = board.registerNewObjective("test", "timerInstance" + tries);
         //Registering the objective needed for the timer
@@ -195,8 +193,7 @@ public void startCounter(final Player p, Horse h, final int countTo)
         o.setDisplaySlot(DisplaySlot.SIDEBAR); //Telling the scoreboard where to display when we tell it to display
 
         timerBoard = board; //Setting timerBoard equal to board.
-        timerObj = o; //Setting timerObj equal to o. This makes it so we can access it by typing plugin.timerObj
-//int count = 60; //Time in seconds (Can reference config)
+    //int count = 60; //Time in seconds (Can reference config)
     if(countTo != 0)
     {
         count = countTo;
@@ -241,7 +238,8 @@ new BukkitRunnable() {
                 fw.setFireworkMeta(data);
                 PlayerJoinListener.racing = true;
                 Bukkit.broadcastMessage(Prefix + ChatColor.GREEN + "§l§oGO!");
-          p.getInventory().clear();
+        p.getInventory().clear();
+        p.getInventory().setArmorContents(new ItemStack[]{});
         
         board.clearSlot(DisplaySlot.SIDEBAR);
         for(Player online : Bukkit.getServer().getOnlinePlayers()) 
@@ -256,7 +254,7 @@ new BukkitRunnable() {
         online.setMetadata("lastLocYaw", new FixedMetadataValue(plugin, p.getLocation().getYaw()));
         
         }
-        online.playSound(online.getLocation(), Sound.NOTE_PIANO, 3, 2);
+        online.playSound(online.getLocation(), Sound.NOTE_PLING, 3, 2);
         this.cancel(); //Cancels the timer
 
         }
@@ -285,7 +283,7 @@ new BukkitRunnable() {
         {
             for(Player onl : plugin.getServer().getOnlinePlayers())
             {
-            onl.playSound(onl.getLocation(), Sound.NOTE_PIANO, 3, 1);
+            onl.playSound(onl.getLocation(), Sound.NOTE_PLING, 3, 1);
             }
         }
       }
@@ -312,6 +310,7 @@ new BukkitRunnable() {
         player.setMetadata("choosingColor", new FixedMetadataValue(plugin, false));
         player.setMetadata("choosingStyle", new FixedMetadataValue(plugin, false));
         player.setMetadata("playerInLine", new FixedMetadataValue(plugin, false));
+        player.setMetadata("inving", new FixedMetadataValue(plugin, false));
         //activateSuperCharged(player);
         
         event.setJoinMessage(Prefix + ChatColor.AQUA + player.getName() + " §3is now competing!");
@@ -360,8 +359,7 @@ new BukkitRunnable() {
     }
     public static boolean racing = false;
     public static ArrayList<Player> racers = new ArrayList<>();
-    public static ArrayList<Entity> horses = new ArrayList<>();
- 
+
     //Adding all online players to the ArrayList
 
 
@@ -373,14 +371,13 @@ new BukkitRunnable() {
     p.sendMessage(Prefix + "§6" + minplayers + " out of a maximum of " + maxplayers + ChatColor.GOLD + " have been gathered." + ChatColor.GREEN + " Starting race!");
 
     
-    startCounter(p, (Horse) p.getVehicle(), countto);    
+    startCounter(p, countto);
     }
 
     
     public static Player getPlayerInPlace(int place)
     {
-        int playerplace = 0;    
-        
+
         List<Double> playerScores = new ArrayList<>();    
 
         for(Player p : Bukkit.getOnlinePlayers())
@@ -411,20 +408,7 @@ new BukkitRunnable() {
         return toreturn;
     }
 
-    public static int findLargest(int[] numbers)
-    {  
-    int largest = numbers[0];  
-    for(int i = 1; i < numbers.length; i++)
-    {  
-        if(numbers[i] > largest)
-        {  
-            largest = numbers[i];  
-        }  
-    }  
-    return largest;
-}
-    
-    
+
     public void placePlayers()
     {
                 
@@ -448,7 +432,7 @@ new BukkitRunnable() {
             plugin.getServer().broadcastMessage("§3§oFifth place: §c§o" + Placement[4]);
             plugin.getServer().broadcastMessage("§5§oSixth place: §c§o" + Placement[5]);
             plugin.getServer().broadcastMessage("§5§oSeventh place: §c§o" + Placement[6]);
-            plugin.getServer().broadcastMessage("§5§oEight place: §c§o" + Placement[7]);
+            plugin.getServer().broadcastMessage("§5§oEighth place: §c§o" + Placement[7]);
 
         plugin.getServer().broadcastMessage("§3---------------------------------------");
         */
@@ -458,9 +442,8 @@ new BukkitRunnable() {
             Objective objective = board.registerNewObjective("test", "playerplaces");
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
             objective.setDisplayName("§6Player §9Places");
-            int inc = 1;
 
-            for(Player p : plugin.getServer().getOnlinePlayers())
+        for(Player p : plugin.getServer().getOnlinePlayers())
             {
                 String dispname = getPlaceColor(p.getWorld().getPlayers().indexOf(p)) + p.getName();
             if(p.getName().length() > 14)
@@ -474,10 +457,9 @@ new BukkitRunnable() {
 
             //p.sendMessage(Main.Prefix + "§5§nApplying the score: " + inc);
             score.setScore(PlayerMoveListener.evalPlace(p));
-            inc++;
 
 
-            p.setScoreboard(board);
+                p.setScoreboard(board);
         }
     }
 

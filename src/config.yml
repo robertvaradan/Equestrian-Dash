@@ -1,6 +1,11 @@
 Config:
   # Edit mode?
   EditMode: false
+  # Should we use NMS? WARNING: This may cause problems with mismatched versions,
+  # (i.e. EquestrianDash 1.7.9 used with a later version of Bukkit/Spigot)
+  NMS:
+    Enabled: true
+    MaxHorseSpeed: 0.225
   # All raceline settings.
   Raceline:
     # Where should the first corner of the raceline be?
@@ -32,6 +37,28 @@ Config:
   Editor:
     # How many markers does this level have? (IMPORTANT!)
     Markers: 0
+  # Powerup config.
+  Powerups:
+    Launcher:
+      Enabled: true # Should this be used as a default powerup?
+      Title: '&b&lLauncher Powerup' # The powerup's name (will shop up in the item's title)
+      Material: 'DIAMOND' # The material for the powerup. Full list of Materials: http://jd.bukkit.org/rb/apidocs/org/bukkit/Material.html
+      Chance: 2 # The amount of times the powerup is entered into the powerup chooser. Higher = more frequent.
+    Speed:
+      Enabled: true
+      Title: '&f&lSpeed Powerup'
+      Material: 'SUGAR'
+      Chance: 3
+      Length: 100 # NOTE: Length is in ticks. 20 ticks = 1 second.
+      Amplifier: 4 # i.e "2" would be the equivelant to "Speed II"
+    TNT:
+      Enabled: true
+      Title: '&c&lTNT Powerup'
+      Material: 'TNT'
+      Chance: 2
+      ThrowDirections:
+        ThrowAheadEnabled: true
+        ThrowBehindEnabled: false
   # The following are spawnpoint location settings.
   Spawn1:
     X: 0

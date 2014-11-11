@@ -2,6 +2,7 @@ name: EquestrianDash
 main: tk.ColonelHedgehog.Dash.Core.Main
 version: 1.0
 author: TheHandfish
+softdepend: [ProtocolLib]
 commands:
   ed:
     description: ED Base Command. Do /ed help for help.

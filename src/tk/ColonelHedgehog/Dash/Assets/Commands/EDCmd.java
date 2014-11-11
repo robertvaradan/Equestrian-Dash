@@ -1,11 +1,13 @@
 package tk.ColonelHedgehog.Dash.Assets.Commands;
 
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import tk.ColonelHedgehog.Dash.Core.Main;
+import tk.ColonelHedgehog.Dash.Events.WorldLoadListener;
 
 import static tk.ColonelHedgehog.Dash.Events.PlayerJoinListener.Prefix;
 
@@ -188,6 +190,14 @@ public class EDCmd implements CommandExecutor
 
 
             }
+            else if (args[0].equalsIgnoreCase("killhorses") || args[0].equalsIgnoreCase("kh"))
+            {
+                for(World w : plugin.getServer().getWorlds())
+                {
+                    WorldLoadListener.killallHorses(w);
+                }
+                sender.sendMessage(Main.Prefix + "§cKilled all horses!");
+            }
             else if (args[0].equalsIgnoreCase("reload"))
             {
                 plugin.reloadConfig();
@@ -201,6 +211,7 @@ public class EDCmd implements CommandExecutor
                 sender.sendMessage("§8- §7/ed spawn Spawn[1-8] §8- §fExample: /ed spawn Spawn4");
                 sender.sendMessage("§8- §7/ed spawn FlareSpawn §8- §fSets where the firework will shoot from.");
                 sender.sendMessage("§8- §7/ed edit [number] §8- §fEnables/disables marker edit mode. All signs placed are markers.");
+                sender.sendMessage("§8- §7/ed (killhorses:kh) §8- §fKills all horses.");
                 sender.sendMessage("§8- §7/ed reload §8- §fReloads this plugin's config.");
             }
         }

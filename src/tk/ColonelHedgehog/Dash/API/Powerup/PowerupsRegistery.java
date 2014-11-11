@@ -1,5 +1,6 @@
 package tk.ColonelHedgehog.Dash.API.Powerup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ public class PowerupsRegistery
     private List<Powerup> powerups;
     public PowerupsRegistery()
     {
-
+        this.powerups = new ArrayList<>();
     }
     public List<Powerup> getPowerups()
     {

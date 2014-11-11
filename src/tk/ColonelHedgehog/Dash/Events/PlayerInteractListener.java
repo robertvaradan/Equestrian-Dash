@@ -81,37 +81,37 @@ public class PlayerInteractListener implements Listener
                 PlayerInteractEntityListener.setName(Gray, "§7§l§oGrey");
                 addLore(Gray, "§9§oHorse color");
 
-                if(p.hasPermission("EquestrianDash.HorseColors.White"))
+                if(p.hasPermission("equestriandash.horsecolors.White"))
                 {
                 Custom.setItem(1, White);
                 }
 
-                if(p.hasPermission("EquestrianDash.HorseColors.Black"))
+                if(p.hasPermission("equestriandash.horsecolors.black"))
                 {
                 Custom.setItem(2, Black);
                 }
 
-                if(p.hasPermission("EquestrianDash.HorseColors.Brown"))
+                if(p.hasPermission("equestriandash.horsecolors.brown"))
                 {
                 Custom.setItem(3, Brown);
                 }
 
-                if(p.hasPermission("EquestrianDash.HorseColors.Chestnut"))
+                if(p.hasPermission("equestriandash.horsecolors.chestnut"))
                 {
                 Custom.setItem(4, Chestnut);
                 }
 
-                if(p.hasPermission("EquestrianDash.HorseColors.Creamy"))
+                if(p.hasPermission("equestriandash.horsecolors.creamy"))
                 {
                 Custom.setItem(5, Creamy);
                 }
 
-                if(p.hasPermission("EquestrianDash.HorseColors.Dark_Brown"))
+                if(p.hasPermission("equestriandash.horsecolors.dark_Brown"))
                 {
                 Custom.setItem(6, DarkBrown);
                 }
 
-                if(p.hasPermission("EquestrianDash.HorseColors.Gray"))
+                if(p.hasPermission("equestriandash.horsecolors.gray"))
                 {
                 Custom.setItem(7, Gray);
                 }
@@ -125,18 +125,26 @@ public class PlayerInteractListener implements Listener
             {
                 if (powerup.getItem().equals(p.getItemInHand()))
                 {
-                    if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
+                    if (!new Racer(event.getPlayer()).inventoryIsSpinning())
                     {
-                        powerup.doOnRightClick((Racer) p);
+                        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
+                        {
+                            powerup.doOnRightClick(new Racer(p), event.getAction());
+                            if (powerup.cancelledEvents().contains(Powerup.ActionType.ALL) || powerup.cancelledEvents().contains(Powerup.ActionType.RIGHT_CLICK))
+                            {
+                                event.setCancelled(true);
+                            }
+                        }
+                        else if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK)
+                        {
+                            powerup.doOnLeftClick(new Racer(p), event.getAction());
+                            if (powerup.cancelledEvents().contains(Powerup.ActionType.ALL) || powerup.cancelledEvents().contains(Powerup.ActionType.LEFT_CLICK))
+                            {
+                                event.setCancelled(true);
+                            }
+                        }
+                        return; // Whichever powerup was loaded first is used. THE-EARLY-BIRD-GETS-THE-WORM RULE IN MOTION! You should be smart enough to make your itemstack different in some respect anyway though.
                     }
-                    else if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK)
-                    {
-                        powerup.doOnRightClick((Racer) p);
-                    }
-
-                    ItemStack newItem = powerup.getItem();
-                    newItem.setAmount(newItem.getAmount() - powerup.getItemAmountReduction());
-                    return; // Whichever powerup was loaded first is used. THE-EARLY-BIRD-GETS-THE-WORM RULE IN MOTION! You should be smart enough to make your itemstack different in some respect anyway though.
                 }
             }
         }
@@ -144,10 +152,10 @@ public class PlayerInteractListener implements Listener
 
     public static void addLore(ItemStack is, String lore)
     {
-    ItemMeta meta = is.getItemMeta();
-    List<String> newlore = new ArrayList<String>();
-    newlore.add(lore);
-    meta.setLore(newlore);
-    is.setItemMeta(meta);
+        ItemMeta meta = is.getItemMeta();
+        List<String> newlore = new ArrayList<>();
+        newlore.add(lore);
+        meta.setLore(newlore);
+        is.setItemMeta(meta);
     }
 }

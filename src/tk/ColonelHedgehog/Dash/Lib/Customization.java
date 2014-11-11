@@ -142,13 +142,11 @@ public class Customization implements Listener
 
     public static void chooseVarient(Player p)
     {
-            if(p.getVehicle() != null)
-            {
-            Horse h = (Horse) p.getVehicle();
+        if(p.getVehicle() != null)
+        {
             Inventory Custom = Bukkit.createInventory(p, 9, "§9§lCustomizing: §6§oStyle");
 
             p.setMetadata("choosingStyle", new FixedMetadataValue(plugin, true));
-            int res = -1;
             // Style: BLACK_DOTS
             ItemStack White = new ItemStack(Material.COAL_ORE);
             setName(White, "§8§l§oBlack Dots");
@@ -178,42 +176,42 @@ public class Customization implements Listener
             setName(Gray, "§7§l§oSkeleton Horse");    
             addLore(Gray, "§d§oHorse variant");
 
-            if(p.hasPermission("EquestrianDash.HorseStyles.Black_Dots"))
+            if(p.hasPermission("equestriandash.horsestyles.black_dots"))
             {
             Custom.setItem(1, White);
             }
 
-            if(p.hasPermission("EquestrianDash.HorseStyles.None"))
+            if(p.hasPermission("equestriandash.horsestyles.none"))
             {            
             Custom.setItem(2, Black);
             }
             
-            if(p.hasPermission("EquestrianDash.HorseStyles.White"))
+            if(p.hasPermission("equestriandash.horsestyles.white"))
             {
             Custom.setItem(3, Brown);
             }
             
-            if(p.hasPermission("EquestrianDash.HorseStyles.Whitefield"))
+            if(p.hasPermission("equestriandash.horsestyles.whitefield"))
             {
             Custom.setItem(4, Chestnut);
             }
             
-            if(p.hasPermission("EquestrianDash.HorseStyles.White_Dots"))
+            if(p.hasPermission("equestriandash.horsestyles.white_dots"))
             {
             Custom.setItem(5, Creamy);
             }
             
-            if(p.hasPermission("EquestrianDash.HorseStyles.Skeleton"))
+            if(p.hasPermission("equestriandash.horsestyles.skeleton"))
             {
             Custom.setItem(6, DarkBrown);
             }
             
-            if(p.hasPermission("EquestrianDash.HorseStyles.Zombie"))
+            if(p.hasPermission("equestriandash.horsestyles.zombie"))
             {
             Custom.setItem(7, Gray);
             }
             
             p.openInventory(Custom);        
-    }
+        }
     }
 }

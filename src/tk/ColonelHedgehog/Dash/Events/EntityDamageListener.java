@@ -43,21 +43,30 @@ public class EntityDamageListener implements Listener
         
         if(e.getType() == EntityType.PLAYER)
         {
-            Player p = (Player) e;
-            event.getDamage();
-            if((p.getHealth() - event.getDamage()) <= 0)
+            if (event.getCause() == DamageCause.FALL)
             {
                 event.setCancelled(true);
-                if(p.getVehicle() != null)
-                {
-                    p.getVehicle().remove();
-                }
-                p.setHealth(p.getMaxHealth());
-                Location loc = new Location(p.getWorld(), p.getMetadata("lastLocX").get(0).asDouble(), p.getMetadata("lastLocY").get(0).asDouble(), p.getMetadata("lastLocZ").get(0).asDouble(), p.getMetadata("lastLocPitch").get(0).asFloat(), p.getMetadata("lastLocYaw").get(0).asFloat());
-                p.teleport(loc);
 
-                makeHorse(p, loc);
-                
+            }
+            else
+            {
+                Player p = (Player) e;
+                event.getDamage();
+                if ((p.getHealth() - event.getDamage()) <= 0)
+                {
+                    event.setCancelled(true);
+                    if (p.getVehicle() != null)
+                    {
+                        p.getVehicle().remove();
+                    }
+                    p.setHealth(p.getMaxHealth());
+                    Location loc = new Location(p.getWorld(), p.getMetadata("lastLocX").get(0).asDouble(), p.getMetadata("lastLocY").get(0).asDouble(), p.getMetadata("lastLocZ").get(0).asDouble(), p.getMetadata("lastLocPitch").get(0).asFloat(), p.getMetadata("lastLocYaw").get(0).asFloat());
+                    p.teleport(loc);
+
+                    makeHorse(p, loc);
+
+
+                }
             }
         }
         

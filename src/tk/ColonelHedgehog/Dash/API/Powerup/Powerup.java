@@ -1,7 +1,10 @@
 package tk.ColonelHedgehog.Dash.API.Powerup;
 
+import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import tk.ColonelHedgehog.Dash.API.Entity.Racer;
+
+import java.util.List;
 
 /**
  * Created by ColonelHedgehog on 11/9/14.
@@ -10,15 +13,37 @@ import tk.ColonelHedgehog.Dash.API.Entity.Racer;
  */
 public interface Powerup
 {
-    public int getItemAmountReduction();
-
+    public enum ActionType
+    {
+        RIGHT_CLICK, LEFT_CLICK, RIGHT_CLICK_ENTITY, LEFT_CLICK_ENTITY, DROP, PICKUP, ALL
+    }
+    // The itemstack used.
     public ItemStack getItem();
 
-    public void doOnRightClick(Racer racer);
+    // Right-click action.
+    public void doOnRightClick(Racer racer, Action action);
 
-    public void doOnLeftClick(Racer racer);
+    // Left-click action.
+    public void doOnLeftClick(Racer racer, Action action);
 
+    // Item dropped (default drop button is Q) action.
     public void doOnDrop(Racer racer);
 
-    public String getMessage();
+    // Right-click racer action.
+    public void doOnRightClickRacer(Racer racer, Racer clicked);
+
+    // Left-click (attack) racer action.
+    public void doOnLeftClickRacer(Racer racer, Racer clicked);
+
+    // Pickup item (after it is dropped) action.
+    public void doOnPickup(Racer racer, Racer dropper);
+
+    // The message sent when you get the item.
+    // Removed: public String getMessage();
+
+    // The chance (1/#) that the item will appear in the hotbar while it is being "spun."
+    public int getChance();
+
+    // All events to ignore (cancel) when you perform a "doOn" action with the item.
+    public List<ActionType> cancelledEvents();
 }

@@ -6,12 +6,14 @@
 
 package tk.ColonelHedgehog.Dash.Events;
 
-import tk.ColonelHedgehog.Dash.Core.Main;
+import net.minecraft.server.v1_7_R4.GenericAttributes;
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import tk.ColonelHedgehog.Dash.Core.Main;
 
 /**
  *
@@ -38,6 +40,21 @@ public class CreatureSpawnListener implements Listener
                         event.getLocation().getWorld().createExplosion(event.getLocation(), (float) 0.0);
                     }
                 }, 100L);
+            }
+            else if(event.getEntity() instanceof Horse)
+            {
+                if(plugin.getConfig().getBoolean("Config.NMS.Enabled"))
+                {
+                    try
+                    {
+                        Horse horse = (Horse) event.getEntity();
+                        ((CraftLivingEntity) horse).getHandle().getAttributeInstance(GenericAttributes.d).setValue(plugin.getConfig().getDouble("Config.NMS.MaxHorseSpeed"));
+                    }
+                    catch (NoClassDefFoundError error)
+                    {
+                        plugin.getLogger().severe("NMS handling failed! The version of Spigot/Bukkit you are using is not compatible with this. Set \"Enabled\" to \"false\" in the NMS section of your config to prevent problems.");
+                    }
+                }
             }
         }
         else

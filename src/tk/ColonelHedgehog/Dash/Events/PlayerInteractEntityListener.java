@@ -6,17 +6,28 @@
 
 package tk.ColonelHedgehog.Dash.Events;
 
-import tk.ColonelHedgehog.Dash.Core.Main;
-import org.bukkit.*;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.*;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
+import org.bukkit.Sound;
+import org.bukkit.entity.EnderCrystal;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Firework;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
+import tk.ColonelHedgehog.Dash.API.Entity.Racer;
+import tk.ColonelHedgehog.Dash.API.Powerup.Powerup;
+import tk.ColonelHedgehog.Dash.Core.Main;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -29,7 +40,7 @@ public class PlayerInteractEntityListener implements Listener
     @EventHandler
     public void onBox(PlayerInteractEntityEvent event)
     {    
-        if(event.getRightClicked() instanceof EnderCrystal && !event.getPlayer().getMetadata("pCooldown").get(0).asBoolean())
+        if(event.getRightClicked() instanceof EnderCrystal && !event.getPlayer().getMetadata("pCooldown").get(0).asBoolean() && !new Racer(event.getPlayer()).inventoryIsSpinning())
         {
             event.getPlayer().getInventory().clear();
             giveReward(event.getPlayer(), event.getRightClicked(), event.getRightClicked().getLocation().getBlockX(), event.getRightClicked().getLocation().getBlockY(), event.getRightClicked().getLocation().getBlockZ());
@@ -46,9 +57,27 @@ public class PlayerInteractEntityListener implements Listener
                 FireworkMeta data = fw.getFireworkMeta();
                 data.addEffects(FireworkEffect.builder().withColor(Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.PURPLE).with(FireworkEffect.Type.STAR).build());
                 data.setPower(0);
-                fw.setFireworkMeta(data);  
-                    
-    int random = (int )(Math.random() * 20 + 1);
+                fw.setFireworkMeta(data);
+
+        p.getInventory().clear();
+        List<Powerup> pl = new ArrayList<>();
+        for(Powerup pow : Main.getPowerupsRegistery().getPowerups())
+        {
+            for(int i = 0; i < pow.getChance(); i++)
+            {
+                pl.add(pow);
+            }
+        }
+
+        for(int i = 0; i <= 8; i++)
+        {
+            Powerup powerup = pl.get(new Random().nextInt(pl.size()));
+            p.getInventory().setItem(i, powerup.getItem());
+        }
+
+        spinInv(p);
+    // Old yucky method. BLECH!
+    /*
     if(random == 1)
     {
     ItemStack it = new ItemStack(Material.NETHER_STALK);
@@ -224,11 +253,56 @@ public class PlayerInteractEntityListener implements Listener
             cancel(); //Cancels the timer
         }
       
-    }.runTaskTimer(plugin, 100L /* The amount of time until the timer starts */, 20L /*  The delay of each call */);
-    
+    }.runTaskTimer(plugin, 100L /* The amount of time until the timer starts *///, 20L /*  The delay of each call */);
 
-    }    
-    
+
+    }
+
+    private static void spinInv(final Player p)
+    {
+        p.setMetadata("invSpinning", new FixedMetadataValue(plugin, true));
+
+        final int[] count = {0};
+        final int[] random = {27 + new Random(0).nextInt(9)};
+        final float[] pitch = {0};
+        final int[] slot = {0};
+        new BukkitRunnable()
+        {
+            @Override
+            public void run()
+            {
+                if (count[0] < random[0] && !p.isDead() && p.isOnline())
+                {
+                    p.playSound(p.getLocation(), Sound.NOTE_PLING, 3, pitch[0]);
+                    p.getInventory().setHeldItemSlot(slot[0]);
+                }
+                else if (!p.isDead() || p.isOnline())
+                {
+                    cancel();
+                    final ItemStack chosen = p.getInventory().getItemInHand();
+
+                    p.getInventory().clear();
+
+                    p.getInventory().setItem(0, chosen);
+                    p.getInventory().setHeldItemSlot(0);
+
+                    p.playSound(p.getLocation(), Sound.NOTE_PLING, 3, 2);
+                    p.playSound(p.getLocation(), Sound.NOTE_PLING, 3, 1.5F);
+                    p.playSound(p.getLocation(), Sound.NOTE_PLING, 3, 1);
+                    p.setMetadata("invSpinning", new FixedMetadataValue(plugin, false));
+                }
+                else
+                {
+                    cancel();
+                }
+                count[0]++;
+                pitch[0] = pitch[0] < 1.9 ? pitch[0] + 0.333333334F : 0;
+                slot[0] = slot[0] < 8 ? slot[0] + 1 : 0;
+
+            }
+        }.runTaskTimer(plugin, 0, 2);
+    }
+
     public static void setName(ItemStack is, String name)
     {
         ItemMeta m = is.getItemMeta();

@@ -12,8 +12,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import tk.ColonelHedgehog.Dash.API.Powerup.Default.LauncherPowerup;
+import tk.ColonelHedgehog.Dash.API.Powerup.Default.SpeedPowerup;
+import tk.ColonelHedgehog.Dash.API.Powerup.Default.TNTPowerup;
 import tk.ColonelHedgehog.Dash.API.Powerup.PowerupsRegistery;
-import tk.ColonelHedgehog.Dash.API.Powerup.Stock.LaunchPowerup;
 import tk.ColonelHedgehog.Dash.Assets.Commands.EDCmd;
 import tk.ColonelHedgehog.Dash.Assets.Powerups;
 import tk.ColonelHedgehog.Dash.Events.*;
@@ -82,6 +84,31 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
         getServer().getPluginManager().registerEvents(new Customization(), this);
         getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
         getServer().getPluginManager().registerEvents(new EntityTargetLivingEntityListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDropItemListener(), this);
+        getServer().getPluginManager().registerEvents(new WorldLoadListener(), this);
+
+        powerupsRegistery = new PowerupsRegistery();
+        powerupsRegistery.registerPowerup(new LauncherPowerup());
+        powerupsRegistery.registerPowerup(new SpeedPowerup());
+        powerupsRegistery.registerPowerup(new TNTPowerup());
+
+        Bukkit.getScheduler().runTaskLater(plugin, new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                getLogger().info(powerupsRegistery.getPowerups().size() + " powerups were registered.");
+            }
+        }, 20L);
+
+        if(getServer().getPluginManager().getPlugin("ProtocolLib") == null)
+        {
+            getLogger().info("No ProtocolLib dependency found. This plugin can run but players will need to respawn by manually clicking the button after death.");
+        }
+        else
+        {
+            getLogger().info("Found and hooked ProtocolLib. Players will respawn automatically after death.");
+        }
     }
 
     @Override
@@ -95,13 +122,6 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
             }
             p.getInventory().clear();
         }
-    }
-
-    @Override
-    public void onLoad()
-    {
-        powerupsRegistery = new PowerupsRegistery();
-        getPowerupsRegistery().registerPowerup(new LaunchPowerup());
     }
     
     public static void buildRaceline(Player p)
