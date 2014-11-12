@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import tk.ColonelHedgehog.Dash.API.Powerup.Default.LauncherPowerup;
+import tk.ColonelHedgehog.Dash.API.Powerup.Default.SlimePowerup;
 import tk.ColonelHedgehog.Dash.API.Powerup.Default.SpeedPowerup;
 import tk.ColonelHedgehog.Dash.API.Powerup.Default.TNTPowerup;
 import tk.ColonelHedgehog.Dash.API.Powerup.PowerupsRegistery;
@@ -91,6 +92,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
         powerupsRegistery.registerPowerup(new LauncherPowerup());
         powerupsRegistery.registerPowerup(new SpeedPowerup());
         powerupsRegistery.registerPowerup(new TNTPowerup());
+        powerupsRegistery.registerPowerup(new SlimePowerup());
 
         Bukkit.getScheduler().runTaskLater(plugin, new Runnable()
         {

@@ -43,7 +43,7 @@ Config:
       Enabled: true # Should this be used as a default powerup?
       Title: '&b&lLauncher Powerup' # The powerup's name (will shop up in the item's title)
       Material: 'DIAMOND' # The material for the powerup. Full list of Materials: http://jd.bukkit.org/rb/apidocs/org/bukkit/Material.html
-      Chance: 2 # The amount of times the powerup is entered into the powerup chooser. Higher = more frequent.
+      Chance: 2 # The amount of times the powerup is entered into the powerup chooser. Higher = less frequent. For math nerds: Frequency = rank / chance.
     Speed:
       Enabled: true
       Title: '&f&lSpeed Powerup'
@@ -59,6 +59,11 @@ Config:
       ThrowDirections:
         ThrowAheadEnabled: true
         ThrowBehindEnabled: false
+    Slime:
+      Enabled: true
+      Title: '&a&lSlime Minions'
+      Material: 'SLIME_BALL'
+      Chance: 1
   # The following are spawnpoint location settings.
   Spawn1:
     X: 0

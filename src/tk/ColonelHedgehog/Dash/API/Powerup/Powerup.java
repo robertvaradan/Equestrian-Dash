@@ -42,7 +42,9 @@ public interface Powerup
     // Removed: public String getMessage();
 
     // The chance (1/#) that the item will appear in the hotbar while it is being "spun."
-    public int getChance();
+    public double getChance(int rank);
+
+    // Disabled -> // public double decreasePerRank(); // Depending on the rank , how much should the chance go down each time?
 
     // All events to ignore (cancel) when you perform a "doOn" action with the item.
     public List<ActionType> cancelledEvents();

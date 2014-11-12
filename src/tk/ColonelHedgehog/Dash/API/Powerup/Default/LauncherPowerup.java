@@ -86,9 +86,9 @@ public class LauncherPowerup implements Powerup
     }*/
 
     @Override
-    public int getChance()
+    public double getChance(int rank)
     {
-        return Main.plugin.getConfig().getInt("Config.Powerups.Launcher.Chance"); // Chance that when we hit an item-box, this will be an option.
+        return (rank / Main.plugin.getConfig().getDouble("Config.Powerups.Launcher.Chance")); // Chance that when we hit an item-box, this will be an option.
     }
 
     @Override

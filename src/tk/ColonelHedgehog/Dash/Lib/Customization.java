@@ -37,106 +37,119 @@ public class Customization implements Listener
     public void onInv(InventoryClickEvent event)
     {
         //event.setCancelled(true);
-        final Player p = (Player) event.getWhoClicked();
-        if(p.getGameMode() != GameMode.CREATIVE)
+        if(event.getInventory().getName().contains("§9§lCustomizing:"))
         {
-        event.setCancelled(true);
-        ItemStack it = event.getCurrentItem();
-        short dat = it.getDurability();
-        int res = -1;
-        boolean pass = true;
-        if(p.hasMetadata("choosingColor") && p.getMetadata("choosingColor").get(0).asBoolean())
-        {
-            if(it == new ItemStack(Material.WOOL, 1, (byte) 0))
+            final Player p = (Player) event.getWhoClicked();
+            if (p.getGameMode() != GameMode.CREATIVE && event.getCurrentItem() != null)
             {
-                res = 1;
-            }
-            else if(it.getType() == Material.COAL_BLOCK)
-            {
-                res = 2;            
-            }
-            else if(it.getType() == Material.WOOL)
-            {
-                res = 3;            
-            }
-            else if(it.getType() == Material.WOOD && dat == 1)
-            {
-                res = 4;            
-            }
-            else if(it.getType() == Material.QUARTZ_BLOCK && dat == 1)
-            {
-                res = 5;            
-            }
-            else if(it.getType() == Material.WOOD && dat == 5)
-            {
-                res = 6;            
-            }
-            else if(it.getType() == Material.STONE)
-            {
-                res = 7;            
-            }
-                p.playSound(p.getLocation(), Sound.HORSE_SADDLE, 3, 1);      
-                p.sendMessage(Prefix + "§a§oHorse color " + it.getItemMeta().getDisplayName() + " §aselected.");
-                p.closeInventory();
-                new BukkitRunnable() 
+                event.setCancelled(true);
+                ItemStack it = event.getCurrentItem();
+                short dat = it.getDurability();
+                int res = -1;
+                if (p.hasMetadata("choosingColor") && p.getMetadata("choosingColor").get(0).asBoolean())
                 {
-
-                    @Override
-                    public void run() 
+                    if (it == new ItemStack(Material.WOOL, 1, (byte) 0))
                     {
-                      // .-.
-                        chooseVarient(p);
-                        cancel(); //Cancels the timer
+                        res = 1;
                     }
+                    else if (it.getType() == Material.COAL_BLOCK)
+                    {
+                        res = 2;
+                    }
+                    else if (it.getType() == Material.WOOL)
+                    {
+                        res = 3;
+                    }
+                    else if (it.getType() == Material.WOOD && dat == 1)
+                    {
+                        res = 4;
+                    }
+                    else if (it.getType() == Material.QUARTZ_BLOCK && dat == 1)
+                    {
+                        res = 5;
+                    }
+                    else if (it.getType() == Material.WOOD && dat == 5)
+                    {
+                        res = 6;
+                    }
+                    else if (it.getType() == Material.STONE)
+                    {
+                        res = 7;
+                    }
+                    p.playSound(p.getLocation(), Sound.HORSE_SADDLE, 3, 1);
+                    p.sendMessage(Prefix + "§a§oHorse color " + it.getItemMeta().getDisplayName() + " §aselected.");
+                    p.closeInventory();
+                    new BukkitRunnable()
+                    {
 
-                }.runTaskTimer(plugin, 3L /* The amount of time until the timer starts */, 20L /*  The delay of each call */);
+                        @Override
+                        public void run()
+                        {
+                            // .-.
+                            chooseVarient(p);
+                            cancel(); //Cancels the timer
+                        }
 
-                p.setMetadata("choosingColor", new FixedMetadataValue(plugin, false));
-                p.setMetadata("colorKey", new FixedMetadataValue(plugin, res));
-                Horse h = (Horse) p.getVehicle();
-                getHorseColor(p, h, p.getMetadata("colorKey").get(0).asInt());
+                    }.runTaskTimer(plugin, 3L /* The amount of time until the timer starts */, 20L /*  The delay of each call */);
 
+                    p.setMetadata("choosingColor", new FixedMetadataValue(plugin, false));
+                    p.setMetadata("colorKey", new FixedMetadataValue(plugin, res));
+                    Horse h = (Horse) p.getVehicle();
+                    getHorseColor(p, h, p.getMetadata("colorKey").get(0).asInt());
+
+                }
+                else if (p.hasMetadata("choosingStyle") && p.getMetadata("choosingStyle").get(0).asBoolean())
+                {
+                    if (it.getType() == Material.COAL_ORE)
+                    {
+                        res = 1;
+                    }
+                    else if (it.getType() == Material.GLASS)
+                    {
+                        res = 2;
+                    }
+                    else if (it.getType() == Material.QUARTZ_BLOCK)
+                    {
+                        res = 3;
+                    }
+                    else if (it.getType() == Material.STAINED_CLAY)
+                    {
+                        res = 4;
+                    }
+                    else if (it.getType() == Material.IRON_BLOCK)
+                    {
+                        res = 5;
+                    }
+                    else if (it.getType() == Material.BONE)
+                    {
+                        res = 6;
+                    }
+                    else if (it.getType() == Material.ROTTEN_FLESH)
+                    {
+                        res = 7;
+                    }
+                    p.playSound(p.getLocation(), Sound.HORSE_ARMOR, 3, 1);
+                    p.sendMessage(Prefix + "§a§oHorse style " + it.getItemMeta().getDisplayName() + " §aselected.");
+                    p.setMetadata("choosingColor", new FixedMetadataValue(plugin, false));
+                    p.closeInventory();
+                    p.setMetadata("patternKey", new FixedMetadataValue(plugin, res));
+                    Horse h = (Horse) p.getVehicle();
+                    getHorsePattern(p, h, p.getMetadata("patternKey").get(0).asInt());
+
+
+                }
+            }
+            else
+            {
+                if(event.getWhoClicked().getGameMode() != GameMode.CREATIVE)
+                {
+                    event.setCancelled(true);
+                }
+            }
         }
-        else if(p.hasMetadata("choosingStyle") && p.getMetadata("choosingStyle").get(0).asBoolean())
+        else if(event.getWhoClicked().getGameMode() != GameMode.CREATIVE)
         {
-            if(it.getType() == Material.COAL_ORE)
-            {
-            res = 1;
-            }
-            else if(it.getType() == Material.GLASS)
-            {
-            res = 2;
-            }
-            else if(it.getType() == Material.QUARTZ_BLOCK)
-            {
-            res = 3;
-            }
-            else if(it.getType() == Material.STAINED_CLAY)
-            {
-            res = 4;
-            }
-            else if(it.getType() == Material.IRON_BLOCK)
-            {
-            res = 5;
-            }
-            else if(it.getType() == Material.BONE)
-            {
-            res = 6;
-            }
-            else if(it.getType() == Material.ROTTEN_FLESH)
-            {
-            res = 7;
-            }
-                p.playSound(p.getLocation(), Sound.HORSE_ARMOR, 3, 1);      
-                p.sendMessage(Prefix + "§a§oHorse style " + it.getItemMeta().getDisplayName() + " §aselected.");
-                p.setMetadata("choosingColor", new FixedMetadataValue(plugin, false));
-                p.closeInventory();
-                p.setMetadata("patternKey", new FixedMetadataValue(plugin, res));
-                Horse h = (Horse) p.getVehicle();
-                getHorsePattern(p, h, p.getMetadata("patternKey").get(0).asInt());
-
-            
-        }
+            event.setCancelled(true);
         }
     }    
 

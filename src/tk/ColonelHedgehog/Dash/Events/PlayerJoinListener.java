@@ -420,10 +420,6 @@ new BukkitRunnable() {
         //Bukkit.getServer().broadcastMessage("§bCreated string with size of: " + size);
 
         //plugin.getServer().broadcastMessage("§3---------- §b§l CURRENT PLACING §3----------");
-            for (int i = 0; i < (Bukkit.getOnlinePlayers().length); i++)
-            {
-            Placement[i] = getPlayerInPlace(i + 1).getName();
-            }
            
         /*    plugin.getServer().broadcastMessage("§e§oFirst place: §c§o" + Placement[0]);
             plugin.getServer().broadcastMessage("§7§oSecond place: §c§o" + Placement[1]);

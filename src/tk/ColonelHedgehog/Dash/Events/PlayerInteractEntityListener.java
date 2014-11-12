@@ -23,6 +23,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import tk.ColonelHedgehog.Dash.API.Entity.Racer;
 import tk.ColonelHedgehog.Dash.API.Powerup.Powerup;
+import tk.ColonelHedgehog.Dash.Assets.Ranking;
 import tk.ColonelHedgehog.Dash.Core.Main;
 
 import java.util.ArrayList;
@@ -63,9 +64,12 @@ public class PlayerInteractEntityListener implements Listener
         List<Powerup> pl = new ArrayList<>();
         for(Powerup pow : Main.getPowerupsRegistery().getPowerups())
         {
-            for(int i = 0; i < pow.getChance(); i++)
+            if(pow.getChance(Ranking.getRank(p)) >= 1)
             {
-                pl.add(pow);
+                for (int i = 0; i < pow.getChance(Ranking.getRank(p)); i++)
+                {
+                    pl.add(pow);
+                }
             }
         }
 
