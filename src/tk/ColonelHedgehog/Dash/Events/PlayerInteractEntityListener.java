@@ -36,7 +36,7 @@ public class PlayerInteractEntityListener implements Listener
     @EventHandler
     public void onBox(final PlayerInteractEntityEvent event)
     {    
-        if(event.getRightClicked() instanceof EnderCrystal && !event.getPlayer().getMetadata("pCooldown").get(0).asBoolean() && !new Racer(event.getPlayer()).inventoryIsSpinning())
+        if(event.getRightClicked() instanceof EnderCrystal && !Main.getCooldownHandler().isCooling(event.getPlayer()) && !new Racer(event.getPlayer()).inventoryIsSpinning())
         {
             event.getPlayer().getInventory().clear();
             giveReward(event.getPlayer(), event.getRightClicked(), event.getRightClicked().getLocation().getBlockX(), event.getRightClicked().getLocation().getBlockY(), event.getRightClicked().getLocation().getBlockZ());

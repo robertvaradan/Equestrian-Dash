@@ -46,7 +46,7 @@ Config:
   Powerups:
     Launcher:
       Enabled: true # Should this be used as a default powerup?
-      Title: '&b&lLauncher Powerup' # The powerup's name (will shop up in the item's title)
+      Title: '&d&lLauncher Powerup' # The powerup's name (will shop up in the item's title)
       Material: 'DIAMOND' # The material for the powerup. Full list of Materials: http://jd.bukkit.org/rb/apidocs/org/bukkit/Material.html
       Chance: 2 # The amount of times the powerup is entered into the powerup chooser. Higher = less frequent. For math nerds: Frequency = rank / chance.
     Speed:
@@ -77,6 +77,11 @@ Config:
       Title: '&9&lArrow Powerup'
       Material: 'ARROW'
       Chance: 2
+    Ice:
+      Enabled: true
+      Title: '&b&lIce Powerup'
+      Material: 'PACKED_ICE'
+      DelayInTicks: 60 # Detonation delay in ticks. 1 second = 20 ticks.
   # The following are spawnpoint location settings.
   Spawn1:
     X: 0

@@ -302,7 +302,6 @@ new BukkitRunnable() {
         
         racers.add(player);
         player.setMetadata("trackPlace", new FixedMetadataValue(plugin, 1));
-        player.setMetadata("pCooldown", new FixedMetadataValue(plugin, false));
         player.setMetadata("playerLap", new FixedMetadataValue(plugin, 0));
         player.setMetadata("markerPos", new FixedMetadataValue(plugin, 0));
         player.setMetadata("ebled", new FixedMetadataValue(plugin, false));

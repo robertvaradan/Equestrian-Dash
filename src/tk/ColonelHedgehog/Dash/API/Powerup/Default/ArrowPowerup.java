@@ -2,10 +2,7 @@ package tk.ColonelHedgehog.Dash.API.Powerup.Default;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -75,7 +72,7 @@ public class ArrowPowerup implements Powerup
     }
 
     @Override
-    public void doOnDrop(Racer racer)
+    public void doOnDrop(Racer racer, Item dropped)
     {
 
     }
@@ -93,7 +90,7 @@ public class ArrowPowerup implements Powerup
     }
 
     @Override
-    public void doOnPickup(Racer racer, Racer dropper)
+    public void doOnPickup(Racer racer, Racer dropper, Item item)
     {
 
     }

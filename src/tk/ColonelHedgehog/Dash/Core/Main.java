@@ -18,6 +18,7 @@ import org.mcstats.Metrics;
 import tk.ColonelHedgehog.Dash.API.Powerup.Default.*;
 import tk.ColonelHedgehog.Dash.API.Powerup.PowerupsRegistery;
 import tk.ColonelHedgehog.Dash.Assets.Commands.EDCmd;
+import tk.ColonelHedgehog.Dash.Assets.CooldownHandler;
 import tk.ColonelHedgehog.Dash.Assets.Powerups;
 import tk.ColonelHedgehog.Dash.Events.*;
 import tk.ColonelHedgehog.Dash.Lib.Customization;
@@ -131,6 +132,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
     private void setupPowerups()
     {
         powerupsRegistery = new PowerupsRegistery();
+        cooldownHandler = new CooldownHandler();
 
         if(plugin.getConfig().getBoolean("Config.Powerups.Launcher.Enabled"))
         {
@@ -189,6 +191,13 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
         {
             protocolManager = ProtocolLibrary.getProtocolManager();
         }
+    }
+
+    private static CooldownHandler cooldownHandler;
+
+    public static CooldownHandler getCooldownHandler()
+    {
+        return cooldownHandler;
     }
 
 }

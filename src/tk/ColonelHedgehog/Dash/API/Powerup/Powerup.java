@@ -1,5 +1,6 @@
 package tk.ColonelHedgehog.Dash.API.Powerup;
 
+import org.bukkit.entity.Item;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import tk.ColonelHedgehog.Dash.API.Entity.Racer;
@@ -27,7 +28,7 @@ public interface Powerup
     public void doOnLeftClick(Racer racer, Action action);
 
     // Item dropped (default drop button is Q) action.
-    public void doOnDrop(Racer racer);
+    public void doOnDrop(Racer racer, Item dropped);
 
     // Right-click racer action.
     public void doOnRightClickRacer(Racer racer, Racer clicked);
@@ -36,7 +37,7 @@ public interface Powerup
     public void doOnLeftClickRacer(Racer racer, Racer clicked);
 
     // Pickup item (after it is dropped) action.
-    public void doOnPickup(Racer racer, Racer dropper);
+    public void doOnPickup(Racer racer, Racer dropper, Item item);
 
     // The message sent when you get the item.
     // Removed: public String getMessage();

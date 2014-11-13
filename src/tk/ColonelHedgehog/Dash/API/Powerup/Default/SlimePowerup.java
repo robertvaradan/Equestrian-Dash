@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Slime;
 import org.bukkit.event.block.Action;
@@ -59,7 +60,7 @@ public class SlimePowerup implements Powerup
     }
 
     @Override
-    public void doOnDrop(Racer racer)
+    public void doOnDrop(Racer racer, Item dropped)
     {
 
     }
@@ -77,7 +78,7 @@ public class SlimePowerup implements Powerup
     }
 
     @Override
-    public void doOnPickup(Racer racer, Racer dropper)
+    public void doOnPickup(Racer racer, Racer dropper, Item item)
     {
 
     }

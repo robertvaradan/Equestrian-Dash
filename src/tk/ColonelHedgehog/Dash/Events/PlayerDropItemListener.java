@@ -29,7 +29,7 @@ public class PlayerDropItemListener implements Listener
         {
             if(powerup.getItem().equals(event.getItemDrop().getItemStack()) && !racer.inventoryIsSpinning())
             {
-                powerup.doOnDrop(new Racer(event.getPlayer()));
+                powerup.doOnDrop(new Racer(event.getPlayer()), event.getItemDrop());
                 if(powerup.cancelledEvents().contains(Powerup.ActionType.DROP) || powerup.cancelledEvents().contains(Powerup.ActionType.ALL))
                 {
                     event.setCancelled(true);
@@ -57,7 +57,7 @@ public class PlayerDropItemListener implements Listener
             {
                 try
                 {
-                    powerup.doOnPickup(new Racer(event.getPlayer()), new Racer(Bukkit.getPlayer(UUID.fromString(event.getItem().getMetadata("whoDropped").toString()))));
+                    powerup.doOnPickup(new Racer(event.getPlayer()), new Racer(Bukkit.getPlayer(UUID.fromString(event.getItem().getMetadata("whoDropped").toString()))), event.getItem());
                     if (powerup.cancelledEvents().contains(Powerup.ActionType.PICKUP) || powerup.cancelledEvents().contains(Powerup.ActionType.ALL))
                     {
                         event.setCancelled(true);

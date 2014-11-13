@@ -143,7 +143,7 @@ public class PlayerMoveListener implements Listener
                     {
                     //p.sendMessage(Main.Prefix + "Debug: Crystal nearby.");
                     
-                        if (!p.getMetadata("pCooldown").get(0).asBoolean())
+                        if (!Main.getCooldownHandler().isCooling(p))
                         {
                             //p.sendMessage(Main.Prefix + "Debug: Not cooling down.");
 
@@ -151,7 +151,6 @@ public class PlayerMoveListener implements Listener
                             PlayerInteractEntityListener.giveReward(p, cry, cry.getLocation().getBlockX(), cry.getLocation().getBlockY(), cry.getLocation().getBlockZ());
                             cry.getWorld().playEffect(cry.getLocation(), Effect.STEP_SOUND, 20);
                             cry.getWorld().playSound(cry.getLocation(), Sound.GLASS, 3, 1);
-                            p.setMetadata("pCooldown", new FixedMetadataValue(plugin, true));
                             plCooldown(p);
                             
                         }
@@ -241,19 +240,7 @@ public class PlayerMoveListener implements Listener
     
     public static void plCooldown(final Player p)
     {
-        new BukkitRunnable() 
-        {
-
-              @Override
-             public void run() 
-            {
-              //Start game method
-                p.setMetadata("pCooldown", new FixedMetadataValue(plugin, false));
-                cancel(); //Cancels the timer
-            }
-
-        }.runTaskTimer(plugin, 100L /* The amount of time until the timer starts */, 20L /*  The delay of each call */);
-        
+        Main.getCooldownHandler().placeInCooldown(p, 5000L);
     }
     public static int evalPlace(Player p)
     {
@@ -269,7 +256,7 @@ public class PlayerMoveListener implements Listener
             {
                 for (int z = -7; z <= 7; z ++)
                 {
-                Block b = p.getWorld().getBlockAt((int)pX+x, (int)pY+y, (int)pZ+z);
+                Block b = p.getWorld().getBlockAt(pX + x, pY + y, pZ + z);
                     if(b.getType() == Material.SIGN || b.getType() == Material.SIGN_POST || b.getType() == Material.WALL_SIGN && b.getState() != null)
                     {
                         

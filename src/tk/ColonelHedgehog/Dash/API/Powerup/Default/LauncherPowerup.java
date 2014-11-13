@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Horse;
+import org.bukkit.entity.Item;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -53,7 +54,7 @@ public class LauncherPowerup implements Powerup
     }
 
     @Override
-    public void doOnDrop(Racer racer)
+    public void doOnDrop(Racer racer, Item dropped)
     {
         // This will be performed in the event that you drop the item.
     }
@@ -71,7 +72,7 @@ public class LauncherPowerup implements Powerup
     }
 
     @Override
-    public void doOnPickup(Racer racer, Racer dropper)
+    public void doOnPickup(Racer racer, Racer dropper, Item item)
     {
         // This will be performed in the event that you pick up the item.
     }

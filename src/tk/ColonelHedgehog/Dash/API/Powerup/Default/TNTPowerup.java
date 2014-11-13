@@ -3,6 +3,7 @@ package tk.ColonelHedgehog.Dash.API.Powerup.Default;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.block.Action;
@@ -65,9 +66,9 @@ public class TNTPowerup implements Powerup
     }
 
     @Override
-    public void doOnDrop(Racer racer)
+    public void doOnDrop(Racer racer, Item dropped)
     {
-        // This will be performed in the event that you drop the item.
+
     }
 
     @Override
@@ -83,7 +84,7 @@ public class TNTPowerup implements Powerup
     }
 
     @Override
-    public void doOnPickup(Racer racer, Racer dropper)
+    public void doOnPickup(Racer racer, Racer dropper, Item item)
     {
         // This will be performed in the event that you pick up the item.
     }
