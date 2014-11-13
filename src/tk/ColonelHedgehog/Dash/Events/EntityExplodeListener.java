@@ -6,6 +6,8 @@
 
 package tk.ColonelHedgehog.Dash.Events;
 
+import org.bukkit.Effect;
+import org.bukkit.Sound;
 import tk.ColonelHedgehog.Dash.Core.Main;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,7 +43,9 @@ public class EntityExplodeListener implements Listener
             event.setCancelled(true); 
             int random = (int )(Math.random() * 6 + 1);
             randomDrop(e.getLocation(), random);
-               new BukkitRunnable() 
+            event.getEntity().getWorld().playEffect(event.getEntity().getLocation(), Effect.STEP_SOUND, 20);
+            event.getEntity().getWorld().playSound(event.getLocation(), Sound.GLASS, 3, 1);
+            new BukkitRunnable()
         {
         
         @Override

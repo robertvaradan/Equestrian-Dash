@@ -58,12 +58,20 @@ Config:
       Chance: 2
       ThrowDirections:
         ThrowAheadEnabled: true
-        ThrowBehindEnabled: false
+        ThrowAheadTicks: 60
+        ThrowAheadMultiplier: 2.5
+        ThrowBehindEnabled: true
+        ThrowBehindTicks: 40
     Slime:
       Enabled: true
-      Title: '&a&lSlime Minions'
+      Title: '&a&lSlime Minions Powerup'
       Material: 'SLIME_BALL'
       Chance: 1
+    Arrow:
+      Enabled: true
+      Title: '&9&lArrow Powerup'
+      Material: 'ARROW'
+      Chance: 4
   # The following are spawnpoint location settings.
   Spawn1:
     X: 0

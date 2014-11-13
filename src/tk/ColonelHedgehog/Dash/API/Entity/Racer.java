@@ -3,6 +3,7 @@ package tk.ColonelHedgehog.Dash.API.Entity;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
+import tk.ColonelHedgehog.Dash.Assets.Ranking;
 import tk.ColonelHedgehog.Dash.Core.Main;
 import tk.ColonelHedgehog.Dash.Events.PlayerMoveListener;
 
@@ -72,6 +73,6 @@ public class Racer
 
     public int getRank()
     {
-        return -1;
+        return Ranking.getRank(this.getPlayer());
     }
 }

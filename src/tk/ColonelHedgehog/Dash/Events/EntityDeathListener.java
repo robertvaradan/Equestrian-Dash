@@ -6,6 +6,7 @@
 
 package tk.ColonelHedgehog.Dash.Events;
 
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -41,6 +42,8 @@ public class EntityDeathListener implements Listener
             final double nx = e.getLocation().getBlockX() + 0.4;
             final double ny = e.getLocation().getBlockY() - 1;
             final double nz = e.getLocation().getBlockX() + 0.4;
+            e.getWorld().playEffect(e.getLocation(), Effect.STEP_SOUND, 20);
+
 
             new BukkitRunnable()
             {

@@ -105,8 +105,8 @@ public class PlayerMoveListener implements Listener
                             det = EDFinished.size() + "th";
                         }
                         
-                        messageExcept(p, PlayerJoinListener.Prefix + "§c" + p.getName().toUpperCase() + " §eHAS FINISHED"  + det.toUpperCase() + "!");
-                        p.sendMessage(PlayerJoinListener.Prefix + "§c§oYOU'VE FINISHED " + det.toUpperCase() + "!");
+                        messageExcept(p, PlayerJoinListener.Prefix + "§c" + p.getName().toUpperCase() + " §eHAS FINISHED §d§l"  + det.toUpperCase() + "!");
+                        p.sendMessage(PlayerJoinListener.Prefix + "§c§oYOU'VE FINISHED §d§l" + det.toUpperCase() + "!");
                         
                         }
                     }
@@ -149,6 +149,8 @@ public class PlayerMoveListener implements Listener
 
                             p.getInventory().clear();
                             PlayerInteractEntityListener.giveReward(p, cry, cry.getLocation().getBlockX(), cry.getLocation().getBlockY(), cry.getLocation().getBlockZ());
+                            cry.getWorld().playEffect(cry.getLocation(), Effect.STEP_SOUND, 20);
+                            cry.getWorld().playSound(cry.getLocation(), Sound.GLASS, 3, 1);
                             p.setMetadata("pCooldown", new FixedMetadataValue(plugin, true));
                             plCooldown(p);
                             

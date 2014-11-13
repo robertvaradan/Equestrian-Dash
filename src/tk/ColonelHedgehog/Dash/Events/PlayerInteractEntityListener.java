@@ -6,13 +6,8 @@
 
 package tk.ColonelHedgehog.Dash.Events;
 
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.Sound;
-import org.bukkit.entity.EnderCrystal;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Firework;
-import org.bukkit.entity.Player;
+import org.bukkit.*;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -39,20 +34,22 @@ public class PlayerInteractEntityListener implements Listener
     public static Main plugin = Main.plugin;
 
     @EventHandler
-    public void onBox(PlayerInteractEntityEvent event)
+    public void onBox(final PlayerInteractEntityEvent event)
     {    
         if(event.getRightClicked() instanceof EnderCrystal && !event.getPlayer().getMetadata("pCooldown").get(0).asBoolean() && !new Racer(event.getPlayer()).inventoryIsSpinning())
         {
             event.getPlayer().getInventory().clear();
             giveReward(event.getPlayer(), event.getRightClicked(), event.getRightClicked().getLocation().getBlockX(), event.getRightClicked().getLocation().getBlockY(), event.getRightClicked().getLocation().getBlockZ());
-        }        
+            event.getRightClicked().remove();
+            event.getRightClicked().getWorld().playEffect(event.getRightClicked().getLocation(), Effect.STEP_SOUND, 20);
+
+
+        }
     }
     
-    public static void giveReward(final Player p, final Entity e, int cx, int cy, int cz)
+    public static void giveReward(final Player p, final Entity e, final int cx, final int cy, final int cz)
     {
-                final double nx = cx + 0.25;
-                final double ny = cy - 1;
-                final double nz = cz + 0.25;
+
                 //e.getServer().broadcastMessage("Was an ender crystal!");
                 Firework fw = e.getWorld().spawn(e.getLocation(), Firework.class);
                 FireworkMeta data = fw.getFireworkMeta();
@@ -64,7 +61,7 @@ public class PlayerInteractEntityListener implements Listener
         List<Powerup> pl = new ArrayList<>();
         for(Powerup pow : Main.getPowerupsRegistery().getPowerups())
         {
-            if(pow.getChance(Ranking.getRank(p)) >= 1)
+            if(pow.getChance(new Racer(p).getRank()) >= 1)
             {
                 for (int i = 0; i < pow.getChance(Ranking.getRank(p)); i++)
                 {
@@ -80,6 +77,25 @@ public class PlayerInteractEntityListener implements Listener
         }
 
         spinInv(p);
+        final Location loc1 = e.getLocation();
+        e.remove();
+
+        new BukkitRunnable()
+        {
+
+            @Override
+            public void run()
+            {
+                //Start game method
+                final double nx = cx + 0.25;
+                final double ny = cy - 1;
+                final double nz = cz + 0.25;
+                Location loc = new Location(loc1.getWorld(), nx, ny, nz);
+                loc1.getWorld().spawnEntity(loc, EntityType.ENDER_CRYSTAL);
+                cancel(); //Cancels the timer
+            }
+
+        }.runTaskTimer(plugin, 100L /* The amount of time until the timer starts */, 20L /*  The delay of each call */);
     // Old yucky method. BLECH!
     /*
     if(random == 1)
@@ -283,7 +299,7 @@ public class PlayerInteractEntityListener implements Listener
                 else if (!p.isDead() || p.isOnline())
                 {
                     cancel();
-                    final ItemStack chosen = p.getInventory().getItemInHand();
+                    final ItemStack chosen = p.getInventory().getItem(slot[0]);
 
                     p.getInventory().clear();
 

@@ -40,6 +40,10 @@ public class PlayerDropItemListener implements Listener
                 }
                 return;
             }
+            else if(racer.inventoryIsSpinning())
+            {
+                event.setCancelled(true);
+            }
         }
     }
 

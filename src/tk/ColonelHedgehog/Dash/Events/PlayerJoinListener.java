@@ -21,6 +21,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
+import tk.ColonelHedgehog.Dash.Assets.Ranking;
 import tk.ColonelHedgehog.Dash.Core.Main;
 
 import java.util.ArrayList;
@@ -412,11 +413,8 @@ new BukkitRunnable() {
     public void placePlayers()
     {
                 
-        String[] Placement;
-        
-        int size = Bukkit.getOnlinePlayers().length;
-        
-        Placement = new String[size];
+
+
         //Bukkit.getServer().broadcastMessage("§bCreated string with size of: " + size);
 
         //plugin.getServer().broadcastMessage("§3---------- §b§l CURRENT PLACING §3----------");
@@ -432,12 +430,14 @@ new BukkitRunnable() {
 
         plugin.getServer().broadcastMessage("§3---------------------------------------");
         */
+
             ScoreboardManager manager = Bukkit.getScoreboardManager();
             Scoreboard board = manager.getNewScoreboard();
             board.clearSlot(DisplaySlot.SIDEBAR);
             Objective objective = board.registerNewObjective("test", "playerplaces");
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
             objective.setDisplayName("§6Player §9Places");
+
 
         for(Player p : plugin.getServer().getOnlinePlayers())
             {
@@ -453,6 +453,7 @@ new BukkitRunnable() {
 
             //p.sendMessage(Main.Prefix + "§5§nApplying the score: " + inc);
             score.setScore(PlayerMoveListener.evalPlace(p));
+                Ranking.Scores.put(p.getUniqueId(), PlayerMoveListener.evalPlace(p));
 
 
                 p.setScoreboard(board);

@@ -1,5 +1,6 @@
 package tk.ColonelHedgehog.Dash.API.Powerup.Default;
 
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -29,7 +30,7 @@ public class SlimePowerup implements Powerup
     {
         ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Config.Powerups.Slime.Material")));
         ItemMeta im = icon.getItemMeta();
-        im.setDisplayName(Main.plugin.getConfig().getString("Config.Powerups.Slime.Name"));
+        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Config.Powerups.Slime.Title")));
         icon.setItemMeta(im);
         return icon;
     }
@@ -48,6 +49,7 @@ public class SlimePowerup implements Powerup
         s2.setMetadata("Creator", new FixedMetadataValue(Main.plugin, p.getName()));
         s3.setMetadata("Creator", new FixedMetadataValue(Main.plugin, p.getName()));
         s4.setMetadata("Creator", new FixedMetadataValue(Main.plugin, p.getName()));
+        p.getInventory().clear();
     }
 
     @Override

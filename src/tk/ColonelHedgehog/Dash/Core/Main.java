@@ -12,10 +12,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import tk.ColonelHedgehog.Dash.API.Powerup.Default.LauncherPowerup;
-import tk.ColonelHedgehog.Dash.API.Powerup.Default.SlimePowerup;
-import tk.ColonelHedgehog.Dash.API.Powerup.Default.SpeedPowerup;
-import tk.ColonelHedgehog.Dash.API.Powerup.Default.TNTPowerup;
+import tk.ColonelHedgehog.Dash.API.Powerup.Default.*;
 import tk.ColonelHedgehog.Dash.API.Powerup.PowerupsRegistery;
 import tk.ColonelHedgehog.Dash.Assets.Commands.EDCmd;
 import tk.ColonelHedgehog.Dash.Assets.Powerups;
@@ -53,7 +50,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
 
         File configf = new File(this.getDataFolder() + "/config.yml");
 
-        if(configf.exists())
+        if(!configf.exists())
         {
             System.out.println("[EquestrianDash] Could not find a config, so generating one!");
             getConfig().options().copyDefaults(true);
@@ -93,6 +90,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
         powerupsRegistery.registerPowerup(new SpeedPowerup());
         powerupsRegistery.registerPowerup(new TNTPowerup());
         powerupsRegistery.registerPowerup(new SlimePowerup());
+        powerupsRegistery.registerPowerup(new ArrowPowerup());
 
         Bukkit.getScheduler().runTaskLater(plugin, new Runnable()
         {

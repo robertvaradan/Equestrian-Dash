@@ -36,27 +36,32 @@ public class TNTPowerup implements Powerup
     public void doOnRightClick(Racer racer, Action action)
     {
         // This will be performed in the event that you right-click with the item.
+        if (Main.plugin.getConfig().getBoolean("Config.Powerups.TNT.ThrowDirections.ThrowBehindEnabled"))
+        {
+            Player p = racer.getPlayer();
+            p.playSound(p.getLocation(), Sound.FUSE, 7, 1);
+            TNTPrimed tnt = p.getWorld().spawn(p.getLocation(), TNTPrimed.class);
+            tnt.setFuseTicks(Main.plugin.getConfig().getInt("Config.Powerups.TNT.ThrowDirections.ThrowBehindTicks"));
 
-        Player p = racer.getPlayer();
-        p.playSound(p.getLocation(), Sound.FUSE, 7, 1);
-        TNTPrimed tnt = p.getWorld().spawn(p.getLocation(), TNTPrimed.class);
-        tnt.setFuseTicks(40);
-
-        racer.getPlayer().getInventory().clear();
+            racer.getPlayer().getInventory().clear();
+        }
     }
 
     @Override
     public void doOnLeftClick(Racer racer, Action action)
     {
         // This will be performed in the event that you left-click with the item.
-        Player p = racer.getPlayer();
+        if(Main.plugin.getConfig().getBoolean("Config.Powerups.TNT.ThrowDirections.ThrowAheadEnabled"))
+        {
+            Player p = racer.getPlayer();
 
-        p.playSound(p.getLocation(), Sound.FUSE, 7, 1);
-        TNTPrimed tnt = p.getWorld().spawn(p.getLocation(), TNTPrimed.class);
-        tnt.setVelocity(p.getLocation().getDirection().normalize().multiply(2.5));
-        tnt.setFuseTicks(60);
+            p.playSound(p.getLocation(), Sound.FUSE, 7, 1);
+            TNTPrimed tnt = p.getWorld().spawn(p.getLocation(), TNTPrimed.class);
+            tnt.setVelocity(p.getLocation().getDirection().normalize().multiply(Main.plugin.getConfig().getDouble("Config.Powerups.TNT.ThrowDirections.ThrowAheadMultiplier")));
+            tnt.setFuseTicks(Main.plugin.getConfig().getInt("Config.Powerups.TNT.ThrowDirections.ThrowAheadTicks"));
 
-        racer.getPlayer().getInventory().clear();
+            racer.getPlayer().getInventory().clear();
+        }
     }
 
     @Override

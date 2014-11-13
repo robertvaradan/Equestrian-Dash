@@ -76,6 +76,18 @@ public class Customization implements Listener
                     {
                         res = 7;
                     }
+
+                    if(!it.hasItemMeta() || !it.getItemMeta().hasDisplayName())
+                    {
+                        event.setCancelled(true);
+                        return;
+                    }
+                    else if(it.getItemMeta().getDisplayName().contains("Customize"))
+                    {
+                        event.setCancelled(true);
+                        return;
+                    }
+
                     p.playSound(p.getLocation(), Sound.HORSE_SADDLE, 3, 1);
                     p.sendMessage(Prefix + "§a§oHorse color " + it.getItemMeta().getDisplayName() + " §aselected.");
                     p.closeInventory();
@@ -128,6 +140,18 @@ public class Customization implements Listener
                     {
                         res = 7;
                     }
+
+                    if (!it.hasItemMeta() || !it.getItemMeta().hasDisplayName())
+                    {
+                        event.setCancelled(true);
+                        return;
+                    }
+                    else if (it.getItemMeta().getDisplayName().contains("Customize"))
+                    {
+                        event.setCancelled(true);
+                        return;
+                    }
+
                     p.playSound(p.getLocation(), Sound.HORSE_ARMOR, 3, 1);
                     p.sendMessage(Prefix + "§a§oHorse style " + it.getItemMeta().getDisplayName() + " §aselected.");
                     p.setMetadata("choosingColor", new FixedMetadataValue(plugin, false));
