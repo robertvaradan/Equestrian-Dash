@@ -6,11 +6,10 @@
 
 package tk.ColonelHedgehog.Dash.Events;
 
-import org.bukkit.GameMode;
-import tk.ColonelHedgehog.Dash.Core.Main;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
+import tk.ColonelHedgehog.Dash.Core.Main;
 
 /**
  *
@@ -24,12 +23,6 @@ public class PlayerToggleSprintListener implements Listener
     public void onSprint(PlayerToggleSprintEvent event)
     {
 
-        if(event.getPlayer().getGameMode() != GameMode.CREATIVE)
-        {
-            //event.getPlayer().sendMessage(Main.Prefix + "§4§oDon't try to cheat... >_>");
-            event.setCancelled(true);
-        }
-        //event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 999999999));
     }
     
 }

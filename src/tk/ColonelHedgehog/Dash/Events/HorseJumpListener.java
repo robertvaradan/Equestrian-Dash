@@ -7,12 +7,14 @@
 package tk.ColonelHedgehog.Dash.Events;
 
 //import org.bukkit.GameMode;
-import tk.ColonelHedgehog.Dash.Core.Main;
+
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.HorseJumpEvent;
 import org.bukkit.potion.PotionEffectType;
+import tk.ColonelHedgehog.Dash.Core.Main;
 
 /**
  *
@@ -26,7 +28,7 @@ public class HorseJumpListener implements Listener
     public void onJump(HorseJumpEvent event)
     {
         Player p = (Player) event.getEntity().getPassenger();
-        if(p.hasPotionEffect(PotionEffectType.SLOW))
+        if(p.hasPotionEffect(PotionEffectType.SLOW) || racetrackNearby(event.getEntity()))
         {
         event.setCancelled(true);
         }
@@ -37,5 +39,26 @@ public class HorseJumpListener implements Listener
         }
         //p.sendMessage(Main.Prefix + "Power is: §4" + event.getPower());
         
+    }
+
+    private boolean racetrackNearby(Horse h)
+    {
+
+        int range = plugin.getConfig().getInt("Config.RaceLine.NoJumpRange");
+        for(int x = -10; x < 10; x++)
+        {
+            for (int y = -10; y < 10; y++)
+            {
+                for (int z = -10; z < 10; z++)
+                {
+                    if(Main.LapCuboid.contains(h.getLocation().add(x, y, z).getBlock()))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }
