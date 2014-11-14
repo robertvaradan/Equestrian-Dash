@@ -6,11 +6,18 @@
 
 package tk.ColonelHedgehog.Dash.Events;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import tk.ColonelHedgehog.Dash.Core.Main;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+import tk.ColonelHedgehog.Dash.API.Entity.Racer;
+import tk.ColonelHedgehog.Dash.API.Event.EDRaceEndEvent;
+import tk.ColonelHedgehog.Dash.Core.Main;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -33,6 +40,27 @@ public class PlayerQuitListener implements Listener
         if (!PlayerJoinListener.RaceEnded)
         {
             event.getPlayer().getServer().broadcastMessage(PlayerJoinListener.Prefix + "" + ChatColor.AQUA + "" + event.getPlayer().getName() + " §3is no longer competing.");
+            if(PlayerJoinListener.count <= 0 && Bukkit.getOnlinePlayers().length == plugin.getConfig().getInt("Config.Players.Min") - 1)
+            {
+                for(Player on : Bukkit.getOnlinePlayers())
+                {
+                    on.kickPlayer("§c§lNo Contest!\n§7§lToo many players have left the game.");
+                    if(plugin.getConfig().getBoolean("Config.RaceOver.Restart.Enabled"))
+                    {
+                        ArrayList<Racer> list = new ArrayList<>();
+                        EDRaceEndEvent callable = new EDRaceEndEvent(list);
+                        Bukkit.getPluginManager().callEvent(callable);
+                        new BukkitRunnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "restart");
+                            }
+                        }.runTaskLater(plugin, plugin.getConfig().getLong("Config.RaceOver.Restart.Delay"));
+                    }
+                }
+            }
         }
     }
 }

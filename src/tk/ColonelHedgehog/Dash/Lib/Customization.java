@@ -90,7 +90,16 @@ public class Customization implements Listener
 
                     p.playSound(p.getLocation(), Sound.HORSE_SADDLE, 3, 1);
                     p.sendMessage(Prefix + "§a§oHorse color " + it.getItemMeta().getDisplayName() + " §aselected.");
-                    p.closeInventory();
+                    new BukkitRunnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            p.closeInventory();
+                        }
+
+                    }.runTask(plugin);
+
                     new BukkitRunnable()
                     {
 
@@ -155,10 +164,18 @@ public class Customization implements Listener
                     p.playSound(p.getLocation(), Sound.HORSE_ARMOR, 3, 1);
                     p.sendMessage(Prefix + "§a§oHorse style " + it.getItemMeta().getDisplayName() + " §aselected.");
                     p.setMetadata("choosingColor", new FixedMetadataValue(plugin, false));
-                    p.closeInventory();
-                    p.setMetadata("patternKey", new FixedMetadataValue(plugin, res));
-                    Horse h = (Horse) p.getVehicle();
-                    getHorsePattern(p, h, p.getMetadata("patternKey").get(0).asInt());
+                    final int finalRes = res;
+                    new BukkitRunnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            p.closeInventory();
+                            p.setMetadata("patternKey", new FixedMetadataValue(plugin, finalRes));
+                            Horse h = (Horse) p.getVehicle();
+                            getHorsePattern(p, h, p.getMetadata("patternKey").get(0).asInt());
+                        }
+                    }.runTask(plugin);
 
 
                 }

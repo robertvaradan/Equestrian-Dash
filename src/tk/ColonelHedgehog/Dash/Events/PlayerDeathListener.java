@@ -33,6 +33,8 @@ public class PlayerDeathListener implements Listener
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event)
     {
+        event.getDrops().clear();
+        event.setDroppedExp(0);
         Player p = event.getEntity();
         if(p.getVehicle() != null)
         {

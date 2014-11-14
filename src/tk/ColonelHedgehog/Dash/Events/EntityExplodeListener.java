@@ -8,6 +8,7 @@ package tk.ColonelHedgehog.Dash.Events;
 
 import org.bukkit.Effect;
 import org.bukkit.Sound;
+import tk.ColonelHedgehog.Dash.Core.GarbageControl;
 import tk.ColonelHedgehog.Dash.Core.Main;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -45,6 +46,10 @@ public class EntityExplodeListener implements Listener
             randomDrop(e.getLocation(), random);
             event.getEntity().getWorld().playEffect(event.getEntity().getLocation(), Effect.STEP_SOUND, 20);
             event.getEntity().getWorld().playSound(event.getLocation(), Sound.GLASS, 3, 1);
+            final double nx = e.getLocation().getBlockX() + 0.25;
+            final double ny = e.getLocation().getBlockY() - 1;
+            final double nz = e.getLocation().getBlockZ() + 0.25;
+            GarbageControl.RespawningIBs.add(new Location(e.getWorld(), nx, ny, nz));
             new BukkitRunnable()
         {
         
@@ -52,9 +57,7 @@ public class EntityExplodeListener implements Listener
         public void run() 
         {
           //Start game method
-                double nx = e.getLocation().getBlockX() + 0.25;
-                double ny = e.getLocation().getBlockY() - 1;
-                double nz = e.getLocation().getBlockZ() + 0.25;
+
 
             Location loc = new Location(e.getWorld(), nx, ny, nz);
             event.getLocation().getWorld().spawnEntity(loc, EntityType.ENDER_CRYSTAL);

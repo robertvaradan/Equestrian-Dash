@@ -19,6 +19,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import tk.ColonelHedgehog.Dash.API.Entity.Racer;
 import tk.ColonelHedgehog.Dash.API.Powerup.Powerup;
 import tk.ColonelHedgehog.Dash.Assets.Ranking;
+import tk.ColonelHedgehog.Dash.Core.GarbageControl;
 import tk.ColonelHedgehog.Dash.Core.Main;
 
 import java.util.ArrayList;
@@ -79,6 +80,11 @@ public class PlayerInteractEntityListener implements Listener
         spinInv(p);
         final Location loc1 = e.getLocation();
         e.remove();
+        final double nx = cx + 0.25;
+        final double ny = cy - 1;
+        final double nz = cz + 0.25;
+        GarbageControl.RespawningIBs.add(new Location(e.getWorld(), nx, ny, nz));
+
 
         new BukkitRunnable()
         {
@@ -87,11 +93,10 @@ public class PlayerInteractEntityListener implements Listener
             public void run()
             {
                 //Start game method
-                final double nx = cx + 0.25;
-                final double ny = cy - 1;
-                final double nz = cz + 0.25;
+
                 Location loc = new Location(loc1.getWorld(), nx, ny, nz);
                 loc1.getWorld().spawnEntity(loc, EntityType.ENDER_CRYSTAL);
+                GarbageControl.RespawningIBs.remove(new Location(e.getWorld(), nx, ny, nz));
                 cancel(); //Cancels the timer
             }
 
@@ -283,7 +288,7 @@ public class PlayerInteractEntityListener implements Listener
         p.setMetadata("invSpinning", new FixedMetadataValue(plugin, true));
 
         final int[] count = {0};
-        final int[] random = {27 + new Random(0).nextInt(9)};
+        final int[] random = {27 + new Random().nextInt(9)};
         final float[] pitch = {0};
         final int[] slot = {0};
         new BukkitRunnable()

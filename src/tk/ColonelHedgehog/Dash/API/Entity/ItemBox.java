@@ -17,8 +17,5 @@ public abstract class ItemBox implements EnderCrystal
         loc.getWorld().spawnEntity(loc, EntityType.ENDER_CRYSTAL);
     }
 
-    public boolean isRespawning()
-    {
-        return false;
-    }
+    //public boolean isRespawning()    {        return false;    }
 }

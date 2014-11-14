@@ -86,8 +86,7 @@ public class SlimePowerup implements Powerup
     @Override
     public double getChance(int rank)
     {
-        double chance = (8 - rank) / Main.plugin.getConfig().getDouble("Config.Powerups.Slime.Chance");
-        return chance;
+        return (8 - rank) / Main.plugin.getConfig().getDouble("Config.Powerups.Slime.Chance");
     }
 
     @Override

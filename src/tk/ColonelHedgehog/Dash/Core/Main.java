@@ -154,6 +154,10 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
         {
             powerupsRegistery.registerPowerup(new ArrowPowerup());
         }
+        if (plugin.getConfig().getBoolean("Config.Powerups.Ice.Enabled"))
+        {
+            powerupsRegistery.registerPowerup(new IcePowerup());
+        }
     }
 
     @Override
@@ -167,6 +171,8 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
             }
             p.getInventory().clear();
         }
+
+        GarbageControl.destroyGarbage();
     }
     
     public static void buildRaceline(Player p)

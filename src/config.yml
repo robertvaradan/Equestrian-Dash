@@ -4,6 +4,12 @@ Config:
   MetricsEnabled: true
   # Are we editing the level now or playing it?
   EditMode: false
+  # Things to do after the race.
+  RaceOver:
+    EndAfter: 2 # After how many racers should we end the game?
+    Restart:
+      Enabled: true # Run the /restart command after the race?
+      Delay: 200 # How many ticks until the /restart command is called? (1 second = 20 ticks)
   # Should we use NMS? WARNING: This may cause problems with mismatched versions,
   # (i.e. EquestrianDash 1.7.9 used with a later version of Bukkit/Spigot)
   NMS:
@@ -81,7 +87,12 @@ Config:
       Enabled: true
       Title: '&b&lIce Powerup'
       Material: 'PACKED_ICE'
+      Chance: 3
       DelayInTicks: 60 # Detonation delay in ticks. 1 second = 20 ticks.
+      DespawnTime: 200 # How long until the ice despawns.
+      Sphere:
+        Height: 5 # How tall should the ice sphere be in blocks?
+        Radius: 5 # How tall should the radius be?
   # The following are spawnpoint location settings.
   Spawn1:
     X: 0

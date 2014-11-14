@@ -21,10 +21,13 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import tk.ColonelHedgehog.Dash.API.Entity.Racer;
+import tk.ColonelHedgehog.Dash.API.Event.EDRaceEndEvent;
+import tk.ColonelHedgehog.Dash.Assets.Ranking;
 import tk.ColonelHedgehog.Dash.Core.Main;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static tk.ColonelHedgehog.Dash.Core.Main.LapCuboid;
 
@@ -36,7 +39,7 @@ public class PlayerMoveListener implements Listener
 {
     public static Main plugin = Main.plugin;
     public static Player[] RPlace;
-    public static List<String> EDFinished = new ArrayList<>();    
+    public static ArrayList<Racer> EDFinished = new ArrayList<>();
 
     @EventHandler
     public void onMove(PlayerMoveEvent event)
@@ -85,30 +88,139 @@ public class PlayerMoveListener implements Listener
                         }
                         else if(lap > plugin.getConfig().getInt("Config.Laps"))
                         {
-                        String det = "0th";    
-                        EDFinished.add(p.getName());
-                        if(EDFinished.size() == 1)
-                        {
-                            det = "1st";
-                            firstPlace(p);
-                        }
-                        else if(EDFinished.size() == 2)
-                        {
-                            det = "2nd";
-                        }
-                        else if(EDFinished.size() == 3)
-                        {
-                            det = "3rd";
-                        }
-                        else
-                        {
-                            det = EDFinished.size() + "th";
-                        }
-                        
-                        messageExcept(p, PlayerJoinListener.Prefix + "§c" + p.getName().toUpperCase() + " §eHAS FINISHED §d§l"  + det.toUpperCase() + "!");
-                        p.sendMessage(PlayerJoinListener.Prefix + "§c§oYOU'VE FINISHED §d§l" + det.toUpperCase() + "!");
-                        
-                        }
+                            String det = "0th";
+                            EDFinished.add(new Racer(p));
+                            if (EDFinished.size() == plugin.getConfig().getInt("Config.RaceOver.EndAfter"))
+                            {
+                                for(Player on : Bukkit.getOnlinePlayers())
+                                {
+                                    on.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 999999999, 99999999));
+
+                                }
+
+                                Bukkit.broadcastMessage(Main.Prefix + "§aThe race has ended! §bAll required players have finished.");
+                                TreeMap<UUID, Integer> nubs = Ranking.getPlayersArranged();
+                                List<Racer> morenubs = new ArrayList<>();
+                                for(Map.Entry<UUID, Integer> nub : nubs.entrySet())
+                                {
+                                    Racer racer = new Racer(Bukkit.getPlayer(nub.getKey()));
+                                    if(EDFinished.contains(racer))
+                                    {
+                                        morenubs.add(racer);
+                                    }
+                                }
+
+                                EDFinished.removeAll(morenubs);
+
+                                Bukkit.broadcastMessage("§9§l====================");
+
+                                for (Racer r : EDFinished)
+                                {
+                                    String name = r.getPlayer().getName();
+                                    if(EDFinished.indexOf(r) == 0)
+                                    {
+                                        Bukkit.broadcastMessage("§c§l1st §8> §c" + name);
+                                    }
+                                    else if(EDFinished.indexOf(r) == 1)
+                                    {
+                                        Bukkit.broadcastMessage("§6§l2nd §8> §6" + name);
+                                    }
+                                    else if (EDFinished.indexOf(r) == 1)
+                                    {
+                                        Bukkit.broadcastMessage("§e§l3rd §8> §e" + name);
+                                    }
+                                    else if (EDFinished.indexOf(r) == 1)
+                                    {
+                                        Bukkit.broadcastMessage("§a§l4th §8> §a" + name);
+                                    }
+                                    else if (EDFinished.indexOf(r) == 1)
+                                    {
+                                        Bukkit.broadcastMessage("§b§l5th §8> §b" + name);
+                                    }
+                                    else if (EDFinished.indexOf(r) == 1)
+                                    {
+                                        Bukkit.broadcastMessage("§9§l6th §8> §9" + name);
+                                    }
+                                    else if (EDFinished.indexOf(r) == 1)
+                                    {
+                                        Bukkit.broadcastMessage("§5§l7th §8> §5" + name);
+                                    }
+                                    else if (EDFinished.indexOf(r) == 1)
+                                    {
+                                        Bukkit.broadcastMessage("§8§l8th §8> §8" + name);
+                                    }
+                                }
+
+                                Bukkit.broadcastMessage("§7§l====================");
+
+                                for(Map.Entry<UUID, Integer> nub : nubs.entrySet())
+                                {
+                                    if(!EDFinished.contains(new Racer(Bukkit.getPlayer(nub.getKey()))))
+                                    {
+                                        String name = Bukkit.getPlayer(nub.getKey()).getName();
+                                        if (nub.getValue() == 1)
+                                        {
+                                            Bukkit.broadcastMessage("§c§l1st §8> §c" + name);
+                                        }
+                                        else if (nub.getValue() == 2)
+                                        {
+                                            Bukkit.broadcastMessage("§6§l2nd §8> §6" + name);
+                                        }
+                                        else if (nub.getValue() == 3)
+                                        {
+                                            Bukkit.broadcastMessage("§e§l3rd §8> §e" + name);
+                                        }
+                                        else if (nub.getValue() == 4)
+                                        {
+                                            Bukkit.broadcastMessage("§a§l4th §8> §a" + name);
+                                        }
+                                        else if (nub.getValue() == 5)
+                                        {
+                                            Bukkit.broadcastMessage("§b§l5th §8> §b" + name);
+                                        }
+                                        else if (nub.getValue() == 6)
+                                        {
+                                            Bukkit.broadcastMessage("§9§l6th §8> §9" + name);
+                                        }
+                                        else if (nub.getValue() == 7)
+                                        {
+                                            Bukkit.broadcastMessage("§5§l7th §8> §5" + name);
+                                        }
+                                        else if (nub.getValue() == 8)
+                                        {
+                                            Bukkit.broadcastMessage("§8§l8th §8> §8" + name);
+                                        }
+
+                                    }
+                                }
+                                Bukkit.broadcastMessage("§9§l====================");
+
+                                EDRaceEndEvent callable = new EDRaceEndEvent(EDFinished);
+                                Bukkit.getPluginManager().callEvent(callable);
+
+                            }
+                                if (EDFinished.size() == 1)
+                                {
+                                    det = "1st";
+                                    firstPlace(p);
+                                }
+                                else if (EDFinished.size() == 2)
+                                {
+                                    det = "2nd";
+                                }
+                                else if (EDFinished.size() == 3)
+                                {
+                                    det = "3rd";
+                                }
+                                else
+                                {
+                                    det = EDFinished.size() + "th";
+                                }
+
+                                messageExcept(p, PlayerJoinListener.Prefix + "§c" + p.getName().toUpperCase() + " §eHAS FINISHED §d§l" + det.toUpperCase() + "!");
+                                p.sendMessage(PlayerJoinListener.Prefix + "§c§oYOU'VE FINISHED §d§l" + det.toUpperCase() + "!");
+
+                            }
                     }
                     
                 p.setMetadata("playerInLine", new FixedMetadataValue(plugin, true));
@@ -205,7 +317,7 @@ public class PlayerMoveListener implements Listener
         Location tloc8 = e.getLocation().add(0,-1,2);
 
         Location eloc1 = e.getLocation().add(3,-1,3);
-        Location eloc2 = e.getLocation().add(-3,-1,3);
+        AtomicReference<Location> eloc2 = new AtomicReference<>(e.getLocation().add(-3, -1, 3));
         Location eloc3 = e.getLocation().add(3,-1,-3);
         Location eloc4 = e.getLocation().add(-3,-1,-3);
         Location eloc5 = e.getLocation().add(3,-1,-3);
@@ -216,7 +328,7 @@ public class PlayerMoveListener implements Listener
         {
             if(tloc1.getBlock().getType() != Material.AIR && tloc2.getBlock().getType() != Material.AIR && tloc3.getBlock().getType() != Material.AIR  && tloc4.getBlock().getType() != Material.AIR && tloc5.getBlock().getType() != Material.AIR && tloc6.getBlock().getType() != Material.AIR && tloc7.getBlock().getType() != Material.AIR && tloc8.getBlock().getType() != Material.AIR)
             {
-            if(!checkFor(Material.PISTON_MOVING_PIECE, p, 7, 7, 7) && eloc1.getBlock().getType() != Material.AIR && eloc2.getBlock().getType() != Material.AIR && eloc3.getBlock().getType() != Material.AIR  && eloc4.getBlock().getType() != Material.AIR && eloc5.getBlock().getType() != Material.AIR && eloc6.getBlock().getType() != Material.AIR && eloc7.getBlock().getType() != Material.AIR && eloc8.getBlock().getType() != Material.AIR)
+            if(!checkFor(Material.PISTON_MOVING_PIECE, p, 7, 7, 7) && eloc1.getBlock().getType() != Material.AIR && eloc2.get().getBlock().getType() != Material.AIR && eloc3.getBlock().getType() != Material.AIR  && eloc4.getBlock().getType() != Material.AIR && eloc5.getBlock().getType() != Material.AIR && eloc6.getBlock().getType() != Material.AIR && eloc7.getBlock().getType() != Material.AIR && eloc8.getBlock().getType() != Material.AIR)
             {
                     //p.sendMessage(Main.Prefix + "§6Stage 1: No air");
             

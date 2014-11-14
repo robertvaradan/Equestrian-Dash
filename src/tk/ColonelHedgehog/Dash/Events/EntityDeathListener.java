@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import tk.ColonelHedgehog.Dash.Core.GarbageControl;
 import tk.ColonelHedgehog.Dash.Core.Main;
 
 /**
@@ -26,6 +27,7 @@ public class EntityDeathListener implements Listener
     @EventHandler
     public void onDeath(EntityDeathEvent event)
     {
+        event.getDrops().clear();
         final Entity e = event.getEntity();
         if(event.getEntity() instanceof Horse)
         {
@@ -44,7 +46,7 @@ public class EntityDeathListener implements Listener
             final double nz = e.getLocation().getBlockX() + 0.4;
             e.getWorld().playEffect(e.getLocation(), Effect.STEP_SOUND, 20);
 
-
+            GarbageControl.RespawningIBs.add(new Location(e.getWorld(), nx, ny, nz));
             new BukkitRunnable()
             {
 
@@ -53,6 +55,7 @@ public class EntityDeathListener implements Listener
                 {
                     //Start game method
                     Location loc = new Location(e.getWorld(), nx, ny, nz);
+                    GarbageControl.RespawningIBs.remove(new Location(e.getWorld(), nx, ny, nz));
                     e.getWorld().spawnEntity(loc, EntityType.ENDER_CRYSTAL);
                     cancel(); //Cancels the timer
                 }

@@ -1,11 +1,14 @@
 package tk.ColonelHedgehog.Dash.API.Entity;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import tk.ColonelHedgehog.Dash.Assets.Ranking;
 import tk.ColonelHedgehog.Dash.Core.Main;
 import tk.ColonelHedgehog.Dash.Events.PlayerMoveListener;
+
+import java.util.UUID;
 
 /**
  * Created by ColonelHedgehog on 11/8/14.
@@ -14,51 +17,51 @@ import tk.ColonelHedgehog.Dash.Events.PlayerMoveListener;
  */
 public class Racer
 {
-    private Player p;
+    private UUID puuid;
 
     public Racer(Player p)
     {
-        this.p = p;
+        this.puuid = p.getUniqueId();
     }
 
     public Horse getHorse()
     {
-        return p.getVehicle() != null && p.getVehicle() instanceof Horse ? (Horse) p.getVehicle() : null;
+        return Bukkit.getPlayer(puuid).getVehicle() != null && Bukkit.getPlayer(puuid).getVehicle() instanceof Horse ? (Horse) Bukkit.getPlayer(puuid).getVehicle() : null;
     }
 
     public Player getPlayer()
     {
-        return p;
+        return Bukkit.getPlayer(puuid);
     }
 
     public int getScore()
     {
-        return PlayerMoveListener.evalPlace(p);
+        return PlayerMoveListener.evalPlace(Bukkit.getPlayer(puuid));
     }
 
     public int getLap()
     {
-        return p.getMetadata("playerLap").get(0).asInt();
+        return Bukkit.getPlayer(puuid).getMetadata("playerLap").get(0).asInt();
     }
 
     public int getMarkerPosition()
     {
-        return p.getMetadata("markerPos").get(0).asInt();
+        return Bukkit.getPlayer(puuid).getMetadata("markerPos").get(0).asInt();
     }
 
     public void setLap(int lap)
     {
-        p.setMetadata("playerLap", new FixedMetadataValue(Main.plugin, lap));
+        Bukkit.getPlayer(puuid).setMetadata("playerLap", new FixedMetadataValue(Main.plugin, lap));
     }
 
     public void setMarkerPostion(int position)
     {
-        p.setMetadata("markerPos", new FixedMetadataValue(Main.plugin, position));
+        Bukkit.getPlayer(puuid).setMetadata("markerPos", new FixedMetadataValue(Main.plugin, position));
     }
 
     public boolean isInLine()
     {
-        return p.getMetadata("playerInLine").get(0).asBoolean();
+        return Bukkit.getPlayer(puuid).getMetadata("playerInLine").get(0).asBoolean();
     }
 
     public Racer getRacer()
@@ -68,7 +71,7 @@ public class Racer
 
     public boolean inventoryIsSpinning()
     {
-        return p.getMetadata("invSpinning").get(0).asBoolean();
+        return Bukkit.getPlayer(puuid).getMetadata("invSpinning").get(0).asBoolean();
     }
 
     public int getRank()

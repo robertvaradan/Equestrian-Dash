@@ -25,16 +25,23 @@ public class CooldownHandler
 
     public boolean isCooling(Player p)
     {
-        if(Cooling.containsKey(p.getUniqueId()))
+        if(!Cooling.containsKey(p.getUniqueId()) || (Cooling.containsKey(p.getUniqueId()) && Cooling.get(p.getUniqueId()) <= System.currentTimeMillis()))
         {
-            boolean returner = Cooling.get(p.getUniqueId()) >= System.currentTimeMillis();
+            boolean returner = true;
+
+            if(Cooling.containsKey(p.getUniqueId()))
+            {
+                returner = Cooling.get(p.getUniqueId()) <= System.currentTimeMillis();
+            }
+
             if (returner)
             {
                 Cooling.remove(p.getUniqueId());
-                return true;
+                return false;
             }
         }
 
-        return false;
+
+        return true;
     }
 }

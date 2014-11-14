@@ -12,6 +12,15 @@ import java.util.*;
 public class Ranking
 {
     public static HashMap<UUID, Integer> Scores = new HashMap<>();
+
+    public static TreeMap<UUID, Integer> getPlayersArranged()
+    {
+        ValueComparator bvc = new ValueComparator(Scores);
+        TreeMap<UUID, Integer> sorted_map = new TreeMap<>(bvc);
+        sorted_map.putAll(Scores);
+        return sorted_map;
+    }
+
     public static int getRank(Player p)
     {
         ValueComparator bvc = new ValueComparator(Scores);

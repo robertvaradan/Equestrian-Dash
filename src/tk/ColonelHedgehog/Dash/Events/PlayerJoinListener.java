@@ -181,19 +181,13 @@ public static void getHorsePattern(Player p, Horse horse, int res)
 }
 
 public static int tries = 1;
+    private Scoreboard board = null;
+    private Objective o;
+    private Score scr;
 
 public void startCounter(final Player p, final int countTo)
 {
-    final Objective o; //Creates a objective called o
-    Scoreboard timerBoard; //Creates a scoreboard called timerBoard(You will see what thats used for later)
-    final Scoreboard board = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
-        board.clearSlot(DisplaySlot.SIDEBAR);
-        o = board.registerNewObjective("test", "timerInstance" + tries);
-        //Registering the objective needed for the timer
-        o.setDisplayName("§9§lEquestrian§b§lDash"); // Setting the title for the scoreboard. This would look like: TCGN | Walls
-        o.setDisplaySlot(DisplaySlot.SIDEBAR); //Telling the scoreboard where to display when we tell it to display
 
-        timerBoard = board; //Setting timerBoard equal to board.
     //int count = 60; //Time in seconds (Can reference config)
     if(countTo != 0)
     {
@@ -201,12 +195,7 @@ public void startCounter(final Player p, final int countTo)
     }
     
 Bukkit.broadcastMessage(Prefix + "§3Game starting in §b" + countTo + " §3seconds..");
-final Score score = o.getScore("§3Time: "); //Making a offline player called "Time:" with a green name and adding it to the scoreboard
 
-        for(Player online : Bukkit.getServer().getOnlinePlayers()) 
-        {
-            online.setScoreboard(timerBoard);
-        }
 
 new BukkitRunnable() {
   @Override
@@ -278,7 +267,7 @@ new BukkitRunnable() {
       else
       {
         count = (count - 1);
-        score.setScore(count); //Making it so after "Time:" it displays the int countdown(So how long it has left in seconds.)
+        scr.setScore(count); //Making it so after "Time:" it displays the int countdown(So how long it has left in seconds.)
         //Bukkit.getServer().broadcastMessage(Prefix + "§9Race begins in: §b" + count);
         if(count <= 3 && count != 0)
         {
@@ -311,6 +300,7 @@ new BukkitRunnable() {
         player.setMetadata("choosingStyle", new FixedMetadataValue(plugin, false));
         player.setMetadata("playerInLine", new FixedMetadataValue(plugin, false));
         player.setMetadata("inving", new FixedMetadataValue(plugin, false));
+        player.setMetadata("invSpinning", new FixedMetadataValue(plugin, false));
         //activateSuperCharged(player);
         
         event.setJoinMessage(Prefix + ChatColor.AQUA + player.getName() + " §3is now competing!");
@@ -327,6 +317,23 @@ new BukkitRunnable() {
         else
         {
         player.kickPlayer(Prefix + "§4This game is full.");
+        }
+
+        if(board == null)
+        {
+            board = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
+            board.clearSlot(DisplaySlot.SIDEBAR);
+            o = board.registerNewObjective("test", "timerInstance" + tries);
+            //Registering the objective needed for the timer
+            o.setDisplayName("§9§lEquestrian§b§lDash"); // Setting the title for the scoreboard. This would look like: TCGN | Walls
+            o.setDisplaySlot(DisplaySlot.SIDEBAR); //Telling the scoreboard where to display when we tell it to display
+            scr = o.getScore("§3Time: "); //Making a offline player called "Time:" with a green name and adding it to the scoreboard
+            scr.setScore(plugin.getConfig().getInt("Config.Countdown"));
+        }
+
+        for (Player online : Bukkit.getServer().getOnlinePlayers())
+        {
+            online.setScoreboard(board);
         }
     }  
     
