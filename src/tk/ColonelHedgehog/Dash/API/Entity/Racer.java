@@ -71,7 +71,7 @@ public class Racer
 
     public boolean inventoryIsSpinning()
     {
-        return Bukkit.getPlayer(puuid).getMetadata("invSpinning").get(0).asBoolean();
+        return Bukkit.getPlayer(puuid).hasMetadata("invSpinning") && Bukkit.getPlayer(puuid).getMetadata("invSpinning").get(0).asBoolean();
     }
 
     public int getRank()

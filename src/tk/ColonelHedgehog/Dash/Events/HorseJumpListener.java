@@ -17,7 +17,6 @@ import org.bukkit.potion.PotionEffectType;
 import tk.ColonelHedgehog.Dash.Core.Main;
 
 /**
- *
  * @author Robert
  */
 public class HorseJumpListener implements Listener
@@ -28,30 +27,30 @@ public class HorseJumpListener implements Listener
     public void onJump(HorseJumpEvent event)
     {
         Player p = (Player) event.getEntity().getPassenger();
-        if(p.hasPotionEffect(PotionEffectType.SLOW) || racetrackNearby(event.getEntity()))
+        if (p.hasPotionEffect(PotionEffectType.SLOW) || racetrackNearby(event.getEntity()))
         {
-        event.setCancelled(true);
+            event.setCancelled(true);
         }
-        
-        if(p.hasMetadata("superCharged") && p.getMetadata("superCharged").get(0).asBoolean())
+
+        if (p.hasMetadata("superCharged") && p.getMetadata("superCharged").get(0).asBoolean())
         {
             event.setPower(event.getPower() * 3);
         }
         //p.sendMessage(Main.Prefix + "Power is: §4" + event.getPower());
-        
+
     }
 
     private boolean racetrackNearby(Horse h)
     {
 
-        int range = plugin.getConfig().getInt("Config.RaceLine.NoJumpRange");
-        for(int x = -10; x < 10; x++)
+        int range = plugin.getConfig().getInt("RaceLine.NoJumpRange");
+        for (int x = -range; x < range; x++)
         {
-            for (int y = -10; y < 10; y++)
+            for (int y = -range; y < range; y++)
             {
-                for (int z = -10; z < 10; z++)
+                for (int z = -range; z < range; z++)
                 {
-                    if(Main.LapCuboid.contains(h.getLocation().add(x, y, z).getBlock()))
+                    if (Main.LapCuboid.contains(h.getLocation().add(x, y, z).getBlock()))
                     {
                         return true;
                     }

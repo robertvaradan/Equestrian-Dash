@@ -26,17 +26,23 @@ public class SpeedPowerup implements Powerup
     @Override
     public ItemStack getItem()
     {
-        ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Config.Powerups.Speed.Material"))); // The powerup's icon.
+        ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Powerups.Speed.Material"))); // The powerup's icon.
         ItemMeta iconMeta = icon.getItemMeta(); // Getting its meta.
-        iconMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Config.Powerups.Speed.Title"))); // Setting its display name to a predefined string in the config.
+        iconMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Powerups.Speed.Title"))); // Setting its display name to a predefined string in the config.
         icon.setItemMeta(iconMeta); // Now we set all the meta.
         return icon;
+    }
+
+    private String getMessage()
+    {
+        return Main.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
     }
 
     @Override
     public void doOnRightClick(Racer racer, Action action)
     {
         // This will be performed in the event that you right-click with the item.
+        racer.getPlayer().sendMessage(getMessage());
         Horse h = racer.getHorse();
         h.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 10));
 
@@ -87,7 +93,7 @@ public class SpeedPowerup implements Powerup
     @Override
     public double getChance(int rank)
     {
-        return (rank / Main.plugin.getConfig().getDouble("Config.Powerups.Speed.Chance")); // Chance that when we hit an item-box, this will be an option.
+        return (rank / Main.plugin.getConfig().getDouble("Powerups.Speed.Chance")); // Chance that when we hit an item-box, this will be an option.
     }
 
     @Override

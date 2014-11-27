@@ -26,23 +26,29 @@ public class TNTPowerup implements Powerup
     @Override
     public ItemStack getItem()
     {
-        ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Config.Powerups.TNT.Material"))); // The powerup's icon.
+        ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Powerups.TNT.Material"))); // The powerup's icon.
         ItemMeta iconMeta = icon.getItemMeta(); // Getting its meta.
-        iconMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Config.Powerups.TNT.Title"))); // Setting its display name to a predefined string in the config.
+        iconMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Powerups.TNT.Title"))); // Setting its display name to a predefined string in the config.
         icon.setItemMeta(iconMeta); // Now we set all the meta.
         return icon;
+    }
+
+    private String getMessage()
+    {
+        return Main.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
     }
 
     @Override
     public void doOnRightClick(Racer racer, Action action)
     {
+        racer.getPlayer().sendMessage(getMessage());
         // This will be performed in the event that you right-click with the item.
-        if (Main.plugin.getConfig().getBoolean("Config.Powerups.TNT.ThrowDirections.ThrowBehindEnabled"))
+        if (Main.plugin.getConfig().getBoolean("Powerups.TNT.ThrowDirections.ThrowBehindEnabled"))
         {
             Player p = racer.getPlayer();
             p.playSound(p.getLocation(), Sound.FUSE, 7, 1);
             TNTPrimed tnt = p.getWorld().spawn(p.getLocation(), TNTPrimed.class);
-            tnt.setFuseTicks(Main.plugin.getConfig().getInt("Config.Powerups.TNT.ThrowDirections.ThrowBehindTicks"));
+            tnt.setFuseTicks(Main.plugin.getConfig().getInt("Powerups.TNT.ThrowDirections.ThrowBehindTicks"));
 
             racer.getPlayer().getInventory().clear();
         }
@@ -52,14 +58,14 @@ public class TNTPowerup implements Powerup
     public void doOnLeftClick(Racer racer, Action action)
     {
         // This will be performed in the event that you left-click with the item.
-        if(Main.plugin.getConfig().getBoolean("Config.Powerups.TNT.ThrowDirections.ThrowAheadEnabled"))
+        if(Main.plugin.getConfig().getBoolean("Powerups.TNT.ThrowDirections.ThrowAheadEnabled"))
         {
             Player p = racer.getPlayer();
 
             p.playSound(p.getLocation(), Sound.FUSE, 7, 1);
             TNTPrimed tnt = p.getWorld().spawn(p.getLocation(), TNTPrimed.class);
-            tnt.setVelocity(p.getLocation().getDirection().normalize().multiply(Main.plugin.getConfig().getDouble("Config.Powerups.TNT.ThrowDirections.ThrowAheadMultiplier")));
-            tnt.setFuseTicks(Main.plugin.getConfig().getInt("Config.Powerups.TNT.ThrowDirections.ThrowAheadTicks"));
+            tnt.setVelocity(p.getLocation().getDirection().normalize().multiply(Main.plugin.getConfig().getDouble("Powerups.TNT.ThrowDirections.ThrowAheadMultiplier")));
+            tnt.setFuseTicks(Main.plugin.getConfig().getInt("Powerups.TNT.ThrowDirections.ThrowAheadTicks"));
 
             racer.getPlayer().getInventory().clear();
         }
@@ -101,7 +107,7 @@ public class TNTPowerup implements Powerup
     @Override
     public double getChance(int rank)
     {
-        return (rank / Main.plugin.getConfig().getDouble("Config.Powerups.TNT.Chance")); // Chance that when we hit an item-box, this will be an option.
+        return (rank / Main.plugin.getConfig().getDouble("Powerups.TNT.Chance")); // Chance that when we hit an item-box, this will be an option.
     }
 
     @Override

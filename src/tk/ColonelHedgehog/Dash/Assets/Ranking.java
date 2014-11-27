@@ -1,6 +1,7 @@
 package tk.ColonelHedgehog.Dash.Assets;
 
 import org.bukkit.entity.Player;
+import tk.ColonelHedgehog.Dash.Lib.ValueComparatorUUID;
 
 import java.util.*;
 
@@ -15,7 +16,7 @@ public class Ranking
 
     public static TreeMap<UUID, Integer> getPlayersArranged()
     {
-        ValueComparator bvc = new ValueComparator(Scores);
+        ValueComparatorUUID bvc = new ValueComparatorUUID(Scores);
         TreeMap<UUID, Integer> sorted_map = new TreeMap<>(bvc);
         sorted_map.putAll(Scores);
         return sorted_map;
@@ -23,7 +24,7 @@ public class Ranking
 
     public static int getRank(Player p)
     {
-        ValueComparator bvc = new ValueComparator(Scores);
+        ValueComparatorUUID bvc = new ValueComparatorUUID(Scores);
         TreeMap<UUID, Integer> sorted_map = new TreeMap<>(bvc);
         sorted_map.putAll(Scores);
         int rank = 1;
@@ -44,27 +45,3 @@ public class Ranking
 }
 
 
-// http://stackoverflow.com/questions/109383/how-to-sort-a-mapkey-value-on-the-values-in-java/1283722#1283722
-class ValueComparator implements Comparator<UUID>
-{
-
-    Map<UUID, Integer> base;
-
-    public ValueComparator(Map<UUID, Integer> base)
-    {
-        this.base = base;
-    }
-
-    // Note: this comparator imposes orderings that are inconsistent with equals.
-    public int compare(UUID a, UUID b)
-    {
-        if (base.get(a) >= base.get(b))
-        {
-            return -1;
-        }
-        else
-        {
-            return 1;
-        } // returning 0 would merge keys
-    }
-}

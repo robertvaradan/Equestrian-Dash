@@ -25,12 +25,12 @@ public class PlayerDropItemListener implements Listener
     public void onItemDrop(PlayerDropItemEvent event)
     {
         Racer racer = new Racer(event.getPlayer());
-        for(Powerup powerup : Main.getPowerupsRegistery().getPowerups())
+        for (Powerup powerup : Main.getPowerupsRegistery().getPowerups())
         {
-            if(powerup.getItem().equals(event.getItemDrop().getItemStack()) && !racer.inventoryIsSpinning())
+            if (powerup.getItem().equals(event.getItemDrop().getItemStack()) && !racer.inventoryIsSpinning())
             {
                 powerup.doOnDrop(new Racer(event.getPlayer()), event.getItemDrop());
-                if(powerup.cancelledEvents().contains(Powerup.ActionType.DROP) || powerup.cancelledEvents().contains(Powerup.ActionType.ALL))
+                if (powerup.cancelledEvents().contains(Powerup.ActionType.DROP) || powerup.cancelledEvents().contains(Powerup.ActionType.ALL))
                 {
                     event.setCancelled(true);
                 }
@@ -40,7 +40,7 @@ public class PlayerDropItemListener implements Listener
                 }
                 return;
             }
-            else if(racer.inventoryIsSpinning())
+            else if (racer.inventoryIsSpinning())
             {
                 event.setCancelled(true);
             }
@@ -63,7 +63,7 @@ public class PlayerDropItemListener implements Listener
                         event.setCancelled(true);
                     }
                 }
-                catch(IllegalArgumentException e)
+                catch (IllegalArgumentException e)
                 {
                     // Nuffin, muffin!
                 }

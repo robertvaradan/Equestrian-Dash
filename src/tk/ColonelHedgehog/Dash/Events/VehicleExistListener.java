@@ -6,15 +6,14 @@
 
 package tk.ColonelHedgehog.Dash.Events;
 
-import tk.ColonelHedgehog.Dash.Core.Main;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleExitEvent;
+import tk.ColonelHedgehog.Dash.Core.Main;
 
 /**
- *
  * @author Robert
  */
 public class VehicleExistListener implements Listener
@@ -25,13 +24,13 @@ public class VehicleExistListener implements Listener
     public void onDismount(VehicleExitEvent event)
     {
         Player p = (Player) event.getExited();
-        if(p.getGameMode() == GameMode.CREATIVE)
+        if (p.getGameMode() == GameMode.CREATIVE)
         {
-        
-        } 
-        else 
+
+        }
+        else
         {
             event.setCancelled(true);
         }
-        }
+    }
 }

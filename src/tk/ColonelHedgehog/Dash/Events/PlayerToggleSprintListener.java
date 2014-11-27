@@ -12,7 +12,6 @@ import org.bukkit.event.player.PlayerToggleSprintEvent;
 import tk.ColonelHedgehog.Dash.Core.Main;
 
 /**
- *
  * @author Robert
  */
 public class PlayerToggleSprintListener implements Listener
@@ -24,5 +23,5 @@ public class PlayerToggleSprintListener implements Listener
     {
 
     }
-    
+
 }

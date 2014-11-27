@@ -7,12 +7,11 @@
 package tk.ColonelHedgehog.Dash.Events;
 
 import org.bukkit.event.EventHandler;
-import tk.ColonelHedgehog.Dash.Core.Main;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import tk.ColonelHedgehog.Dash.Core.Main;
 
 /**
- *
  * @author Robert
  */
 public class FoodLevelChangeListener implements Listener

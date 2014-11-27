@@ -26,19 +26,29 @@ public class LauncherPowerup implements Powerup
     @Override
     public ItemStack getItem()
     {
-        ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Config.Powerups.Launcher.Material"))); // The powerup's "icon".
+        ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Powerups.Launcher.Material"))); // The powerup's "icon".
         ItemMeta iconMeta = icon.getItemMeta(); // Getting its meta.
-        iconMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Config.Powerups.Launcher.Title"))); // Setting its display name to a predefined string in the config.
+        iconMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Powerups.Launcher.Title"))); // Setting its display name to a predefined string in the config.
         icon.setItemMeta(iconMeta); // Now we set all the meta.
         return icon;
+    }
+
+    private String getMessage()
+    {
+        return Main.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
     }
 
     @Override
     public void doOnRightClick(Racer racer, Action action)
     {
+        racer.getPlayer().sendMessage(getMessage());
         // This will be performed in the event that you right-click with the item.
+        double x = Main.plugin.getConfig().getDouble("Powerups.Launcher.Velocity.MultiplyX");
+        double y = Main.plugin.getConfig().getDouble("Powerups.Launcher.Velocity.MultiplyY");
+        double z = Main.plugin.getConfig().getDouble("Powerups.Launcher.Velocity.MultiplyZ");
+        double plus_y = Main.plugin.getConfig().getDouble("Powerups.Launcher.Velocity.AddY");
         Horse h = racer.getHorse();
-        h.setVelocity(h.getLocation().getDirection().multiply(new Vector(2, 1, 2)).add(new Vector(0, 1.5, 0)));
+        h.setVelocity(h.getLocation().getDirection().multiply(new Vector(x, y, z)).add(new Vector(0, plus_y, 0)));
         racer.getPlayer().setVelocity(racer.getPlayer().getLocation().getDirection().multiply(new Vector(2, 1, 2)).add(new Vector(0, 1.5, 0)));
         racer.getPlayer().playSound(racer.getPlayer().getLocation(), Sound.FIREWORK_LARGE_BLAST2, 7, 1);
 
@@ -89,7 +99,7 @@ public class LauncherPowerup implements Powerup
     @Override
     public double getChance(int rank)
     {
-        return (rank / Main.plugin.getConfig().getDouble("Config.Powerups.Launcher.Chance")); // Chance that when we hit an item-box, this will be an option.
+        return (rank / Main.plugin.getConfig().getDouble("Powerups.Launcher.Chance")); // Chance that when we hit an item-box, this will be an option.
     }
 
     @Override

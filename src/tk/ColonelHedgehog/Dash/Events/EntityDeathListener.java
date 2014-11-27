@@ -17,7 +17,6 @@ import tk.ColonelHedgehog.Dash.Core.GarbageControl;
 import tk.ColonelHedgehog.Dash.Core.Main;
 
 /**
- *
  * @author Robert
  */
 public class EntityDeathListener implements Listener
@@ -29,12 +28,12 @@ public class EntityDeathListener implements Listener
     {
         event.getDrops().clear();
         final Entity e = event.getEntity();
-        if(event.getEntity() instanceof Horse)
+        if (event.getEntity() instanceof Horse)
         {
-            if(event.getEntity().getPassenger() != null && event.getEntity().getPassenger() instanceof Player)
+            if (event.getEntity().getPassenger() != null && event.getEntity().getPassenger() instanceof Player)
             {
-            Player p = (Player) event.getEntity().getPassenger();
-            p.setHealth(0.0);
+                Player p = (Player) event.getEntity().getPassenger();
+                p.setHealth(0.0);
             }
             Horse h = (Horse) event.getEntity();
             h.getInventory().clear();

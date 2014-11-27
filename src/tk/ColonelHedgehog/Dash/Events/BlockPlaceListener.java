@@ -14,7 +14,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import tk.ColonelHedgehog.Dash.Core.Main;
 
 /**
- *
  * @author Robert
  */
 public class BlockPlaceListener implements Listener
@@ -24,9 +23,9 @@ public class BlockPlaceListener implements Listener
     @SuppressWarnings("deprecation")
     @EventHandler
     public void onPlace(SignChangeEvent event)
-    {    
+    {
         Player p = event.getPlayer();
-        if(p.hasMetadata("editorEnabled") && p.getMetadata("editorEnabled").get(0).asBoolean())
+        if (p.hasMetadata("editorEnabled") && p.getMetadata("editorEnabled").get(0).asBoolean())
         {
             event.setLine(0, "#");
             event.setLine(1, "" + p.getMetadata("editorNumber").get(0).asInt());

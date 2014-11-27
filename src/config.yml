@@ -1,128 +1,117 @@
-Config:
-  # Metrics help me learn who is using the plugin. Your anonymous statistics are sent to mcstats.org telling us basic
-  # but not identifying information. If you'd like to opt out, set this as disabled.
-  MetricsEnabled: true
-  # Are we editing the level now or playing it?
-  EditMode: false
-  # Things to do after the race.
-  RaceOver:
-    EndAfter: 2 # After how many racers should we end the game?
-    Restart:
-      Enabled: true # Run the /restart command after the race?
-      Delay: 200 # How many ticks until the /restart command is called? (1 second = 20 ticks)
-  # Should we use NMS? WARNING: This may cause problems with mismatched versions,
-  # (i.e. EquestrianDash 1.7.9 used with a later version of Bukkit/Spigot)
-  NMS:
+# --- CONFIG START --- #
+
+# Metrics help me learn who is using the plugin. Your anonymous statistics are sent to mcstats.org telling us basic
+# but not identifying information. If you'd like to opt out, set this as disabled.
+MetricsEnabled: true
+
+# Are we editing the level now or playing it? (By default, this is "true" so you can edit stuff.)
+EditMode: true
+
+# -- End-of-race settings.
+
+RaceOver:
+  EndAfter: 2 # After how many racers should we end the game?
+  Restart:
+    Enabled: true # Run the /restart command after the race?
+    Delay: 200 # How many ticks until the /restart command is called? (1 second = 20 ticks)
+
+# -- CountDown settings.
+# Specify from where the countdown should start before the map is chosen.
+# Write "false" or "true" in the RandomPick box depending on if you want the map to be randomly chosen.
+# Players can always vote for the "random" option.
+# Also choose when the players should be told the time before the race start
+# with "WarnAt. "StartTime" is NOT to be confused with "CountTo" because "StartTime"
+# refers to the time that eslapses between the player mounting a horse and then the race beginning.
+Countdown:
+  RandomPick: false
+  CountTo: 30
+  StartTime: 10
+  WarnAt:
+  - 15
+  - 10
+  - 5
+  - 3
+  - 2
+  - 1
+
+# -- Player settings.
+# You can set your max players without this plugin.
+
+Players:
+  # Minimum players to start a game.
+  MinPlayers: 2
+
+# Where should our lobby be? (world,x,y,z,pitch,yaw)
+Lobby: world,0,128,0,0.00000,0.00000
+
+# Should we tell everyone who has voted for what map?
+AnonymousVotes: false
+
+# Powerup config.
+Powerups:
+  Launcher:
+    Enabled: true # Should this be used as a default powerup?
+    Title: '&d&lLauncher Powerup' # The powerup's name (will shop up in the item's title)
+    Material: 'DIAMOND' # The material for the powerup. Full list of Materials: http://jd.bukkit.org/rb/apidocs/org/bukkit/Material.html
+    Chance: 2 # The amount of times the powerup is entered into the powerup chooser. Higher = less frequent. For math nerds: Frequency = rank / chance.
+    Velocity:
+      MultiplyX: 2
+      MultiplyY: 1
+      MultiplyZ: 2
+      AddY: 1
+  Speed:
     Enabled: true
-    MaxHorseSpeed: 0.225
-  # All raceline settings.
-  Raceline:
-    # Where should the first corner of the raceline be?
-    Lap1:
-      X: 0
-      Y: 0
-      Z: 0
-    # Where should the second corner of the raceline be?
-    Lap2:
-      X: 0
-      Y: 0
-      Z: 0
-    # How far away does the horse need to be from the raceline to be able to jump? (Players can glitch back and through the raceline if it is too low!)
-    NoJumpRange: 10
-  # These are the player settings.
-  Players:
-    # Minimum players to start a game.
-    Min: 2
-    # Maximum players allowed at a time.
-    Max: 8
-  # From where should the firework launch?
-  Fw:
-    X: 0
-    Y: 0
-    Z: 0
-  # From where should the screen count down from before the game begins?
-  Countdown: 30
-  # How many laps does this level have?
-  Laps: 3
-  # Editor settings.
-  Editor:
-    # How many markers does this level have? (IMPORTANT!)
-    Markers: 0
-  # Powerup config.
-  Powerups:
-    Launcher:
-      Enabled: true # Should this be used as a default powerup?
-      Title: '&d&lLauncher Powerup' # The powerup's name (will shop up in the item's title)
-      Material: 'DIAMOND' # The material for the powerup. Full list of Materials: http://jd.bukkit.org/rb/apidocs/org/bukkit/Material.html
-      Chance: 2 # The amount of times the powerup is entered into the powerup chooser. Higher = less frequent. For math nerds: Frequency = rank / chance.
-    Speed:
+    Title: '&f&lSpeed Powerup'
+    Material: 'SUGAR'
+    Chance: 1
+    Length: 100 # NOTE: Length is in ticks. 20 ticks = 1 second.
+    Amplifier: 4 # i.e "2" would be the equivelant to "Speed II"
+  TNT:
+    Enabled: true
+    Title: '&c&lTNT Powerup'
+    Material: 'TNT'
+    Chance: 2
+    ThrowDirections:
+      ThrowAheadEnabled: true
+      ThrowAheadTicks: 60
+      ThrowAheadMultiplier: 2.5
+      ThrowBehindEnabled: true
+      ThrowBehindTicks: 40
+  Slime:
+    Enabled: true
+    Title: '&a&lSlime Minions Powerup'
+    Material: 'SLIME_BALL'
+    Chance: 3
+    RemoveAfter: 100 # Remove slimes after how many ticks? 1 second = 20 ticks.
+  Arrow:
+    Enabled: true
+    Title: '&9&lArrow Powerup'
+    Material: 'ARROW'
+    Chance: 2
+  Ice:
+    Enabled: true
+    Title: '&b&lIce Powerup'
+    Material: 'PACKED_ICE'
+    Chance: 3
+    DelayInTicks: 60 # Detonation delay in ticks. 1 second = 20 ticks.
+    DespawnTime: 200 # How long until the ice despawns.
+    Sphere:
+      Height: 5 # How tall should the ice sphere be in blocks?
+      Radius: 5 # How tall should the radius be?
+    ThrowAhead:
       Enabled: true
-      Title: '&f&lSpeed Powerup'
-      Material: 'SUGAR'
-      Chance: 3
-      Length: 100 # NOTE: Length is in ticks. 20 ticks = 1 second.
-      Amplifier: 4 # i.e "2" would be the equivelant to "Speed II"
-    TNT:
-      Enabled: true
-      Title: '&c&lTNT Powerup'
-      Material: 'TNT'
-      Chance: 2
-      ThrowDirections:
-        ThrowAheadEnabled: true
-        ThrowAheadTicks: 60
-        ThrowAheadMultiplier: 2.5
-        ThrowBehindEnabled: true
-        ThrowBehindTicks: 40
-    Slime:
-      Enabled: true
-      Title: '&a&lSlime Minions Powerup'
-      Material: 'SLIME_BALL'
-      Chance: 3
-    Arrow:
-      Enabled: true
-      Title: '&9&lArrow Powerup'
-      Material: 'ARROW'
-      Chance: 2
-    Ice:
-      Enabled: true
-      Title: '&b&lIce Powerup'
-      Material: 'PACKED_ICE'
-      Chance: 3
-      DelayInTicks: 60 # Detonation delay in ticks. 1 second = 20 ticks.
-      DespawnTime: 200 # How long until the ice despawns.
-      Sphere:
-        Height: 5 # How tall should the ice sphere be in blocks?
-        Radius: 5 # How tall should the radius be?
-  # The following are spawnpoint location settings.
-  Spawn1:
-    X: 0
-    Y: 0
-    Z: 0
-  Spawn2:
-    X: 0
-    Y: 0
-    Z: 0
-  Spawn3:
-    X: 0
-    Y: 0
-    Z: 0
-  Spawn4:
-    X: 0
-    Y: 0
-    Z: 0
-  Spawn5:
-    X: 0
-    Y: 0
-    Z: 0
-  Spawn6:
-    X: 0
-    Y: 0
-    Z: 0
-  Spawn7:
-    X: 0
-    Y: 0
-    Z: 0
-  Spawn8:
-    X: 0
-    Y: 0
-    Z: 0
+      Multiplier: 2
+      DelayInTicks: 60
+  Wither:
+    Enabled: true
+    Title: '&8&lWither Powerup'
+    SpeedMultiplier: 2
+    # No material setting.
+    Chance: 2
+  Thief:
+    Enabled: true
+    Title: '&7&lThief Powerup'
+    Material: 'FERMENTED_SPIDER_EYE'
+    # No chance settings. It's engineered to give you it more commonly if you're in a middle place.
+
+# --- CONFIG END --- #

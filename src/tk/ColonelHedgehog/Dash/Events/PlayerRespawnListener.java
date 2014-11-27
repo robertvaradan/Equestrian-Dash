@@ -14,17 +14,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import tk.ColonelHedgehog.Dash.Assets.GameState;
 import tk.ColonelHedgehog.Dash.Core.Main;
 
 import static org.bukkit.entity.EntityType.HORSE;
-import static tk.ColonelHedgehog.Dash.Events.PlayerJoinListener.getHorseColor;
-import static tk.ColonelHedgehog.Dash.Events.PlayerJoinListener.getHorsePattern;
 
 /**
- *
  * @author Robert
  */
 public class PlayerRespawnListener implements Listener
@@ -52,8 +48,7 @@ public class PlayerRespawnListener implements Listener
 
                 Horse horse = (Horse) p.getWorld().spawnEntity(loc, HORSE);
                 horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
-                getHorseColor(p, horse, p.getMetadata("colorKey").get(0).asInt());
-                getHorsePattern(p, horse, p.getMetadata("patternKey").get(0).asInt());
+
                 p.getLocation().setYaw(p.getMetadata("lastLocYaw").get(0).asFloat());
                 p.getLocation().setPitch(p.getMetadata("lastLocPitch").get(0).asFloat());
                 horse.getLocation().setYaw(p.getMetadata("lastLocYaw").get(0).asFloat());
@@ -65,19 +60,34 @@ public class PlayerRespawnListener implements Listener
 
     public void respawnSequence(final Player p, final Horse horse)
     {
-        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 999999999, 999999999));
-        p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, -15));
+
         new BukkitRunnable()
         {
             @Override
             public void run()
             {
                 //System.out.println("FORCE RESPAWN!");
+                PlayerJoinListener.getHorseColor(p, horse, p.getMetadata("colorKey").get(0).asInt());
+                PlayerJoinListener.getHorsePattern(p, horse, p.getMetadata("patternKey").get(0).asInt());
                 horse.setOwner(p);
                 horse.setPassenger(p);
-                p.removePotionEffect(PotionEffectType.SLOW);
-                p.removePotionEffect(PotionEffectType.JUMP);
+                horse.setAdult();
+
+
+                //horse.setVariant(Horse.Variant.DONKEY);
+
+                if (GameState.getCurrentTrack().getTrackData().getBoolean("NMS.Enabled"))
+                {
+                    try
+                    {
+                        ((org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity) horse).getHandle().getAttributeInstance(net.minecraft.server.v1_7_R4.GenericAttributes.d).setValue(GameState.getCurrentTrack().getTrackData().getDouble("NMS.MaxHorseSpeed"));
+                    }
+                    catch (NoClassDefFoundError error)
+                    {
+                        plugin.getLogger().severe("NMS handling failed! The version of Spigot/Bukkit you are using is not compatible with this. Set \"Enabled\" to \"false\" in the NMS section of your track config to prevent problems.");
+                    }
+                }
             }
-        }.runTaskLater(plugin, 40);
+        }.runTaskLater(plugin, 1);
     }
 }

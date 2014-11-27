@@ -27,21 +27,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Robert
  */
 public class PlayerInteractListener implements Listener
 {
     public static Main plugin = Main.plugin;
 
+    public static void addLore(ItemStack is, String lore)
+    {
+        ItemMeta meta = is.getItemMeta();
+        List<String> newlore = new ArrayList<>();
+        newlore.add(lore);
+        meta.setLore(newlore);
+        is.setItemMeta(meta);
+    }
+
     @EventHandler
     public void onInter(PlayerInteractEvent event)
     {
+
         Player p = event.getPlayer();
-        
-        if(p.getItemInHand().getType() == Material.SADDLE && p.getGameMode() != GameMode.CREATIVE && p.getVehicle() != null)
+
+        if (p.getItemInHand().getType() == Material.SADDLE && p.getGameMode() != GameMode.CREATIVE && p.getVehicle() != null)
         {
-            if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
+            if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
             {
                 p.sendMessage(PlayerJoinListener.Prefix + "§b§oOpened horse customization menu!");
 
@@ -81,45 +90,45 @@ public class PlayerInteractListener implements Listener
                 PlayerInteractEntityListener.setName(Gray, "§7§l§oGrey");
                 addLore(Gray, "§9§oHorse color");
 
-                if(p.hasPermission("equestriandash.horsecolors.White"))
+                if (p.hasPermission("equestriandash.horsecolors.White"))
                 {
-                Custom.setItem(1, White);
+                    Custom.setItem(1, White);
                 }
 
-                if(p.hasPermission("equestriandash.horsecolors.black"))
+                if (p.hasPermission("equestriandash.horsecolors.black"))
                 {
-                Custom.setItem(2, Black);
+                    Custom.setItem(2, Black);
                 }
 
-                if(p.hasPermission("equestriandash.horsecolors.brown"))
+                if (p.hasPermission("equestriandash.horsecolors.brown"))
                 {
-                Custom.setItem(3, Brown);
+                    Custom.setItem(3, Brown);
                 }
 
-                if(p.hasPermission("equestriandash.horsecolors.chestnut"))
+                if (p.hasPermission("equestriandash.horsecolors.chestnut"))
                 {
-                Custom.setItem(4, Chestnut);
+                    Custom.setItem(4, Chestnut);
                 }
 
-                if(p.hasPermission("equestriandash.horsecolors.creamy"))
+                if (p.hasPermission("equestriandash.horsecolors.creamy"))
                 {
-                Custom.setItem(5, Creamy);
+                    Custom.setItem(5, Creamy);
                 }
 
-                if(p.hasPermission("equestriandash.horsecolors.dark_Brown"))
+                if (p.hasPermission("equestriandash.horsecolors.dark_Brown"))
                 {
-                Custom.setItem(6, DarkBrown);
+                    Custom.setItem(6, DarkBrown);
                 }
 
-                if(p.hasPermission("equestriandash.horsecolors.gray"))
+                if (p.hasPermission("equestriandash.horsecolors.gray"))
                 {
-                Custom.setItem(7, Gray);
+                    Custom.setItem(7, Gray);
                 }
                 h.setVariant(Horse.Variant.HORSE);
                 p.openInventory(Custom);
             }
         }
-        else if(p.getGameMode() != GameMode.CREATIVE)
+        else if (p.getGameMode() != GameMode.CREATIVE)
         {
             for (Powerup powerup : Main.getPowerupsRegistery().getPowerups())
             {
@@ -148,14 +157,5 @@ public class PlayerInteractListener implements Listener
                 }
             }
         }
-    }
-
-    public static void addLore(ItemStack is, String lore)
-    {
-        ItemMeta meta = is.getItemMeta();
-        List<String> newlore = new ArrayList<>();
-        newlore.add(lore);
-        meta.setLore(newlore);
-        is.setItemMeta(meta);
     }
 }

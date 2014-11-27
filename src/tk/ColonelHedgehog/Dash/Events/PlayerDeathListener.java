@@ -23,7 +23,6 @@ import java.lang.reflect.InvocationTargetException;
 import static tk.ColonelHedgehog.Dash.Events.PlayerJoinListener.Prefix;
 
 /**
- *
  * @author Robert
  */
 public class PlayerDeathListener implements Listener
@@ -36,9 +35,9 @@ public class PlayerDeathListener implements Listener
         event.getDrops().clear();
         event.setDroppedExp(0);
         Player p = event.getEntity();
-        if(p.getVehicle() != null)
+        if (p.getVehicle() != null)
         {
-            if(p.getVehicle() instanceof Horse)
+            if (p.getVehicle() instanceof Horse)
             {
                 Horse h = (Horse) p.getVehicle();
                 h.setOwner(null);
@@ -50,7 +49,7 @@ public class PlayerDeathListener implements Listener
 
         event.setDeathMessage(Prefix + ChatColor.DARK_RED + event.getDeathMessage() + ".");
 
-        if(plugin.getServer().getPluginManager().getPlugin("ProtocolLib") != null)
+        if (plugin.getServer().getPluginManager().getPlugin("ProtocolLib") != null)
         {
             forceRespawn(event.getEntity());
         }

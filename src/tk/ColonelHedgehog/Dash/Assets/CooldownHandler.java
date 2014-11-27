@@ -13,6 +13,7 @@ import java.util.UUID;
 public class CooldownHandler
 {
     private HashMap<UUID, Long> Cooling;
+
     public CooldownHandler()
     {
         this.Cooling = new HashMap<>();
@@ -25,20 +26,16 @@ public class CooldownHandler
 
     public boolean isCooling(Player p)
     {
-        if(!Cooling.containsKey(p.getUniqueId()) || (Cooling.containsKey(p.getUniqueId()) && Cooling.get(p.getUniqueId()) <= System.currentTimeMillis()))
+        boolean containsPlayer = Cooling.containsKey(p.getUniqueId());
+        if(!containsPlayer || (Cooling.get(p.getUniqueId()) <= System.currentTimeMillis()))
         {
-            boolean returner = true;
-
-            if(Cooling.containsKey(p.getUniqueId()))
-            {
-                returner = Cooling.get(p.getUniqueId()) <= System.currentTimeMillis();
-            }
-
-            if (returner)
+            if(containsPlayer)
             {
                 Cooling.remove(p.getUniqueId());
-                return false;
+                return Cooling.get(p.getUniqueId()) > System.currentTimeMillis();
             }
+
+            return false;
         }
 
 

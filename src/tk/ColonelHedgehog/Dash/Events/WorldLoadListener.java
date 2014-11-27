@@ -5,7 +5,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.event.world.WorldInitEvent;
 import tk.ColonelHedgehog.Dash.Core.Main;
 
 import java.util.ArrayList;
@@ -18,12 +18,6 @@ import java.util.List;
  */
 public class WorldLoadListener implements Listener
 {
-    @EventHandler
-    public void onLoad(WorldLoadEvent event)
-    {
-        killallHorses(event.getWorld());
-    }
-
     public static void killallHorses(World w) // RIP in peace D:
     {
         List<Horse> toremove = new ArrayList<>();
@@ -42,5 +36,11 @@ public class WorldLoadListener implements Listener
         }
 
         Main.plugin.getLogger().info("Removed " + toremove.size() + " horse(s).");
+    }
+
+    @EventHandler
+    public void onLoad(WorldInitEvent event)
+    {
+        killallHorses(event.getWorld());
     }
 }

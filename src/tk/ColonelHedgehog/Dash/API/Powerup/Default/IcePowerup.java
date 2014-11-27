@@ -30,9 +30,9 @@ public class IcePowerup implements Powerup
     @Override
     public ItemStack getItem()
     {
-        ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Config.Powerups.Ice.Material")));
+        ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Powerups.Ice.Material")));
         ItemMeta iconMeta = icon.getItemMeta();
-        iconMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Config.Powerups.Ice.Title")));
+        iconMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Powerups.Ice.Title")));
         icon.setItemMeta(iconMeta);
         return icon;
     }
@@ -40,19 +40,61 @@ public class IcePowerup implements Powerup
     @Override
     public void doOnRightClick(Racer racer, Action action)
     {
-        racer.getPlayer().sendMessage(Main.Prefix + "§eDrop this item to use it!");
+        if (Main.plugin.getConfig().getBoolean("Powerups.Ice.ThrowAhead.Enabled"))
+        {
+            racer.getPlayer().sendMessage(Main.Prefix + "§eDrop or left click with this item to use it!");
+        }
+        else
+        {
+            racer.getPlayer().sendMessage(Main.Prefix + "§eDrop this item to use it!");
+        }
     }
 
     @Override
     public void doOnLeftClick(Racer racer, Action action)
     {
+        if(Main.plugin.getConfig().getBoolean("Powerups.Ice.ThrowAhead.Enabled"))
+        {
+            Location loc = racer.getPlayer().getEyeLocation();
+            final Item dropped = loc.getWorld().dropItem(loc, this.getItem());
+            dropped.setVelocity(loc.getDirection().multiply(Main.plugin.getConfig().getDouble("Powerups.Ice.ThrowAhead.Multiplier")));
 
+            racer.getPlayer().sendMessage(getMessage());
+            dropped.getWorld().playSound(dropped.getLocation(), Sound.FIZZ, 3, 0);
+
+            new BukkitRunnable()
+            {
+
+                @Override
+                public void run()
+                {
+                    // Ice thingy
+                    if (!dropped.isDead())
+                    {
+                        createIceShardThings(dropped.getLocation());
+                        dropped.getWorld().playSound(dropped.getLocation(), Sound.GLASS, 3, 1);
+                        dropped.remove();
+                    }
+
+                }
+
+
+            }.runTaskLater(Main.plugin, Main.plugin.getConfig().getLong("Powerups.Ice.ThrowAhead.DelayInTicks"));
+            racer.getPlayer().getInventory().clear();
+
+        }
+    }
+
+    private String getMessage()
+    {
+        return Main.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
     }
 
     @Override
     public void doOnDrop(Racer racer, final Item dropped)
     {
-        dropped.getWorld().playSound(dropped.getLocation(), Sound.FUSE, 3, 1);
+        racer.getPlayer().sendMessage(getMessage());
+        dropped.getWorld().playSound(dropped.getLocation(), Sound.FIZZ, 3, 0);
 
         new BukkitRunnable()
         {
@@ -67,17 +109,18 @@ public class IcePowerup implements Powerup
                     dropped.getWorld().playSound(dropped.getLocation(), Sound.GLASS, 3, 1);
                     dropped.remove();
                 }
+
             }
 
 
-        }.runTaskLater(Main.plugin, Main.plugin.getConfig().getLong("Config.Powerups.Ice.DelayInTicks"));
+        }.runTaskLater(Main.plugin, Main.plugin.getConfig().getLong("Powerups.Ice.DelayInTicks"));
     }
 
     @SuppressWarnings("deprecation") // pls nu hurt mi
     private void createIceShardThings(final Location loc2)
     {
-        int sh = Main.plugin.getConfig().getInt("Config.Powerups.Ice.Sphere.Height");
-        int sr = Main.plugin.getConfig().getInt("Config.Powerups.Ice.Sphere.Radius");
+        int sh = Main.plugin.getConfig().getInt("Powerups.Ice.Sphere.Height");
+        int sr = Main.plugin.getConfig().getInt("Powerups.Ice.Sphere.Radius");
 
         /*System.out.println("HEIGHT: " + sh);
         System.out.println("RADIUS: " + sr);*/
@@ -85,7 +128,7 @@ public class IcePowerup implements Powerup
 
         for(Location fin : ice)
         {
-            fin.getBlock().setType(new Random().nextInt() + 1 == 1 ? Material.ICE : Material.PACKED_ICE);
+            fin.getBlock().setType(new Random().nextInt(2) == 1 ? Material.ICE : Material.PACKED_ICE);
             fin.getWorld().playEffect(fin, Effect.STEP_SOUND, Material.SNOW.getId());
             GarbageControl.DespawningIce.add(fin);
             //System.out.println("Creating ice at " + fin.toString());
@@ -103,7 +146,7 @@ public class IcePowerup implements Powerup
                     loc.getBlock().breakNaturally(new ItemStack(Material.AIR));
                 }
             }
-        }.runTaskLater(Main.plugin, Main.plugin.getConfig().getLong("Config.Powerups.Ice.DespawnTime"));
+        }.runTaskLater(Main.plugin, Main.plugin.getConfig().getLong("Powerups.Ice.DespawnTime"));
 
     }
 
@@ -122,13 +165,13 @@ public class IcePowerup implements Powerup
     @Override
     public void doOnPickup(Racer racer, Racer dropper, Item item)
     {
-        dropper.getPlayer().sendMessage(Main.Prefix + "§e" + racer.getPlayer().getName() + " §6recovered your " + Main.plugin.getConfig().getString("Config.Powerups.Ice.Title") + "§6!");
+        dropper.getPlayer().sendMessage(Main.Prefix + "§e" + racer.getPlayer().getName() + " §6recovered your " + Main.plugin.getConfig().getString("Powerups.Ice.Title") + "§6!");
     }
 
     @Override
     public double getChance(int rank)
     {
-        return (8 - rank) / Main.plugin.getConfig().getDouble("Config.Powerups.Ice.Chance");
+        return (8 - rank) / Main.plugin.getConfig().getDouble("Powerups.Ice.Chance");
 
     }
 

@@ -1,0 +1,107 @@
+# ======================================= #
+#                  TRACK                  #
+#                  DATA                   #
+# ======================================= #
+
+# This config contains all the data relating to a track.
+# There are a bunch of settings here for maximum
+# flexibility. But only mess around with the things you
+# need to or you might just break something!
+
+# Here's something rather simple. The TrackName. Choose
+# something cool, but don't make it too long. Example
+# names: Dry Dry Ruins, Moo-Moo's Farm, Rocky Mountain.
+# Choose wisely!
+
+TrackName: 'My Track'
+
+# NMS stands for "Net.Minecraft.Server." NMS code is
+# great for developers because it lets us do things
+# that you can't just do with the Bukkit API, such
+# as modifying specific mob attriubutes. The only
+# way to modify the Horse's speed (other than with
+# a speed potion is through NMS. There is a catch
+# however. NMS usually breaks with EVERY Minecraft
+# update. :( If you don't care about the horse's
+# speeds, you can go ahead and leave this disabled.
+
+NMS:
+  Enabled: true
+  MaxHorseSpeed: 0.225
+
+# You can set the raceline ingame with the /ed line1
+# and /ed line2 commands. But if you'd like to do
+# some extra tweaking, go ahead and modify these
+# fields. The X, Y, and Z fields can all be decimals.
+
+Raceline:
+  # Set with /ed line1
+  Lap1:
+    X: 0
+    Y: 0
+    Z: 0
+  # Set with /ed line2
+  Lap2:
+    X: 0
+    Y: 0
+    Z: 0
+
+# The "NoJumpRange" setting is how far away the player
+# must be to NOT be able to jump. There is an exploit
+# that lets some players jump with their horse and
+# walk through the raceline (ono). While it is found
+# that if the player tries to abuse this and get laps
+# he will simply be forced out again, this is still a
+# gray area. Better safe than sorry, but the higehr
+# the no-jump range, the more lag you may find.
+
+  NoJumpRange: 10
+
+# At the start of the race, a firework will, well, fire
+# up to the sky. This can be set with /ed spawn flarespawn
+# by default.
+
+Fw:
+  X: 0
+  Y: 0
+  Z: 0
+
+# How many laps does this level have?
+Laps: 3
+# Editor settings.
+Editor:
+  # How many markers does this level have? (IMPORTANT!)
+  Markers: 0
+# The following are spawnpoint location settings.
+Spawn1:
+  X: 0
+  Y: 0
+  Z: 0
+Spawn2:
+  X: 0
+  Y: 0
+  Z: 0
+Spawn3:
+  X: 0
+  Y: 0
+  Z: 0
+Spawn4:
+  X: 0
+  Y: 0
+  Z: 0
+Spawn5:
+  X: 0
+  Y: 0
+  Z: 0
+Spawn6:
+  X: 0
+  Y: 0
+  Z: 0
+Spawn7:
+  X: 0
+  Y: 0
+  Z: 0
+Spawn8:
+  X: 0
+  Y: 0
+  Z: 0

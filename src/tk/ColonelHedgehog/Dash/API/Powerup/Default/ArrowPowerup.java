@@ -27,16 +27,22 @@ public class ArrowPowerup implements Powerup
     @Override
     public ItemStack getItem()
     {
-        ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Config.Powerups.Arrow.Material")));
+        ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Powerups.Arrow.Material")));
         ItemMeta im = icon.getItemMeta();
-        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Config.Powerups.Arrow.Title")));
+        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Powerups.Arrow.Title")));
         icon.setItemMeta(im);
         return icon;
+    }
+
+    private String getMessage()
+    {
+        return Main.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
     }
 
     @Override
     public void doOnRightClick(Racer racer, Action action)
     {
+        racer.getPlayer().sendMessage(getMessage());
         Arrow a = racer.getPlayer().getWorld().spawnArrow(racer.getPlayer().getEyeLocation(), racer.getPlayer().getEyeLocation().getDirection(), 3, 3);
         a.setShooter(racer.getPlayer());
         double minAngle = 6.2831853071795862D;
@@ -98,7 +104,7 @@ public class ArrowPowerup implements Powerup
     @Override
     public double getChance(int rank)
     {
-        return (rank / Main.plugin.getConfig().getDouble("Config.Powerups.Arrow.Chance")); // Chance that when we hit an item-box, this will be an option.
+        return (rank / Main.plugin.getConfig().getDouble("Powerups.Arrow.Chance")); // Chance that when we hit an item-box, this will be an option.
     }
 
     @Override

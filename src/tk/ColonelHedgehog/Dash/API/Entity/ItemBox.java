@@ -1,21 +1,24 @@
 package tk.ColonelHedgehog.Dash.API.Entity;
 
-import org.bukkit.Location;
 import org.bukkit.entity.EnderCrystal;
-import org.bukkit.entity.EntityType;
 
 /**
  * Created by ColonelHedgehog on 11/8/14.
  * You have freedom to modify given sources. Please credit me as original author.
  * Keep in mind that this is not for sale.
  */
-public abstract class ItemBox implements EnderCrystal
+public class ItemBox
 {
-    @Deprecated
-    public ItemBox(Location loc)
+    private EnderCrystal ec;
+
+    public ItemBox(EnderCrystal crystal)
     {
-        loc.getWorld().spawnEntity(loc, EntityType.ENDER_CRYSTAL);
+        this.ec = crystal;
     }
 
-    //public boolean isRespawning()    {        return false;    }
+
+    public void respawn()
+    {
+
+    }
 }
