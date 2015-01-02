@@ -21,7 +21,7 @@ TrackName: 'My Track'
 # as modifying specific mob attriubutes. The only
 # way to modify the Horse's speed (other than with
 # a speed potion is through NMS. There is a catch
-# however. NMS usually breaks with EVERY Minecraft
+# however. NMS can usually break with EVERY Minecraft
 # update. :( If you don't care about the horse's
 # speeds, you can go ahead and leave this disabled.
 

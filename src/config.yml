@@ -47,6 +47,9 @@ Lobby: world,0,128,0,0.00000,0.00000
 # Should we tell everyone who has voted for what map?
 AnonymousVotes: false
 
+# When the player hits an Item Box, should his old powerup be removed?
+ReplaceOldPowerup: false
+
 # Powerup config.
 Powerups:
   Launcher:
@@ -113,5 +116,13 @@ Powerups:
     Title: '&7&lThief Powerup'
     Material: 'FERMENTED_SPIDER_EYE'
     # No chance settings. It's engineered to give you it more commonly if you're in a middle place.
+  Chicken:
+    Enabled: true
+    Title: '&4&lChicken &8&lPowerup'
+    # No material setting.
+    ExplosionSize: 5
+    Chance: 4
+    DelayInSeconds: 10
+    Multiplier: 2
 
 # --- CONFIG END --- #
