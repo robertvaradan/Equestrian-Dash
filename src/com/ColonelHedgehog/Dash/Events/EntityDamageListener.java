@@ -58,7 +58,7 @@ public class EntityDamageListener implements Listener
             else
             {
                 Player p = (Player) e;
-                p.sendMessage("YOU HURTN', MANE!");
+                //p.sendMessage("YOU HURTN', MANE!");
                 if ((p.getHealth() - event.getFinalDamage()) <= 0)
                 {
                     Respawner.respawn(p);
