@@ -6,19 +6,19 @@
 
 package com.ColonelHedgehog.Dash.Events;
 
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleExitEvent;
-import com.ColonelHedgehog.Dash.Core.Main;
 
 /**
  * @author Robert
  */
 public class VehicleExistListener implements Listener
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
     @EventHandler
     public void onDismount(VehicleExitEvent event)

@@ -1,6 +1,7 @@
 package com.ColonelHedgehog.Dash.API.Powerup.Default;
 
 import com.ColonelHedgehog.Dash.API.Powerup.Powerup;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -13,7 +14,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import com.ColonelHedgehog.Dash.API.Entity.Racer;
 import com.ColonelHedgehog.Dash.Core.GarbageControl;
-import com.ColonelHedgehog.Dash.Core.Main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +30,9 @@ public class IcePowerup implements Powerup
     @Override
     public ItemStack getItem()
     {
-        ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Powerups.Ice.Material")));
+        ItemStack icon = new ItemStack(Material.getMaterial(EquestrianDash.plugin.getConfig().getString("Powerups.Ice.Material")));
         ItemMeta iconMeta = icon.getItemMeta();
-        iconMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Powerups.Ice.Title")));
+        iconMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', EquestrianDash.plugin.getConfig().getString("Powerups.Ice.Title")));
         icon.setItemMeta(iconMeta);
         return icon;
     }
@@ -40,24 +40,24 @@ public class IcePowerup implements Powerup
     @Override
     public void doOnRightClick(Racer racer, Action action)
     {
-        if (Main.plugin.getConfig().getBoolean("Powerups.Ice.ThrowAhead.Enabled"))
+        if (EquestrianDash.plugin.getConfig().getBoolean("Powerups.Ice.ThrowAhead.Enabled"))
         {
-            racer.getPlayer().sendMessage(Main.Prefix + "§eDrop or left click with this item to use it!");
+            racer.getPlayer().sendMessage(EquestrianDash.Prefix + "§eDrop or left click with this item to use it!");
         }
         else
         {
-            racer.getPlayer().sendMessage(Main.Prefix + "§eDrop this item to use it!");
+            racer.getPlayer().sendMessage(EquestrianDash.Prefix + "§eDrop this item to use it!");
         }
     }
 
     @Override
     public void doOnLeftClick(Racer racer, Action action)
     {
-        if(Main.plugin.getConfig().getBoolean("Powerups.Ice.ThrowAhead.Enabled"))
+        if(EquestrianDash.plugin.getConfig().getBoolean("Powerups.Ice.ThrowAhead.Enabled"))
         {
             Location loc = racer.getPlayer().getEyeLocation();
             final Item dropped = loc.getWorld().dropItem(loc, this.getItem());
-            dropped.setVelocity(loc.getDirection().multiply(Main.plugin.getConfig().getDouble("Powerups.Ice.ThrowAhead.Multiplier")));
+            dropped.setVelocity(loc.getDirection().multiply(EquestrianDash.plugin.getConfig().getDouble("Powerups.Ice.ThrowAhead.Multiplier")));
 
             racer.getPlayer().sendMessage(getMessage());
             dropped.getWorld().playSound(dropped.getLocation(), Sound.FIZZ, 3, 0);
@@ -79,7 +79,7 @@ public class IcePowerup implements Powerup
                 }
 
 
-            }.runTaskLater(Main.plugin, Main.plugin.getConfig().getLong("Powerups.Ice.ThrowAhead.DelayInTicks"));
+            }.runTaskLater(EquestrianDash.plugin, EquestrianDash.plugin.getConfig().getLong("Powerups.Ice.ThrowAhead.DelayInTicks"));
             racer.getPlayer().getInventory().clear();
 
         }
@@ -87,7 +87,7 @@ public class IcePowerup implements Powerup
 
     private String getMessage()
     {
-        return Main.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
+        return EquestrianDash.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
     }
 
     @Override
@@ -113,14 +113,14 @@ public class IcePowerup implements Powerup
             }
 
 
-        }.runTaskLater(Main.plugin, Main.plugin.getConfig().getLong("Powerups.Ice.DelayInTicks"));
+        }.runTaskLater(EquestrianDash.plugin, EquestrianDash.plugin.getConfig().getLong("Powerups.Ice.DelayInTicks"));
     }
 
     @SuppressWarnings("deprecation") // pls nu hurt mi
     private void createIceShardThings(final Location loc2)
     {
-        int sh = Main.plugin.getConfig().getInt("Powerups.Ice.Sphere.Height");
-        int sr = Main.plugin.getConfig().getInt("Powerups.Ice.Sphere.Radius");
+        int sh = EquestrianDash.plugin.getConfig().getInt("Powerups.Ice.Sphere.Height");
+        int sr = EquestrianDash.plugin.getConfig().getInt("Powerups.Ice.Sphere.Radius");
 
         /*System.out.println("HEIGHT: " + sh);
         System.out.println("RADIUS: " + sr);*/
@@ -146,7 +146,7 @@ public class IcePowerup implements Powerup
                     loc.getBlock().breakNaturally(new ItemStack(Material.AIR));
                 }
             }
-        }.runTaskLater(Main.plugin, Main.plugin.getConfig().getLong("Powerups.Ice.DespawnTime"));
+        }.runTaskLater(EquestrianDash.plugin, EquestrianDash.plugin.getConfig().getLong("Powerups.Ice.DespawnTime"));
 
     }
 
@@ -165,13 +165,13 @@ public class IcePowerup implements Powerup
     @Override
     public void doOnPickup(Racer racer, Racer dropper, Item item)
     {
-        dropper.getPlayer().sendMessage(Main.Prefix + "§e" + racer.getPlayer().getName() + " §6recovered your " + Main.plugin.getConfig().getString("Powerups.Ice.Title") + "§6!");
+        dropper.getPlayer().sendMessage(EquestrianDash.Prefix + "§e" + racer.getPlayer().getName() + " §6recovered your " + EquestrianDash.plugin.getConfig().getString("Powerups.Ice.Title") + "§6!");
     }
 
     @Override
     public double getChance(int rank)
     {
-        return (8 - rank) / Main.plugin.getConfig().getDouble("Powerups.Ice.Chance");
+        return (8 - rank) / EquestrianDash.plugin.getConfig().getDouble("Powerups.Ice.Chance");
 
     }
 

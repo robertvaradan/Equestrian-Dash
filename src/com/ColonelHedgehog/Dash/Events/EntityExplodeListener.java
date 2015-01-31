@@ -7,7 +7,7 @@
 package com.ColonelHedgehog.Dash.Events;
 
 import com.ColonelHedgehog.Dash.API.Powerup.ItemBox.ItemBox;
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -22,7 +22,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public class EntityExplodeListener implements Listener
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
     public static void randomDrop(Location loc, int rand)
     {
@@ -74,7 +74,7 @@ public class EntityExplodeListener implements Listener
         event.blockList().clear();
         try
         {
-            ItemBox ib = Main.getItemBoxRegistry().getByLocation(e.getLocation());
+            ItemBox ib = EquestrianDash.getItemBoxRegistry().getByLocation(e.getLocation());
             if (ib != null)
             {
                 ib.respawn();

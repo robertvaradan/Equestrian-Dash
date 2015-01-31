@@ -9,7 +9,7 @@ package com.ColonelHedgehog.Dash.Events;
 import com.ColonelHedgehog.Dash.API.Entity.Racer;
 import com.ColonelHedgehog.Dash.API.Event.EDRaceEndEvent;
 import com.ColonelHedgehog.Dash.Assets.GameState;
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -29,7 +29,7 @@ import java.util.UUID;
  */
 public class PlayerQuitListener implements Listener
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
     @EventHandler
     public void onLeave(PlayerQuitEvent event)

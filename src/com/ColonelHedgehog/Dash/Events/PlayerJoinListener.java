@@ -8,6 +8,7 @@ package com.ColonelHedgehog.Dash.Events;
 
 import com.ColonelHedgehog.Dash.API.Entity.Racer;
 import com.ColonelHedgehog.Dash.API.Event.EDRaceBeginEvent;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.*;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -28,7 +29,6 @@ import com.ColonelHedgehog.Dash.API.Track.Track;
 import com.ColonelHedgehog.Dash.Assets.GameState;
 import com.ColonelHedgehog.Dash.Assets.Ranking;
 import com.ColonelHedgehog.Dash.Assets.VoteBoard;
-import com.ColonelHedgehog.Dash.Core.Main;
 import com.ColonelHedgehog.Dash.Lib.ValueComparatorTrack;
 
 import java.util.*;
@@ -42,7 +42,7 @@ import static com.ColonelHedgehog.Dash.Events.PlayerInteractEntityListener.setNa
 public class PlayerJoinListener implements Listener
 {
     public static HashMap<Location, UUID> SpawnPoints = new HashMap<>();
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
     public static Objective placeObj = null; // Same as above but it creates a objective called timerObj
     public static Objective pl[]; //Creates a objective called o
@@ -86,7 +86,7 @@ public class PlayerJoinListener implements Listener
                     //int random1 = (int )(Math.random() * 7 + 1);
                     //int random2 = (int )(Math.random() * 10 + 1);
 
-                    //online.sendMessage(Main.Prefix + "Horse is " + horse + " at " + horse.getLocation());
+                    //online.sendMessage(EquestrianDash.Prefix + "Horse is " + horse + " at " + horse.getLocation());
                     horse.setMaxHealth(20.0);
                     horse.setJumpStrength(0.75);
                     if (p.getGameMode() != GameMode.CREATIVE)
@@ -101,7 +101,7 @@ public class PlayerJoinListener implements Listener
         else
         {
             p.setGameMode(GameMode.CREATIVE);
-            p.sendMessage(Main.Prefix + "§aYou are in §9Edit Mode.");
+            p.sendMessage(EquestrianDash.Prefix + "§aYou are in §9Edit Mode.");
             p.removePotionEffect(PotionEffectType.SLOW);
         }
     }
@@ -232,7 +232,7 @@ public class PlayerJoinListener implements Listener
 
                     Firework fw = p.getWorld().spawn(flareloc, Firework.class);
                     FireworkMeta data = fw.getFireworkMeta();
-                    //p.sendMessage(Main.Prefix + "Firework spawned at " + flareloc);
+                    //p.sendMessage(EquestrianDash.Prefix + "Firework spawned at " + flareloc);
                     data.addEffects(FireworkEffect.builder().withColor(Color.GREEN).with(Type.BALL_LARGE).build());
                     data.setPower(1);
                     fw.setFireworkMeta(data);
@@ -311,7 +311,7 @@ public class PlayerJoinListener implements Listener
             setName(it, "§9§l§oCustomize §b§l§oColors");
             PlayerInteractListener.addLore(it, "§6§oRight click §a§oto customize your horse's colors and style!");
             p.getInventory().addItem(it);
-            String[] s = Main.plugin.getConfig().getString("Lobby").split(",");
+            String[] s = EquestrianDash.plugin.getConfig().getString("Lobby").split(",");
             Location teleport = new Location(Bukkit.getWorld(s[0]), Double.parseDouble(s[1]), Double.parseDouble(s[2]), Double.parseDouble(s[3]), Float.parseFloat(s[5]), Float.parseFloat(s[4]));
             p.teleport(teleport);
             p.removePotionEffect(PotionEffectType.SLOW);
@@ -324,7 +324,7 @@ public class PlayerJoinListener implements Listener
                     @Override
                     public void run()
                     {
-                        event.getPlayer().kickPlayer(Main.Prefix + "§cThis game is in progress!");
+                        event.getPlayer().kickPlayer(EquestrianDash.Prefix + "§cThis game is in progress!");
                     }
                 }.runTask(plugin);
 
@@ -333,7 +333,7 @@ public class PlayerJoinListener implements Listener
 
             Player player = event.getPlayer();
 
-            //Main.buildRaceline(player);
+            //EquestrianDash.buildRaceline(player);
 
             racers.add(player);
             player.setMetadata("trackPlace", new FixedMetadataValue(plugin, 1));
@@ -356,17 +356,17 @@ public class PlayerJoinListener implements Listener
             //player.sendMessage(Prefix + ChatColor.GOLD + "Joined! §c§l§oRight-click with the saddle to customize horse colors!");
             //int maxplayers = plugin.getConfig().getInt("Config.Players.Max");
             //Player[] players = player.getServer().getOnlinePlayers().equals();
-            //player.sendMessage(Main.Prefix + "§6Thanks for joining!");
+            //player.sendMessage(EquestrianDash.Prefix + "§6Thanks for joining!");
 
             if (players < Bukkit.getMaxPlayers())
             {
 
-                p.sendMessage(Main.Prefix + "§aWelcome! §eVote for the map with /vote.");
+                p.sendMessage(EquestrianDash.Prefix + "§aWelcome! §eVote for the map with /vote.");
 
                 final int minplayers = plugin.getConfig().getInt("Players.MinPlayers");
                 if (Bukkit.getOnlinePlayers().size() == minplayers)
                 {
-                    Bukkit.broadcastMessage(Main.Prefix + "§bEnough players have been gathered to start the game!");
+                    Bukkit.broadcastMessage(EquestrianDash.Prefix + "§bEnough players have been gathered to start the game!");
                     for (Player o : Bukkit.getOnlinePlayers())
                     {
                         o.playSound(o.getLocation(), Sound.ORB_PICKUP, 3, 2);
@@ -391,7 +391,7 @@ public class PlayerJoinListener implements Listener
                                         suf = "";
                                     }
 
-                                    Bukkit.broadcastMessage(Main.Prefix + "§eVoting ends in §a" + count + " second" + suf + "§e.");
+                                    Bukkit.broadcastMessage(EquestrianDash.Prefix + "§eVoting ends in §a" + count + " second" + suf + "§e.");
                                     for (Player o : Bukkit.getOnlinePlayers())
                                     {
                                         o.playSound(o.getLocation(), Sound.ORB_PICKUP, 3, 2);
@@ -402,7 +402,7 @@ public class PlayerJoinListener implements Listener
                             {
                                 cancel();
                                 Track chosen = null;
-                                if (!plugin.getConfig().getBoolean("Countdown.RandomPick") && !VoteBoard.getVotes().isEmpty() && Main.getTrackRegistry().getTracks().size() > 1)
+                                if (!plugin.getConfig().getBoolean("Countdown.RandomPick") && !VoteBoard.getVotes().isEmpty() && EquestrianDash.getTrackRegistry().getTracks().size() > 1)
                                 {
                                     ValueComparatorTrack bvc = new ValueComparatorTrack(VoteBoard.getVotes());
                                     TreeMap<Track, Integer> sorted_map = new TreeMap<>(bvc);
@@ -419,7 +419,7 @@ public class PlayerJoinListener implements Listener
                                 }
                                 else
                                 {
-                                    List<Track> tracks = Main.getTrackRegistry().getTracks();
+                                    List<Track> tracks = EquestrianDash.getTrackRegistry().getTracks();
                                     try
                                     {
                                         chosen = tracks.get(new Random().nextInt(tracks.size()));
@@ -437,7 +437,7 @@ public class PlayerJoinListener implements Listener
                                     return;
                                 }
 
-                                Bukkit.broadcastMessage(Main.Prefix + "§aStarting race on map: \"§b" + chosen.getDisplayName() + "\"");
+                                Bukkit.broadcastMessage(EquestrianDash.Prefix + "§aStarting race on map: \"§b" + chosen.getDisplayName() + "\"");
                                 GameState.setCurrentTrack(chosen);
 
                                 int c = 1;
@@ -453,7 +453,7 @@ public class PlayerJoinListener implements Listener
                                     }
                                     else
                                     {
-                                        on.kickPlayer(Main.Prefix + "§cData missmatch!\n The player count higher than the amount of listed spawns.");
+                                        on.kickPlayer(EquestrianDash.Prefix + "§cData missmatch!\n The player count higher than the amount of listed spawns.");
                                         plugin.getLogger().severe("ERROR: You didn't list enough spawns to meet the amount of players allowed!");
                                     }
                                     c++;
@@ -463,7 +463,7 @@ public class PlayerJoinListener implements Listener
                             else
                             {
                                 cancel();
-                                Bukkit.broadcastMessage(Main.Prefix + "§cToo many players have left.");
+                                Bukkit.broadcastMessage(EquestrianDash.Prefix + "§cToo many players have left.");
                             }
                         }
                     }.runTaskTimer(plugin, 0, 20);
@@ -476,14 +476,14 @@ public class PlayerJoinListener implements Listener
                     @Override
                     public void run()
                     {
-                        event.getPlayer().kickPlayer(Main.Prefix + "§cThis game is full!");
+                        event.getPlayer().kickPlayer(EquestrianDash.Prefix + "§cThis game is full!");
                     }
                 }.runTask(plugin);
             }
         }
         else
         {
-            event.getPlayer().sendMessage(Main.Prefix + "§aYou are in §9Edit Mode.");
+            event.getPlayer().sendMessage(EquestrianDash.Prefix + "§aYou are in §9Edit Mode.");
         }
     }
 
@@ -531,7 +531,7 @@ public class PlayerJoinListener implements Listener
             Score score = objective.getScore(dispname);
 
 
-            //p.sendMessage(Main.Prefix + "§5§nApplying the score: " + inc);
+            //p.sendMessage(EquestrianDash.Prefix + "§5§nApplying the score: " + inc);
             score.setScore(PlayerMoveListener.evalPlace(p));
             Ranking.Scores.put(p.getUniqueId(), PlayerMoveListener.evalPlace(p));
 

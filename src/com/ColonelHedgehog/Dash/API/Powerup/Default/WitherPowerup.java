@@ -2,7 +2,7 @@ package com.ColonelHedgehog.Dash.API.Powerup.Default;
 
 import com.ColonelHedgehog.Dash.API.Entity.Racer;
 import com.ColonelHedgehog.Dash.API.Powerup.Powerup;
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,7 +29,7 @@ public class WitherPowerup implements Powerup
     {
         ItemStack icon = new ItemStack(Material.SKULL_ITEM, 1, (byte) 1); // Data values are evil though! D:
         ItemMeta im = icon.getItemMeta();
-        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Powerups.Wither.Title")));
+        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', EquestrianDash.plugin.getConfig().getString("Powerups.Wither.Title")));
         icon.setItemMeta(im);
 
         return icon;
@@ -37,7 +37,7 @@ public class WitherPowerup implements Powerup
 
     private String getMessage()
     {
-        return Main.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
+        return EquestrianDash.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
     }
 
     @Override
@@ -47,7 +47,7 @@ public class WitherPowerup implements Powerup
         Location loc = racer.getPlayer().getEyeLocation();
         WitherSkull skull = (WitherSkull) loc.getWorld().spawnEntity(loc, EntityType.WITHER_SKULL);
         skull.setShooter(racer.getPlayer());
-        skull.setVelocity(loc.getDirection().multiply(Main.plugin.getConfig().getDouble("Powerups.Wither.SpeedMultiplier")));
+        skull.setVelocity(loc.getDirection().multiply(EquestrianDash.plugin.getConfig().getDouble("Powerups.Wither.SpeedMultiplier")));
         racer.getPlayer().getInventory().clear();
     }
 
@@ -84,7 +84,7 @@ public class WitherPowerup implements Powerup
     @Override
     public double getChance(int rank)
     {
-        return rank / Main.plugin.getConfig().getDouble("Powerups.Wither.Chance");
+        return rank / EquestrianDash.plugin.getConfig().getDouble("Powerups.Wither.Chance");
     }
 
     @Override

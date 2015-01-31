@@ -1,6 +1,6 @@
 package com.ColonelHedgehog.Dash.API.Powerup.ItemBox;
 
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.Location;
 import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.EntityType;
@@ -103,6 +103,6 @@ public class ItemBox
                 cancel(); //Cancels the timer
             }
 
-        }.runTaskTimer(Main.plugin, 100L /* The amount of time until the timer starts */, 20L /*  The delay of each call */);
+        }.runTaskTimer(EquestrianDash.plugin, 100L /* The amount of time until the timer starts */, 20L /*  The delay of each call */);
     }
 }

@@ -7,7 +7,7 @@
 package com.ColonelHedgehog.Dash.Events;
 
 import com.ColonelHedgehog.Dash.Assets.GameState;
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import net.minecraft.server.v1_8_R1.GenericAttributes;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftLivingEntity;
 import org.bukkit.entity.EnderCrystal;
@@ -22,7 +22,7 @@ import org.bukkit.event.entity.EntitySpawnEvent;
  */
 public class CreatureSpawnListener implements Listener
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
     @EventHandler
     public void onSpawn(final EntitySpawnEvent event)

@@ -21,8 +21,6 @@ import com.ColonelHedgehog.Dash.Assets.VoteBoard;
 import com.ColonelHedgehog.Dash.Events.*;
 import com.ColonelHedgehog.Dash.Lib.Customization;
 import com.ColonelHedgehog.Dash.Lib.Seeker;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -49,10 +47,10 @@ import java.util.List;
  * Created by Robert AKA TheHandfish. Do not redistribute this or download it from any other location than its project page/GitHub Repository on BukkitDev. 
  * Leave this section (from "@author" to ":)") intact, too, please. :)
  */
-public class Main extends JavaPlugin implements Listener, CommandExecutor 
+public class EquestrianDash extends JavaPlugin implements Listener, CommandExecutor
 {
     public static boolean tm = false;
-    public static Main plugin;
+    public static EquestrianDash plugin;
     public static Location Lap1;
     public static Location Lap2;
     public static Cuboid LapCuboid;
@@ -61,7 +59,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
 
     public static void setItemBoxRegistery(ItemBoxRegistry itemBoxRegistery)
     {
-        Main.itemBoxRegistery = itemBoxRegistery;
+        EquestrianDash.itemBoxRegistery = itemBoxRegistery;
     }
 
     @Override
@@ -186,10 +184,10 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
         pm.registerEvents(new BlockPlaceListener(), this);
         pm.registerEvents(new PlayerRespawnListener(), this);
         pm.registerEvents(new EntityDeathListener(), this);
-        pm.registerEvents(new PlayerDeathListener(), this);
+        //pm.registerEvents(new PlayerDeathListener(), this);
         pm.registerEvents(new PlayerInteractListener(), this);
         pm.registerEvents(new PlayerToggleSprintListener(), this);
-        pm.registerEvents(new EntityShootBowListener(), this);
+        //pm.registerEvents(new EntityShootBowListener(), this);
         pm.registerEvents(new Customization(), this);
         pm.registerEvents(new FoodLevelChangeListener(), this);
         pm.registerEvents(new EntityTargetLivingEntityListener(), this);
@@ -208,16 +206,6 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
                 getLogger().info(powerupsRegistry.getPowerups().size() + " powerups were registered.");
             }
         }, 20L);
-
-
-        if(pm.getPlugin("ProtocolLib") == null)
-        {
-            getLogger().info("No ProtocolLib dependency found. This plugin can run but players will need to respawn by manually clicking the button after death.");
-        }
-        else
-        {
-            getLogger().info("Found and hooked ProtocolLib. Players will respawn automatically after death.");
-        }
 
         if (!plugin.getConfig().getBoolean("EditMode"))
         {
@@ -272,7 +260,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
     {
         trackRegistry = new TrackRegistry();
 
-        String[] files = new File(Main.plugin.getDataFolder() + "/Tracks/").list();
+        String[] files = new File(EquestrianDash.plugin.getDataFolder() + "/Tracks/").list();
 
         int num = 0;
         if (files != null)
@@ -281,7 +269,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
             {
                 World w = Bukkit.getWorld(file);
                 getLogger().info("Registering track for \"" + file + "\"");
-                Main.getTrackRegistry().registerTrack(new Track(w));
+                EquestrianDash.getTrackRegistry().registerTrack(new Track(w));
                 num++;
             }
         }
@@ -292,7 +280,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
 
     private static TrackRegistry trackRegistry;
 
-    public static Main getInstance()
+    public static EquestrianDash getInstance()
     {
         return plugin;
     }
@@ -339,9 +327,13 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
         {
             powerupsRegistry.registerPowerup(new ThiefPowerup());
         }
-        if (plugin.getConfig().getBoolean("Powerups.Chicken.Enabled"))
+        if (plugin.getConfig().getBoolean("Powerups.Trollkin.Enabled"))
         {
-            powerupsRegistry.registerPowerup(new ChickenPowerup());
+            powerupsRegistry.registerPowerup(new TrollkinPowerup());
+        }
+        if (plugin.getConfig().getBoolean("Powerups.Lightning.Enabled"))
+        {
+            powerupsRegistry.registerPowerup(new LightningPowerup());
         }
     }
 
@@ -374,17 +366,6 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor
         return powerupsRegistry;
     }
 
-
-    private ProtocolManager protocolManager;
-
-    @Override
-    public void onLoad()
-    {
-        if(getServer().getPluginManager().getPlugin("ProtocolLib") != null)
-        {
-            protocolManager = ProtocolLibrary.getProtocolManager();
-        }
-    }
 
     private static CooldownHandler cooldownHandler;
 

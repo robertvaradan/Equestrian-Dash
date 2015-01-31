@@ -8,20 +8,20 @@ package com.ColonelHedgehog.Dash.Events;
 
 //import org.bukkit.GameMode;
 
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.HorseJumpEvent;
 import org.bukkit.potion.PotionEffectType;
-import com.ColonelHedgehog.Dash.Core.Main;
 
 /**
  * @author Robert
  */
 public class HorseJumpListener implements Listener
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
     @EventHandler
     public void onJump(HorseJumpEvent event)
@@ -36,7 +36,7 @@ public class HorseJumpListener implements Listener
         {
             event.setPower(event.getPower() * 3);
         }
-        //p.sendMessage(Main.Prefix + "Power is: §4" + event.getPower());
+        //p.sendMessage(EquestrianDash.Prefix + "Power is: §4" + event.getPower());
 
     }
 
@@ -50,7 +50,7 @@ public class HorseJumpListener implements Listener
             {
                 for (int z = -range; z < range; z++)
                 {
-                    if (Main.LapCuboid.contains(h.getLocation().add(x, y, z).getBlock()))
+                    if (EquestrianDash.LapCuboid.contains(h.getLocation().add(x, y, z).getBlock()))
                     {
                         return true;
                     }

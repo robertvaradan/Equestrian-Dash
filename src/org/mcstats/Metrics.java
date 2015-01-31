@@ -52,7 +52,7 @@ public class Metrics
     private final static int REVISION = 7;
 
     /**
-     * The base url of the metrics domain
+     * The base url of the metrics doEquestrianDash
      */
     private static final String BASE_URL = "http://report.mcstats.org";
 

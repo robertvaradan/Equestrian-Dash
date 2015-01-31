@@ -2,6 +2,7 @@ package com.ColonelHedgehog.Dash.API.Powerup.Default;
 
 import com.ColonelHedgehog.Dash.API.Entity.Racer;
 import com.ColonelHedgehog.Dash.API.Powerup.Powerup;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import com.ColonelHedgehog.Dash.Lib.TrackTask;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,7 +11,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
-import com.ColonelHedgehog.Dash.Core.Main;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,16 +27,16 @@ public class ArrowPowerup implements Powerup
     @Override
     public ItemStack getItem()
     {
-        ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Powerups.Arrow.Material")));
+        ItemStack icon = new ItemStack(Material.getMaterial(EquestrianDash.plugin.getConfig().getString("Powerups.Arrow.Material")));
         ItemMeta im = icon.getItemMeta();
-        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Powerups.Arrow.Title")));
+        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', EquestrianDash.plugin.getConfig().getString("Powerups.Arrow.Title")));
         icon.setItemMeta(im);
         return icon;
     }
 
     private String getMessage()
     {
-        return Main.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
+        return EquestrianDash.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
     }
 
     @Override
@@ -65,7 +65,7 @@ public class ArrowPowerup implements Powerup
 
         if (minEntity != null)
         {
-            new TrackTask(a, (LivingEntity) minEntity, Main.plugin);
+            new TrackTask(a, (LivingEntity) minEntity, EquestrianDash.plugin);
         }
 
         racer.getPlayer().getInventory().clear();
@@ -104,7 +104,7 @@ public class ArrowPowerup implements Powerup
     @Override
     public double getChance(int rank)
     {
-        return (rank / Main.plugin.getConfig().getDouble("Powerups.Arrow.Chance")); // Chance that when we hit an item-box, this will be an option.
+        return (rank / EquestrianDash.plugin.getConfig().getDouble("Powerups.Arrow.Chance")); // Chance that when we hit an item-box, this will be an option.
     }
 
     @Override

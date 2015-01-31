@@ -6,7 +6,7 @@
 
 package com.ColonelHedgehog.Dash.Events;
 
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,7 +18,7 @@ import org.bukkit.metadata.FixedMetadataValue;
  */
 public class BlockPlaceListener implements Listener
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
     @SuppressWarnings("deprecation")
     @EventHandler

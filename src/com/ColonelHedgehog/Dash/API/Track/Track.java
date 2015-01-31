@@ -1,6 +1,6 @@
 package com.ColonelHedgehog.Dash.API.Track;
 
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -62,7 +62,7 @@ public class Track
     {
         if (trackDataFile == null)
         {
-            trackDataFile = new File(Main.plugin.getDataFolder() + "/Tracks/" + world.getName(), "TrackData.yml");
+            trackDataFile = new File(EquestrianDash.plugin.getDataFolder() + "/Tracks/" + world.getName(), "TrackData.yml");
         }
 
         trackData  = YamlConfiguration.loadConfiguration(trackDataFile);
@@ -71,7 +71,7 @@ public class Track
         Reader defConfigStream = null;
         try
         {
-            defConfigStream = new InputStreamReader(Main.plugin.getResource("TrackData.yml"), "UTF8");
+            defConfigStream = new InputStreamReader(EquestrianDash.plugin.getResource("TrackData.yml"), "UTF8");
         }
         catch (UnsupportedEncodingException e)
         {
@@ -105,7 +105,7 @@ public class Track
         }
         catch (IOException ex)
         {
-            Main.plugin.getLogger().log(Level.SEVERE, "Could not save config to " + trackData, ex);
+            EquestrianDash.plugin.getLogger().log(Level.SEVERE, "Could not save config to " + trackData, ex);
         }
     }
 

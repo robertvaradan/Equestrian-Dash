@@ -1,11 +1,11 @@
 package com.ColonelHedgehog.Dash.API.Entity;
 
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import com.ColonelHedgehog.Dash.Assets.Ranking;
-import com.ColonelHedgehog.Dash.Core.Main;
 import com.ColonelHedgehog.Dash.Events.PlayerMoveListener;
 
 import java.util.UUID;
@@ -51,12 +51,12 @@ public class Racer
 
     public void setLap(int lap)
     {
-        Bukkit.getPlayer(puuid).setMetadata("playerLap", new FixedMetadataValue(Main.plugin, lap));
+        Bukkit.getPlayer(puuid).setMetadata("playerLap", new FixedMetadataValue(EquestrianDash.plugin, lap));
     }
 
     public void setMarkerPostion(int position)
     {
-        Bukkit.getPlayer(puuid).setMetadata("markerPos", new FixedMetadataValue(Main.plugin, position));
+        Bukkit.getPlayer(puuid).setMetadata("markerPos", new FixedMetadataValue(EquestrianDash.plugin, position));
     }
 
     public boolean isInLine()

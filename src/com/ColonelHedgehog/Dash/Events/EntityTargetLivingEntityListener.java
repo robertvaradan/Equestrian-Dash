@@ -1,6 +1,6 @@
 package com.ColonelHedgehog.Dash.Events;
 
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,7 +13,7 @@ import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
  */
 public class EntityTargetLivingEntityListener implements Listener
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
     @EventHandler
     public void onTarget(EntityTargetLivingEntityEvent event)

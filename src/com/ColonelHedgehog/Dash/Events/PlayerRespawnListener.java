@@ -7,7 +7,7 @@
 package com.ColonelHedgehog.Dash.Events;
 
 import com.ColonelHedgehog.Dash.Assets.GameState;
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import net.minecraft.server.v1_8_R1.GenericAttributes;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -27,14 +27,15 @@ import static org.bukkit.entity.EntityType.HORSE;
  */
 public class PlayerRespawnListener implements Listener
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event)
     {
         Player p = event.getPlayer();
+        //System.out.println("RESPAWN EVENT...");
         Location loc = new Location(p.getWorld(), p.getMetadata("lastLocX").get(0).asDouble(), p.getMetadata("lastLocY").get(0).asDouble(), p.getMetadata("lastLocZ").get(0).asDouble(), p.getMetadata("lastLocPitch").get(0).asFloat(), p.getMetadata("lastLocYaw").get(0).asFloat());
-        event.setRespawnLocation(loc);
+        //event.setRespawnLocation(loc);
         forceRespawn(p);
     }
 
@@ -45,6 +46,7 @@ public class PlayerRespawnListener implements Listener
             @Override
             public void run()
             {
+                //System.out.println("PREPARING RESPAWN SEQUENCE... ");
 
                 Location loc = new Location(p.getWorld(), p.getMetadata("lastLocX").get(0).asDouble(), p.getMetadata("lastLocY").get(0).asDouble(), p.getMetadata("lastLocZ").get(0).asDouble(), p.getMetadata("lastLocPitch").get(0).asFloat(), p.getMetadata("lastLocYaw").get(0).asFloat());
 

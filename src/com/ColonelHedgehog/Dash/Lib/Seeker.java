@@ -6,10 +6,10 @@
 
 package com.ColonelHedgehog.Dash.Lib;
 
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
-import com.ColonelHedgehog.Dash.Core.Main;
 
 /**
  *
@@ -17,7 +17,7 @@ import com.ColonelHedgehog.Dash.Core.Main;
  */
 public class Seeker implements Listener
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
     @EventHandler
     public void onSeek(EntityShootBowEvent event)

@@ -11,7 +11,7 @@ package com.ColonelHedgehog.Dash.Lib;
  * @author Robert
  */
 
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.Sound;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Entity;
@@ -41,7 +41,7 @@ public class TrackTask extends BukkitRunnable
         {
             c = true;
         }
-        m = c ? Main.plugin.getConfig().getDouble("Powerups.Chicken.Multiplier") : 0;
+        m = c ? EquestrianDash.plugin.getConfig().getDouble("Powerups.Chicken.Multiplier") : 0;
     }
 
     @Override

@@ -2,7 +2,8 @@ package com.ColonelHedgehog.Dash.API.Powerup.Default;
 
 import com.ColonelHedgehog.Dash.API.Entity.Racer;
 import com.ColonelHedgehog.Dash.API.Powerup.Powerup;
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -25,16 +26,16 @@ public class ThiefPowerup implements Powerup
     @Override
     public ItemStack getItem()
     {
-        ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Powerups.Thief.Material")));
+        ItemStack icon = new ItemStack(Material.getMaterial(EquestrianDash.plugin.getConfig().getString("Powerups.Thief.Material")));
         ItemMeta im = icon.getItemMeta();
-        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Powerups.Thief.Title")));
+        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', EquestrianDash.plugin.getConfig().getString("Powerups.Thief.Title")));
         icon.setItemMeta(im);
         return icon;
     }
 
     private String getMessage()
     {
-        return Main.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
+        return EquestrianDash.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
     }
 
     @Override
@@ -46,7 +47,7 @@ public class ThiefPowerup implements Powerup
     @Override
     public void doOnLeftClick(Racer racer, Action action)
     {
-        racer.getPlayer().sendMessage(Main.Prefix + "§6Right-click another racer to use this item.");
+        racer.getPlayer().sendMessage(EquestrianDash.Prefix + "§6Right-click another racer to use this item.");
     }
 
     @Override
@@ -62,15 +63,17 @@ public class ThiefPowerup implements Powerup
         ItemStack item = clicked.getPlayer().getInventory().getItem(0);
         if(item != null)
         {
-            racer.getPlayer().sendMessage(Main.Prefix + "§aYou stole §e" + clicked.getPlayer().getName() + "§a's " + item.getItemMeta().getDisplayName() + "§a!");
-            clicked.getPlayer().sendMessage(Main.Prefix + "§e" + racer.getPlayer().getName() + " §cstole your " + item.getItemMeta().getDisplayName() + "§c!");
+            racer.getPlayer().sendMessage(EquestrianDash.Prefix + "§aYou stole §e" + clicked.getPlayer().getName() + "§a's " + item.getItemMeta().getDisplayName() + "§a!");
+            clicked.getPlayer().sendMessage(EquestrianDash.Prefix + "§e" + racer.getPlayer().getName() + " §cstole your " + item.getItemMeta().getDisplayName() + "§c!");
             racer.getPlayer().setItemInHand(item);
             clicked.getPlayer().getInventory().clear();
+            racer.getPlayer().playSound(racer.getPlayer().getLocation(), Sound.CAT_MEOW, 3, 0);
+            clicked.getPlayer().playSound(clicked.getPlayer().getLocation(), Sound.CAT_MEOW, 3, 0);
         }
         else
         {
             racer.getPlayer().playSound(racer.getPlayer().getLocation(), Sound.ITEM_BREAK, 3, 1);
-            racer.getPlayer().sendMessage(Main.Prefix + "§eThe racer you clicked had no powerup, so nothing was stolen! §cWell that was a waste.");
+            racer.getPlayer().sendMessage(EquestrianDash.Prefix + "§eThe racer you clicked had no powerup, so nothing was stolen! §cWell that was a waste.");
             racer.getPlayer().getInventory().clear();
         }
     }
@@ -90,7 +93,9 @@ public class ThiefPowerup implements Powerup
     @Override
     public double getChance(int rank)
     {
-        if(8 - rank < 4.5 && 8 - rank >= 3)
+        int racing = Bukkit.getOnlinePlayers().size();
+
+        if(racing - rank < (racing / 2) + 0.5 && racing - rank >= racing / 2 - 1)
         {
             return 2;
         }

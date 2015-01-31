@@ -12,7 +12,8 @@ import com.ColonelHedgehog.Dash.API.Event.EDRacerLapEvent;
 import com.ColonelHedgehog.Dash.API.Powerup.ItemBox.ItemBox;
 import com.ColonelHedgehog.Dash.Assets.GameState;
 import com.ColonelHedgehog.Dash.Assets.Ranking;
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Assets.Respawner;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import io.puharesource.mc.titlemanager.api.TitleObject;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -33,17 +34,15 @@ import org.bukkit.util.Vector;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.ColonelHedgehog.Dash.Core.Main.LapCuboid;
+import static com.ColonelHedgehog.Dash.Core.EquestrianDash.LapCuboid;
 
 /**
  * @author Robert
  */
 public class PlayerMoveListener implements Listener
 {
-    public static Main plugin = Main.plugin;
-    public static Player[] RPlace;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
     public static ArrayList<Racer> EDFinished = new ArrayList<>();
-    public static ArrayList<Integer> playerScores = new ArrayList<>(); // You can add all the ints in the world to this arraylist.
 
     public static void updateRespawn(Player p)
     {
@@ -80,11 +79,11 @@ public class PlayerMoveListener implements Listener
         {
             if (tloc1.getBlock().getType() != Material.AIR && tloc2.getBlock().getType() != Material.AIR && tloc3.getBlock().getType() != Material.AIR && tloc4.getBlock().getType() != Material.AIR && tloc5.getBlock().getType() != Material.AIR && tloc6.getBlock().getType() != Material.AIR && tloc7.getBlock().getType() != Material.AIR && tloc8.getBlock().getType() != Material.AIR)
             {
-                if (!checkFor(Material.PISTON_MOVING_PIECE, p, 7, 7, 7) && eloc1.getBlock().getType() != Material.AIR && eloc2.get().getBlock().getType() != Material.AIR && eloc3.getBlock().getType() != Material.AIR && eloc4.getBlock().getType() != Material.AIR && eloc5.getBlock().getType() != Material.AIR && eloc6.getBlock().getType() != Material.AIR && eloc7.getBlock().getType() != Material.AIR && eloc8.getBlock().getType() != Material.AIR)
+                if (eloc1.getBlock().getType() != Material.AIR && eloc2.get().getBlock().getType() != Material.AIR && eloc3.getBlock().getType() != Material.AIR && eloc4.getBlock().getType() != Material.AIR && eloc5.getBlock().getType() != Material.AIR && eloc6.getBlock().getType() != Material.AIR && eloc7.getBlock().getType() != Material.AIR && eloc8.getBlock().getType() != Material.AIR)
                 {
-                    //p.sendMessage(Main.Prefix + "§6Stage 1: No air");
+                    //p.sendMessage(EquestrianDash.Prefix + "§6Stage 1: No air");
 
-                    //p.sendMessage(Main.Prefix + "§aStage 3: No lava, saving pos...");
+                    //p.sendMessage(EquestrianDash.Prefix + "§aStage 3: No lava, saving pos...");
                     p.setMetadata("lastLocX", new FixedMetadataValue(plugin, p.getLocation().getX()));
                     p.setMetadata("lastLocY", new FixedMetadataValue(plugin, p.getLocation().getY()));
                     p.setMetadata("lastLocZ", new FixedMetadataValue(plugin, p.getLocation().getZ()));
@@ -96,13 +95,13 @@ public class PlayerMoveListener implements Listener
 
         if (checkFor(Material.LAVA, p, 2, 2, 2) || checkFor(Material.STATIONARY_LAVA, p, 2, 2, 2))
         {
-            p.damage(30.00);
+            Respawner.respawn(p);
         }
     }
 
     public static void plCooldown(final Player p)
     {
-        Main.getCooldownHandler().placeInCooldown(p, 5000L);
+        EquestrianDash.getCooldownHandler().placeInCooldown(p, 5000L);
     }
 
     public static int evalPlace(Player p)
@@ -147,13 +146,13 @@ public class PlayerMoveListener implements Listener
 
                             }
                         }
-                        //Main.plugin.getLogger().info("LINES ARE 1: " + signline1 + ", 2:" + signline2);
-                        //p.sendMessage(Main.Prefix + "Debug: Was a sign. " + signline1 + " and " + signline2);
+                        //EquestrianDash.plugin.getLogger().info("LINES ARE 1: " + signline1 + ", 2:" + signline2);
+                        //p.sendMessage(EquestrianDash.Prefix + "Debug: Was a sign. " + signline1 + " and " + signline2);
 
 
                         if ("#".equals(signline1) && isInteger(replace))
                         {
-                            //p.sendMessage(Main.Prefix + "Debug: Line 2 is int.");
+                            //p.sendMessage(EquestrianDash.Prefix + "Debug: Line 2 is int.");
                             int markers = GameState.getCurrentTrack().getTrackData().getInt("Editor.Markers");
                             int plap = p.getMetadata("playerLap").get(0).asInt();
                             p.setMetadata("markerPos", new FixedMetadataValue(plugin, Integer.parseInt(replace)));
@@ -161,12 +160,9 @@ public class PlayerMoveListener implements Listener
                             int ppos = p.getMetadata("markerPos").get(0).asInt();
 
 
-                            int racenum = (plap * markers) + ppos;
-
-
                             //Bukkit.broadcastMessage(racenum + " : IS IT");
-                                //p.sendMessage(Main.Prefix + "Debug: Lap was smaller than 1.");
-                            return racenum;
+                                //p.sendMessage(EquestrianDash.Prefix + "Debug: Lap was smaller than 1.");
+                            return (plap * markers) + ppos;
 
                         }
                         else
@@ -176,9 +172,7 @@ public class PlayerMoveListener implements Listener
                             int plap = p.getMetadata("playerLap").get(0).asInt();
 
 
-                            int racenum = (plap * markers) + ppos;
-
-                            return racenum;
+                            return (plap * markers) + ppos;
                         }
                     }
                 }
@@ -217,7 +211,7 @@ public class PlayerMoveListener implements Listener
             {
                 for (int z = -(rZ); z <= rZ; z++)
                 {
-                    Block b = p.getWorld().getBlockAt((int) pX + x, (int) pY + y, (int) pZ + z);
+                    Block b = p.getWorld().getBlockAt(pX + x, pY + y, pZ + z);
 
                     if (b.getType() == m)
                     {
@@ -352,7 +346,7 @@ public class PlayerMoveListener implements Listener
             {
                 Entity v = p.getVehicle();
 
-                //p.sendMessage(Main.Prefix + "§bTo: " + event.getTo().getZ() + " §6From: " + event.getFrom().getZ() + " §eDiff: " + (event.getTo().getZ() - event.getFrom().getZ()));
+                //p.sendMessage(EquestrianDash.Prefix + "§bTo: " + event.getTo().getZ() + " §6From: " + event.getFrom().getZ() + " §eDiff: " + (event.getTo().getZ() - event.getFrom().getZ()));
                 if (p.getGameMode() != GameMode.CREATIVE)
                 {
                     if (p.isSprinting())
@@ -382,7 +376,7 @@ public class PlayerMoveListener implements Listener
                         if (lap < GameState.getCurrentTrack().getTrackData().getInt("Laps"))
                         {
                             p.sendMessage(PlayerJoinListener.Prefix + "§9§lLAP §a§l" + (lap) + "!");
-                            if(Main.tm)
+                            if(EquestrianDash.tm)
                             {
                                 new TitleObject("§9§lLAP §a§l" + (lap) + "!", "").setStay(60).setFadeIn(10).setFadeOut(10).send(p);
                             }
@@ -391,7 +385,7 @@ public class PlayerMoveListener implements Listener
                         else if (lap == GameState.getCurrentTrack().getTrackData().getInt("Laps"))
                         {
                             p.sendMessage(PlayerJoinListener.Prefix + "§8§l§o§nF§f§l§o§nI§8§l§o§nN§8§l§o§nA§f§l§o§nL §8§l§o§nL§f§l§o§nA§8§l§o§nP§f§l§o§n!");
-                            if (Main.tm)
+                            if (EquestrianDash.tm)
                             {
                                 new TitleObject("§8§l§o§nF§f§l§o§nI§8§l§o§nN§8§l§o§nA§f§l§o§nL §8§l§o§nL§f§l§o§nA§8§l§o§nP§f§l§o§n!", "").setStay(60).setFadeIn(10).setFadeOut(10).send(p);
                             }
@@ -409,7 +403,7 @@ public class PlayerMoveListener implements Listener
 
                                 }
 
-                                Bukkit.broadcastMessage(Main.Prefix + "§aThe race has ended! §bAll required players have finished.");
+                                Bukkit.broadcastMessage(EquestrianDash.Prefix + "§aThe race has ended! §bAll required players have finished.");
                                 TreeMap<UUID, Integer> nubs = Ranking.getPlayersArranged();
                                 List<Racer> morenubs = new ArrayList<>();
                                 for (Map.Entry<UUID, Integer> nub : nubs.entrySet())
@@ -523,7 +517,7 @@ public class PlayerMoveListener implements Listener
                                         {
                                             for(Player on : Bukkit.getOnlinePlayers())
                                             {
-                                                on.kickPlayer(Main.Prefix + "§cThe game has ended.");
+                                                on.kickPlayer(EquestrianDash.Prefix + "§cThe game has ended.");
                                             }
 
                                             restart();
@@ -552,7 +546,7 @@ public class PlayerMoveListener implements Listener
 
                             messageExcept(p, PlayerJoinListener.Prefix + "§c" + p.getName().toUpperCase() + " §eHAS FINISHED §d§l" + det.toUpperCase() + "!");
                             p.sendMessage(PlayerJoinListener.Prefix + "§c§oYOU'VE FINISHED §d§l" + det.toUpperCase() + "!");
-                            if(Main.tm)
+                            if(EquestrianDash.tm)
                             {
                                 new TitleObject("§c§lFINISHED!", "§b§lYou've finished in §a§l" + det + "!").setStay(60).setFadeIn(10).setFadeOut(10).send(p);
                             }
@@ -566,10 +560,10 @@ public class PlayerMoveListener implements Listener
                 {
                     v.setVelocity(new Vector(0, 0.5, 1.5));
                     p.setVelocity(new Vector(0, 0.5, 1.5));
-                    p.sendMessage(Main.Prefix + "§4§oWrong way, cheater! Turn around.");
+                    p.sendMessage(EquestrianDash.Prefix + "§4§oWrong way, cheater! Turn around.");
                 }
 
-                //p.sendMessage(Main.Prefix + "§aDebug: §bPlayer in raceline!");
+                //p.sendMessage(EquestrianDash.Prefix + "§aDebug: §bPlayer in raceline!");
             }
         }
         else
@@ -589,13 +583,13 @@ public class PlayerMoveListener implements Listener
         {
             for(Entity e : p.getNearbyEntities(0.25, 0.25, 0.25))
             {
-                ItemBox ib = Main.getItemBoxRegistry().getByLocation(e.getLocation());
-                if (ib != null)
-                    //p.sendMessage(Main.Prefix + "Debug: Crystal nearby.");
+                ItemBox ib = EquestrianDash.getItemBoxRegistry().getByLocation(e.getLocation());
+                if (ib != null && ib.getEnderCrystal() != null && !ib.getEnderCrystal().isDead())
+                    //p.sendMessage(EquestrianDash.Prefix + "Debug: Crystal nearby.");
 
-                    if (!Main.getCooldownHandler().isCooling(p))
+                    if (!EquestrianDash.getCooldownHandler().isCooling(p))
                     {
-                        //p.sendMessage(Main.Prefix + "Debug: Not cooling down.");
+                        //p.sendMessage(EquestrianDash.Prefix + "Debug: Not cooling down.");
 
                         ib.getLocation().getWorld().playEffect(ib.getLocation(), Effect.STEP_SOUND, 20);
                         ib.getLocation().getWorld().playSound(ib.getLocation(), Sound.GLASS, 3, 1);

@@ -6,7 +6,7 @@ import org.bukkit.entity.Horse;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldInitEvent;
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class WorldLoadListener implements Listener
             h.remove();
         }
 
-        Main.plugin.getLogger().info("Removed " + toremove.size() + " horse(s).");
+        EquestrianDash.plugin.getLogger().info("Removed " + toremove.size() + " horse(s).");
     }
 
     @EventHandler

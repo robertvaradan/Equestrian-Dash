@@ -6,7 +6,7 @@
 
 package com.ColonelHedgehog.Dash.Assets;
 
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 
 /**
  *
@@ -14,7 +14,7 @@ import com.ColonelHedgehog.Dash.Core.Main;
  */
 public class Racetrack 
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
 
 

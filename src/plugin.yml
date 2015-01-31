@@ -1,8 +1,8 @@
 name: EquestrianDash
-main: com.ColonelHedgehog.Dash.Core.Main
+main: com.ColonelHedgehog.Dash.Core.EquestrianDash
 version: 0.9
 author: TheHandfish
-softdepend: [ProtocolLib, Multiverse-Core, TitleManager]
+softdepend: [Multiverse-Core, TitleManager]
 load: POSTWORLD
 commands:
   ed:

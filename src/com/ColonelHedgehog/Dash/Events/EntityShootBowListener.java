@@ -6,7 +6,7 @@
 
 package com.ColonelHedgehog.Dash.Events;
 
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.*;
@@ -21,7 +21,7 @@ import org.bukkit.scheduler.BukkitRunnable;
  */
 public class EntityShootBowListener implements Listener
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
     public static void createArrows(final Entity e, final Projectile p)
     {

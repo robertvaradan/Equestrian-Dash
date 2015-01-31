@@ -1,7 +1,7 @@
 package com.ColonelHedgehog.Dash.API.Powerup;
 
 import com.ColonelHedgehog.Dash.API.Lang.PowerupAlreadyRegisteredException;
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class PowerupsRegistry
             }
             catch (PowerupAlreadyRegisteredException e)
             {
-                Main.plugin.getLogger().severe(e.getMessage());
+                EquestrianDash.plugin.getLogger().severe(e.getMessage());
                 e.printStackTrace();
             }
         }

@@ -6,6 +6,7 @@
 
 package com.ColonelHedgehog.Dash.Lib;
 
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import com.ColonelHedgehog.Dash.Events.PlayerInteractListener;
 import com.ColonelHedgehog.Dash.Events.PlayerJoinListener;
 import org.bukkit.Bukkit;
@@ -20,7 +21,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
-import com.ColonelHedgehog.Dash.Core.Main;
 
 import static com.ColonelHedgehog.Dash.Events.PlayerInteractEntityListener.setName;
 
@@ -30,7 +30,7 @@ import static com.ColonelHedgehog.Dash.Events.PlayerInteractEntityListener.setNa
  */
 public class Customization implements Listener
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
     @EventHandler
     public void onInv(InventoryClickEvent event)

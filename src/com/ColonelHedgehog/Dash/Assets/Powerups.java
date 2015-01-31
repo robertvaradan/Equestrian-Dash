@@ -6,6 +6,7 @@
 
 package com.ColonelHedgehog.Dash.Assets;
 
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import com.ColonelHedgehog.Dash.Events.PlayerJoinListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -19,7 +20,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import com.ColonelHedgehog.Dash.Core.Main;
 
 /**
  *
@@ -27,7 +27,7 @@ import com.ColonelHedgehog.Dash.Core.Main;
  */
 public class Powerups implements Listener
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
     
     public static void specialTnT(Player p)
     {
@@ -213,7 +213,7 @@ public class Powerups implements Listener
                     {
                     num = p.getMetadata("superColorCount").get(0).asInt();
                     }
-                    //p.sendMessage(Main.Prefix + "SuperCharged Debug: Inversion - " + num);
+                    //p.sendMessage(EquestrianDash.Prefix + "SuperCharged Debug: Inversion - " + num);
                 
                 setColoredArmor(p, num);
                 

@@ -9,7 +9,7 @@ package com.ColonelHedgehog.Dash.Events;
 import com.ColonelHedgehog.Dash.API.Entity.Racer;
 import com.ColonelHedgehog.Dash.API.Powerup.ItemBox.ItemBox;
 import com.ColonelHedgehog.Dash.API.Powerup.Powerup;
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,7 +22,7 @@ import static org.bukkit.GameMode.CREATIVE;
  */
 public class EntityDamageByEntityListener implements Listener
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
     @EventHandler
     public void onCombust(EntityDamageByEntityEvent event)
@@ -39,22 +39,22 @@ public class EntityDamageByEntityListener implements Listener
 
                 if (p.getGameMode() == CREATIVE)
                 {
-                    if(Main.getItemBoxRegistry().getByLocation(e.getLocation()) != null)
+                    if(EquestrianDash.getItemBoxRegistry().getByLocation(e.getLocation()) != null)
                     {
-                        ItemBox ib = Main.getItemBoxRegistry().getByLocation(e.getLocation());
+                        ItemBox ib = EquestrianDash.getItemBoxRegistry().getByLocation(e.getLocation());
                         ib.getEnderCrystal().remove();
-                        Main.getItemBoxRegistry().deregister(ib, true);
-                        p.sendMessage(Main.Prefix + "§aRemoved Item Box.");
+                        EquestrianDash.getItemBoxRegistry().deregister(ib, true);
+                        p.sendMessage(EquestrianDash.Prefix + "§aRemoved Item Box.");
 
                     }
                     else
                     {
                         e.remove();
-                        p.sendMessage(Main.Prefix + "§cRemoved Ender Crystal. §eIt was not an Item Box.");
+                        p.sendMessage(EquestrianDash.Prefix + "§cRemoved Ender Crystal. §eIt was not an Item Box.");
                     }
                 }
             }
-            ItemBox ib = Main.getItemBoxRegistry().getByLocation(e.getLocation());
+            ItemBox ib = EquestrianDash.getItemBoxRegistry().getByLocation(e.getLocation());
             if (ib != null)
             {
                 ib.respawn();
@@ -73,9 +73,9 @@ public class EntityDamageByEntityListener implements Listener
 
                 if (hurter.getItemInHand() != null)
                 {
-                    for (Powerup pow : Main.getPowerupsRegistry().getPowerups())
+                    for (Powerup pow : EquestrianDash.getPowerupsRegistry().getPowerups())
                     {
-                        if (pow.getItem().equals(hurter.getItemInHand()))
+                        if (pow.getItem().getType() == hurter.getItemInHand().getType() && pow.getItem().getDurability() == hurter.getItemInHand().getDurability())
                         {
                             pow.doOnLeftClickRacer(new Racer(hurter), new Racer(victim));
                             if (pow.cancelledEvents().contains(Powerup.ActionType.ALL) || pow.cancelledEvents().contains(Powerup.ActionType.LEFT_CLICK_ENTITY))

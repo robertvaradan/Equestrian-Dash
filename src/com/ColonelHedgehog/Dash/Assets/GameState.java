@@ -2,7 +2,7 @@ package com.ColonelHedgehog.Dash.Assets;
 
 import com.ColonelHedgehog.Dash.API.Powerup.ItemBox.ItemBox;
 import com.ColonelHedgehog.Dash.API.Track.Track;
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.Bukkit;
 
 /**
@@ -42,7 +42,7 @@ public class GameState
             throw new NullPointerException();
         }
 
-        for(Track others: Main.getTrackRegistry().getTracks())
+        for(Track others: EquestrianDash.getTrackRegistry().getTracks())
         {
             if(!others.equals(track))
             {
@@ -52,20 +52,20 @@ public class GameState
         }
 
 
-        String[] s = Main.plugin.getConfig().getString("Lobby").split(",");
+        String[] s = EquestrianDash.plugin.getConfig().getString("Lobby").split(",");
 
         Bukkit.unloadWorld(Bukkit.getWorld(s[0]), false);
-        Main.buildRaceline();
+        EquestrianDash.buildRaceline();
         Bukkit.getLogger().info("Unloading world \"" + s[0] + "\".");
 
         int i = 0;
-        for (ItemBox ib : Main.getItemBoxRegistry().getByWorld(track.getWorld()))
+        for (ItemBox ib : EquestrianDash.getItemBoxRegistry().getByWorld(track.getWorld()))
         {
             i++;
             ib.spawn(true);
         }
 
-        Main.getInstance().getLogger().info(i + " Item Box" + (i == 1 ? "" : "es") + " were spawned on track: \"" + track.getDisplayName() + "\".");
+        EquestrianDash.getInstance().getLogger().info(i + " Item Box" + (i == 1 ? "" : "es") + " were spawned on track: \"" + track.getDisplayName() + "\".");
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ed reload");
     }

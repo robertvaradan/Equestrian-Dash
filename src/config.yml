@@ -111,18 +111,30 @@ Powerups:
     SpeedMultiplier: 2
     # No material setting.
     Chance: 2
+  Lightning:
+    Enabled: true
+    Material: 'BLAZE_ROD'
+    Chance: 4
+    Title: '&f&lLightning Powerup'
+    Amount: 3
+    Force: 1 # Explosion size.
+    Speed: 5 # 20 ticks = 1 lightning strike per second.
+    Range: 15 # How many blocks out should this reach?
+    YOffset: -3
   Thief:
     Enabled: true
     Title: '&7&lThief Powerup'
     Material: 'FERMENTED_SPIDER_EYE'
     # No chance settings. It's engineered to give you it more commonly if you're in a middle place.
-  Chicken:
+  Trollkin:
     Enabled: true
-    Title: '&4&lChicken &8&lPowerup'
-    # No material setting.
-    ExplosionSize: 5
+    Title: '&6&lTrollkin Powerup'
+    Material: 'PUMPKIN'
     Chance: 4
-    DelayInSeconds: 10
-    Multiplier: 2
+    Effects:
+      Length: 200
+      Power: 5
+      PumpkinHelmet: true
+
 
 # --- CONFIG END --- #

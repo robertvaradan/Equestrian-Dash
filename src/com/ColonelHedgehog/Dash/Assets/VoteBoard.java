@@ -1,10 +1,10 @@
 package com.ColonelHedgehog.Dash.Assets;
 
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 import com.ColonelHedgehog.Dash.API.Track.Track;
-import com.ColonelHedgehog.Dash.Core.Main;
 
 import java.util.*;
 
@@ -30,7 +30,7 @@ public class VoteBoard
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         obj.setDisplayName("§aMap Voting");
 
-        for(Track track : Main.getTrackRegistry().getTracks())
+        for(Track track : EquestrianDash.getTrackRegistry().getTracks())
         {
             Votes.put(track, 0);
         }

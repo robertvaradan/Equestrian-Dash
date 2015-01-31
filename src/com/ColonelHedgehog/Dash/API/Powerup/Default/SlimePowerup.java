@@ -2,6 +2,7 @@ package com.ColonelHedgehog.Dash.API.Powerup.Default;
 
 import com.ColonelHedgehog.Dash.API.Entity.Racer;
 import com.ColonelHedgehog.Dash.API.Powerup.Powerup;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -14,7 +15,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
-import com.ColonelHedgehog.Dash.Core.Main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,16 +30,16 @@ public class SlimePowerup implements Powerup
     @Override
     public ItemStack getItem()
     {
-        ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Powerups.Slime.Material")));
+        ItemStack icon = new ItemStack(Material.getMaterial(EquestrianDash.plugin.getConfig().getString("Powerups.Slime.Material")));
         ItemMeta im = icon.getItemMeta();
-        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Powerups.Slime.Title")));
+        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', EquestrianDash.plugin.getConfig().getString("Powerups.Slime.Title")));
         icon.setItemMeta(im);
         return icon;
     }
 
     private String getMessage()
     {
-        return Main.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
+        return EquestrianDash.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
     }
 
     @Override
@@ -53,10 +53,10 @@ public class SlimePowerup implements Powerup
         final Slime s2 = (Slime) p.getWorld().spawnEntity(l2, EntityType.SLIME);
         final Slime s3 = (Slime) p.getWorld().spawnEntity(l1, EntityType.SLIME);
         final Slime s4 = (Slime) p.getWorld().spawnEntity(l2, EntityType.SLIME);
-        s1.setMetadata("Creator", new FixedMetadataValue(Main.plugin, p.getName()));
-        s2.setMetadata("Creator", new FixedMetadataValue(Main.plugin, p.getName()));
-        s3.setMetadata("Creator", new FixedMetadataValue(Main.plugin, p.getName()));
-        s4.setMetadata("Creator", new FixedMetadataValue(Main.plugin, p.getName()));
+        s1.setMetadata("Creator", new FixedMetadataValue(EquestrianDash.plugin, p.getName()));
+        s2.setMetadata("Creator", new FixedMetadataValue(EquestrianDash.plugin, p.getName()));
+        s3.setMetadata("Creator", new FixedMetadataValue(EquestrianDash.plugin, p.getName()));
+        s4.setMetadata("Creator", new FixedMetadataValue(EquestrianDash.plugin, p.getName()));
         p.getInventory().clear();
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("EquestrianDash"), new Runnable()
@@ -73,7 +73,7 @@ public class SlimePowerup implements Powerup
                 s3.getWorld().createExplosion(s3.getLocation(), (float) 0.0);
                 s4.getWorld().createExplosion(s4.getLocation(), (float) 0.0);
             }
-        }, Main.plugin.getConfig().getLong("Powerups.Slime.RemoveAfter"));
+        }, EquestrianDash.plugin.getConfig().getLong("Powerups.Slime.RemoveAfter"));
     }
 
     @Override
@@ -109,7 +109,7 @@ public class SlimePowerup implements Powerup
     @Override
     public double getChance(int rank)
     {
-        return (8 - rank) / Main.plugin.getConfig().getDouble("Powerups.Slime.Chance");
+        return (8 - rank) / EquestrianDash.plugin.getConfig().getDouble("Powerups.Slime.Chance");
     }
 
     @Override

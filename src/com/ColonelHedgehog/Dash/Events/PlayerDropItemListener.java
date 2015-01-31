@@ -2,13 +2,13 @@ package com.ColonelHedgehog.Dash.Events;
 
 import com.ColonelHedgehog.Dash.API.Entity.Racer;
 import com.ColonelHedgehog.Dash.API.Powerup.Powerup;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import com.ColonelHedgehog.Dash.Core.Main;
 
 import java.util.UUID;
 
@@ -19,15 +19,15 @@ import java.util.UUID;
  */
 public class PlayerDropItemListener implements Listener
 {
-    private Main plugin = Main.plugin;
+    private EquestrianDash plugin = EquestrianDash.plugin;
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event)
     {
         Racer racer = new Racer(event.getPlayer());
-        for (Powerup powerup : Main.getPowerupsRegistry().getPowerups())
+        for (Powerup powerup : EquestrianDash.getPowerupsRegistry().getPowerups())
         {
-            if (powerup.getItem().equals(event.getItemDrop().getItemStack()) && !racer.inventoryIsSpinning())
+            if (powerup.getItem().getType() == event.getItemDrop().getItemStack().getType() && powerup.getItem().getDurability() == event.getItemDrop().getItemStack().getDurability() && !racer.inventoryIsSpinning())
             {
                 powerup.doOnDrop(new Racer(event.getPlayer()), event.getItemDrop());
                 if (powerup.cancelledEvents().contains(Powerup.ActionType.DROP) || powerup.cancelledEvents().contains(Powerup.ActionType.ALL))
@@ -51,9 +51,9 @@ public class PlayerDropItemListener implements Listener
     public void onItemPickup(PlayerPickupItemEvent event)
     {
         Racer racer = new Racer(event.getPlayer());
-        for (Powerup powerup : Main.getPowerupsRegistry().getPowerups())
+        for (Powerup powerup : EquestrianDash.getPowerupsRegistry().getPowerups())
         {
-            if (powerup.getItem().equals(event.getItem().getItemStack()) && !racer.inventoryIsSpinning())
+            if (powerup.getItem().getType() == event.getItem().getItemStack().getType() && powerup.getItem().getDurability() == event.getItem().getItemStack().getDurability() && !racer.inventoryIsSpinning())
             {
                 try
                 {

@@ -7,6 +7,7 @@
 package com.ColonelHedgehog.Dash.Events;
 
 import com.ColonelHedgehog.Dash.API.Powerup.Powerup;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -20,7 +21,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import com.ColonelHedgehog.Dash.API.Entity.Racer;
-import com.ColonelHedgehog.Dash.Core.Main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class PlayerInteractListener implements Listener
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
     public static void addLore(ItemStack is, String lore)
     {
@@ -128,9 +128,9 @@ public class PlayerInteractListener implements Listener
         }
         else if (p.getGameMode() != GameMode.CREATIVE)
         {
-            for (Powerup powerup : Main.getPowerupsRegistry().getPowerups())
+            for (Powerup powerup : EquestrianDash.getPowerupsRegistry().getPowerups())
             {
-                if (powerup.getItem().equals(p.getItemInHand()))
+                if (powerup.getItem().getType() == p.getItemInHand().getType() && powerup.getItem().getDurability() == p.getItemInHand().getDurability())
                 {
                     if (!new Racer(event.getPlayer()).inventoryIsSpinning())
                     {

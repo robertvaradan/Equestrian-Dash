@@ -1,7 +1,7 @@
 package com.ColonelHedgehog.Dash.Assets.Commands;
 
 import com.ColonelHedgehog.Dash.Assets.VoteBoard;
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -22,7 +22,7 @@ public class VoteCmd implements CommandExecutor
     {
         if(cs instanceof Player)
         {
-            if (!Main.plugin.getConfig().getBoolean("Countdown.RandomPick"))
+            if (!EquestrianDash.plugin.getConfig().getBoolean("Countdown.RandomPick"))
             {
                 if (!VoteBoard.getVoters().contains(((Player) cs).getUniqueId()))
                 {
@@ -34,19 +34,19 @@ public class VoteCmd implements CommandExecutor
                             builder.append(" " + arg);
                         }
 
-                        Track voted = Main.getTrackRegistry().getClosest(builder.toString());
+                        Track voted = EquestrianDash.getTrackRegistry().getClosest(builder.toString().trim());
 
                         if (voted == null)
                         {
-                            cs.sendMessage(Main.Prefix + "§4Error: §cUnknown track: \"§e" + builder.toString() + "§c\".");
+                            cs.sendMessage(EquestrianDash.Prefix + "§4Error: §cUnknown track: \"§e" + builder.toString().trim() + "§c\".");
                             return false;
                         }
 
-                        cs.sendMessage(Main.Prefix + "§aVoted for \"§b" + voted.getDisplayName() + "§a\"!");
+                        cs.sendMessage(EquestrianDash.Prefix + "§aVoted for \"§b" + voted.getDisplayName() + "§a\"!");
 
-                        if (!Main.plugin.getConfig().getBoolean("AnonymousVotes"))
+                        if (!EquestrianDash.plugin.getConfig().getBoolean("AnonymousVotes"))
                         {
-                            Bukkit.broadcastMessage(Main.Prefix + "§e" + cs.getName() + " §ahas voted for §b" + voted.getDisplayName() + "§a.");
+                            Bukkit.broadcastMessage(EquestrianDash.Prefix + "§e" + cs.getName() + " §ahas voted for §b" + voted.getDisplayName() + "§a.");
                         }
 
                         Player p = (Player) cs;
@@ -58,22 +58,22 @@ public class VoteCmd implements CommandExecutor
                     }
                     else
                     {
-                        cs.sendMessage(Main.Prefix + "§4Error: §cNo track specified!");
+                        cs.sendMessage(EquestrianDash.Prefix + "§4Error: §cNo track specified!");
                     }
                 }
                 else
                 {
-                    cs.sendMessage(Main.Prefix + "§cYou've already voted!");
+                    cs.sendMessage(EquestrianDash.Prefix + "§cYou've already voted!");
                 }
             }
             else
             {
-                cs.sendMessage(Main.Prefix + "§6Voting for maps is not enabled on this server.");
+                cs.sendMessage(EquestrianDash.Prefix + "§6Voting for maps is not enabled on this server.");
             }
         }
         else
         {
-            cs.sendMessage(Main.Prefix + "§4Error: §cYou are not a player.");
+            cs.sendMessage(EquestrianDash.Prefix + "§4Error: §cYou are not a player.");
         }
         return false;
     }

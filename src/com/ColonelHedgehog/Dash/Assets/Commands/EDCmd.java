@@ -2,7 +2,7 @@ package com.ColonelHedgehog.Dash.Assets.Commands;
 
 import com.ColonelHedgehog.Dash.API.Powerup.ItemBox.ItemBox;
 import com.ColonelHedgehog.Dash.API.Track.Track;
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import com.ColonelHedgehog.Dash.Events.WorldLoadListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -28,7 +28,7 @@ import static com.ColonelHedgehog.Dash.Events.PlayerJoinListener.Prefix;
  */
 public class EDCmd implements CommandExecutor
 {
-    private Main plugin = Main.plugin;
+    private EquestrianDash plugin = EquestrianDash.plugin;
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
@@ -42,7 +42,7 @@ public class EDCmd implements CommandExecutor
                     {
                         if(args.length > 2)
                         {
-                            if (Main.getTrackRegistry().getTrackByID(args[2]) == null)
+                            if (EquestrianDash.getTrackRegistry().getTrackByID(args[2]) == null)
                             {
                                 World w = Bukkit.getWorld(args[2]);
                                 if(w != null)
@@ -51,59 +51,59 @@ public class EDCmd implements CommandExecutor
                                     {
                                         Track track = new Track(w);
                                         track.initialize(args[3]);
-                                        Main.getTrackRegistry().registerTrack(track);
+                                        EquestrianDash.getTrackRegistry().registerTrack(track);
                                     }
                                     else
                                     {
                                         Track track = new Track(w);
                                         track.initialize(w.getName());
-                                        Main.getTrackRegistry().registerTrack(track);
+                                        EquestrianDash.getTrackRegistry().registerTrack(track);
                                     }
-                                    sender.sendMessage(Main.Prefix + "§aTrack added!");
+                                    sender.sendMessage(EquestrianDash.Prefix + "§aTrack added!");
                                 }
                                 else
                                 {
-                                    sender.sendMessage(Main.Prefix + "§6The specified world doesn't exist!");
+                                    sender.sendMessage(EquestrianDash.Prefix + "§6The specified world doesn't exist!");
                                 }
                             }
                             else
                             {
-                                sender.sendMessage(Main.Prefix + "§6This world has already been registered as a track.");
+                                sender.sendMessage(EquestrianDash.Prefix + "§6This world has already been registered as a track.");
                             }
                         }
                         else
                         {
-                            sender.sendMessage(Main.Prefix + "§4Error: §cToo few arguments! Do §e/ed help §cfor help.");
+                            sender.sendMessage(EquestrianDash.Prefix + "§4Error: §cToo few arguments! Do §e/ed help §cfor help.");
                         }
                     }
                     else if(args[1].equalsIgnoreCase("del"))
                     {
                         if(args.length > 2)
                         {
-                            Track t = Main.getTrackRegistry().getTrackByID(args[2]);
+                            Track t = EquestrianDash.getTrackRegistry().getTrackByID(args[2]);
                             File f = new File(plugin.getDataFolder() + "/Tracks/" + t.getWorld().getName());
-                            boolean done = f.delete() || (Main.getTrackRegistry().getTrackByID(args[2]) != null); // cri cri
+                            boolean done = f.delete() || (EquestrianDash.getTrackRegistry().getTrackByID(args[2]) != null); // cri cri
                             String trackname = t.getDisplayName();
-                            Main.getTrackRegistry().deregisterTrack(t);
+                            EquestrianDash.getTrackRegistry().deregisterTrack(t);
                             if(done)
                             {
-                                Main.plugin.getLogger().info("Deleted a track named " + trackname + " for world " + t.getWorld() + ".");
-                                sender.sendMessage(Main.Prefix + "§aWorld \"§e" + t.getWorld().getName() + "§a\" is no longer a track.");
+                                EquestrianDash.plugin.getLogger().info("Deleted a track named " + trackname + " for world " + t.getWorld() + ".");
+                                sender.sendMessage(EquestrianDash.Prefix + "§aWorld \"§e" + t.getWorld().getName() + "§a\" is no longer a track.");
                             }
                             else
                             {
-                                sender.sendMessage(Main.Prefix + "§cCouldn't delete Track! Does it exist?");
+                                sender.sendMessage(EquestrianDash.Prefix + "§cCouldn't delete Track! Does it exist?");
                             }
                         }
                         else
                         {
-                            sender.sendMessage(Main.Prefix + "§cToo few arguments! Do §e/ed help §cfor help.");
+                            sender.sendMessage(EquestrianDash.Prefix + "§cToo few arguments! Do §e/ed help §cfor help.");
                         }
                     }
                     else if(args[1].equalsIgnoreCase("list"))
                     {
-                        sender.sendMessage(Main.Prefix + "§b§lAll registered tracks:");
-                        List<Track> tracks = Main.getTrackRegistry().getTracks();
+                        sender.sendMessage(EquestrianDash.Prefix + "§b§lAll registered tracks:");
+                        List<Track> tracks = EquestrianDash.getTrackRegistry().getTracks();
                         for(Track track : tracks)
                         {
                             sender.sendMessage("§8- §9Name: \"§b" + track.getDisplayName() + "§9\", World: §b" + track.getWorld().getName());
@@ -116,12 +116,12 @@ public class EDCmd implements CommandExecutor
                     }
                     else
                     {
-                        sender.sendMessage(Main.Prefix + "§cUnknown option: \"§e" + args[1] + "§c\". Do §e/ed help §cfor help.");
+                        sender.sendMessage(EquestrianDash.Prefix + "§cUnknown option: \"§e" + args[1] + "§c\". Do §e/ed help §cfor help.");
                     }
                 }
                 else
                 {
-                    sender.sendMessage(Main.Prefix + "§cToo few arguments! Do §e/ed help§c for help.");
+                    sender.sendMessage(EquestrianDash.Prefix + "§cToo few arguments! Do §e/ed help§c for help.");
                 }
             }
             else if (args[0].equalsIgnoreCase("line1"))  // If the player typed /basic then do the following...
@@ -129,11 +129,11 @@ public class EDCmd implements CommandExecutor
                 if (sender instanceof Player)
                 {
                     Player p = (Player) sender;
-                    p.sendMessage(Main.Prefix + "§9Editor: §bPosition 1§3 has been set.");
-                    Track t = Main.getTrackRegistry().getTrackByWorld(p.getWorld());
+                    p.sendMessage(EquestrianDash.Prefix + "§9Editor: §bPosition 1§3 has been set.");
+                    Track t = EquestrianDash.getTrackRegistry().getTrackByWorld(p.getWorld());
                     if(t == null)
                     {
-                        p.sendMessage(Main.Prefix + "§cThis world has not been set as a track! §cUse §e/ed track add (Worldname) (Display_Name)§c to set it as one.");
+                        p.sendMessage(EquestrianDash.Prefix + "§cThis world has not been set as a track! §cUse §e/ed track add (Worldname) (Display_Name)§c to set it as one.");
                         return false;
                     }
 
@@ -146,7 +146,7 @@ public class EDCmd implements CommandExecutor
                 }
                 else
                 {
-                    sender.sendMessage(Main.Prefix + "§4Error: §6You must be a player to perform this command.");
+                    sender.sendMessage(EquestrianDash.Prefix + "§4Error: §6You must be a player to perform this command.");
                     return false;
                 }
             }
@@ -155,16 +155,16 @@ public class EDCmd implements CommandExecutor
                 if (sender instanceof Player)
                 {
                     Player p = (Player) sender;
-                    p.sendMessage(Main.Prefix + "§9Editor: §bPosition 2§3 has been set.");
-                    Track t = Main.getTrackRegistry().getTrackByWorld(p.getWorld());
+                    p.sendMessage(EquestrianDash.Prefix + "§9Editor: §bPosition 2§3 has been set.");
+                    Track t = EquestrianDash.getTrackRegistry().getTrackByWorld(p.getWorld());
 
                     if (t == null)
                     {
-                        p.sendMessage(Main.Prefix + "§cThis world has not been set as a track! §cUse §e/ed track add (Worldname) (Display_Name)§c to set it as one.");
+                        p.sendMessage(EquestrianDash.Prefix + "§cThis world has not been set as a track! §cUse §e/ed track add (Worldname) (Display_Name)§c to set it as one.");
                         return false;
                     }
 
-                    p.sendMessage(Main.Prefix + "§9Editor: §bPosition 2§3 has been set.");
+                    p.sendMessage(EquestrianDash.Prefix + "§9Editor: §bPosition 2§3 has been set.");
                     t.getTrackData().set("Raceline.Lap2.X", p.getLocation().getBlockX());
                     t.getTrackData().set("Raceline.Lap2.Y", p.getLocation().getBlockY());
                     t.getTrackData().set("Raceline.Lap2.Z", p.getLocation().getBlockZ());
@@ -174,7 +174,7 @@ public class EDCmd implements CommandExecutor
                 }
                 else
                 {
-                    sender.sendMessage(Main.Prefix + "§4Error: §6You must be a player to perform this command.");
+                    sender.sendMessage(EquestrianDash.Prefix + "§4Error: §6You must be a player to perform this command.");
                     return false;
                 }
             }
@@ -183,11 +183,11 @@ public class EDCmd implements CommandExecutor
                 if (sender instanceof Player)
                 {
                     Player p = (Player) sender;
-                    Track t = Main.getTrackRegistry().getTrackByWorld(p.getWorld());
+                    Track t = EquestrianDash.getTrackRegistry().getTrackByWorld(p.getWorld());
 
                     if (t == null)
                     {
-                        p.sendMessage(Main.Prefix + "§cThis world has not been set as a track! §cUse §e/ed track add (Worldname) (Display_Name)§c to set it as one.");
+                        p.sendMessage(EquestrianDash.Prefix + "§cThis world has not been set as a track! §cUse §e/ed track add (Worldname) (Display_Name)§c to set it as one.");
                         return false;
                     }
 
@@ -208,8 +208,8 @@ public class EDCmd implements CommandExecutor
                             }
                             catch(NumberFormatException nfe)
                             {
-                                p.sendMessage(Main.Prefix + "§4Error: §c\"§e" + args[1].substring(5) + "§c\" is not a number!");
-                                p.sendMessage(Main.Prefix + "§6To set spawns, you need to write §e/ed spawn Spawn§a#§e - where §a# §eis a number. Example: To set the spawn for §bPlayer 1§e, you would do: §e/ed spawn Spawn1");
+                                p.sendMessage(EquestrianDash.Prefix + "§4Error: §c\"§e" + args[1].substring(5) + "§c\" is not a number!");
+                                p.sendMessage(EquestrianDash.Prefix + "§6To set spawns, you need to write §e/ed spawn Spawn§a#§e - where §a# §eis a number. Example: To set the spawn for §bPlayer 1§e, you would do: §e/ed spawn Spawn1");
                                 return false;
                             }
                             t.getTrackData().set("Spawn" + size + ".X", p.getLocation().getX());
@@ -218,7 +218,7 @@ public class EDCmd implements CommandExecutor
                         }
                         else
                         {
-                            p.sendMessage(Main.Prefix + "§4Error: §6\"§e" + args[1] + "§6\" is not a valid spawnpoint.");
+                            p.sendMessage(EquestrianDash.Prefix + "§4Error: §6\"§e" + args[1] + "§6\" is not a valid spawnpoint.");
                             return false;
                         }
 
@@ -229,13 +229,13 @@ public class EDCmd implements CommandExecutor
                     }
                     else
                     {
-                        p.sendMessage(Main.Prefix + "§4Error: §6Specify spawn type! §aExample: §6Spawn1, Spawn2, FlareSpawn");
+                        p.sendMessage(EquestrianDash.Prefix + "§4Error: §6Specify spawn type! §aExample: §6Spawn1, Spawn2, FlareSpawn");
                         return false;
                     }
                 }
                 else
                 {
-                    sender.sendMessage(Main.Prefix + "§4You must be a player!");
+                    sender.sendMessage(EquestrianDash.Prefix + "§4You must be a player!");
                     return false;
                 }
             }
@@ -243,7 +243,7 @@ public class EDCmd implements CommandExecutor
             {
                 if(!(sender instanceof Player))
                 {
-                    sender.sendMessage(Main.Prefix + "§cYou can only use edit mode as a player.");
+                    sender.sendMessage(EquestrianDash.Prefix + "§cYou can only use edit mode as a player.");
                     return false;
                 }
 
@@ -257,12 +257,12 @@ public class EDCmd implements CommandExecutor
                         number = Integer.parseInt(args[1]);
                         p.setMetadata("editorEnabled", new FixedMetadataValue(plugin, true));
                         p.setMetadata("editorNumber", new FixedMetadataValue(plugin, number));
-                        p.sendMessage(Main.Prefix + "§dEdit mode updated. Marker number: §5" + number);
+                        p.sendMessage(EquestrianDash.Prefix + "§dEdit mode updated. Marker number: §5" + number);
                         return true;
                     }
                     catch (NumberFormatException nfe)
                     {
-                        p.sendMessage(Main.Prefix + "§e" + args[1] + "§c is not a number.");
+                        p.sendMessage(EquestrianDash.Prefix + "§e" + args[1] + "§c is not a number.");
                         return false;
                     }
                 }
@@ -272,12 +272,12 @@ public class EDCmd implements CommandExecutor
                     {
                         p.setMetadata("editorEnabled", new FixedMetadataValue(plugin, false));
                         p.setMetadata("editorNumber", new FixedMetadataValue(plugin, 0));
-                        p.sendMessage(Main.Prefix + "§eMarker editor disabled.");
+                        p.sendMessage(EquestrianDash.Prefix + "§eMarker editor disabled.");
                     }
                     else if(p.hasMetadata("editorEnabled"))
                     {
                         p.setMetadata("editorEnabled", new FixedMetadataValue(plugin, true));
-                        p.sendMessage(Main.Prefix + "§dMarker editor enabled.");
+                        p.sendMessage(EquestrianDash.Prefix + "§dMarker editor enabled.");
                     }
                 }
 
@@ -289,7 +289,7 @@ public class EDCmd implements CommandExecutor
                 {
                     WorldLoadListener.killallHorses(w);
                 }
-                sender.sendMessage(Main.Prefix + "§cKilled all horses!");
+                sender.sendMessage(EquestrianDash.Prefix + "§cKilled all horses!");
             }
             else if (args[0].equalsIgnoreCase("lobby"))
             {
@@ -299,11 +299,11 @@ public class EDCmd implements CommandExecutor
 
                     plugin.getConfig().set("Lobby", p.getWorld().getName() + "," + p.getLocation().getX() + "," + p.getLocation().getY() + "," + p.getLocation().getZ() + "," + p.getLocation().getPitch() + "," + p.getLocation().getYaw());
                     plugin.saveConfig();
-                    sender.sendMessage(Main.Prefix + "§aLobby has been set.");
+                    sender.sendMessage(EquestrianDash.Prefix + "§aLobby has been set.");
                 }
                 else
                 {
-                    sender.sendMessage(Main.Prefix + "§cYou must be a player to use this command.");
+                    sender.sendMessage(EquestrianDash.Prefix + "§cYou must be a player to use this command.");
                 }
             }
             else if(args[0].equalsIgnoreCase("itembox") || args[0].equalsIgnoreCase("ib"))
@@ -312,38 +312,38 @@ public class EDCmd implements CommandExecutor
                 {
                     Player p = (Player) sender;
                     Location loc = p.getLocation().getBlock().getLocation().add(0.5, 0, 0.5);
-                    ItemBox locb = Main.getItemBoxRegistry().getByLocation(loc);
+                    ItemBox locb = EquestrianDash.getItemBoxRegistry().getByLocation(loc);
                     if(locb == null)
                     {
                         ItemBox ib = new ItemBox(loc, (EnderCrystal) loc.getWorld().spawnEntity(loc, EntityType.ENDER_CRYSTAL));
-                        Main.getItemBoxRegistry().register(ib, true);
-                        p.sendMessage(Main.Prefix + "§dCreated new §bItem Box at §a" + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ() + "§b.");
+                        EquestrianDash.getItemBoxRegistry().register(ib, true);
+                        p.sendMessage(EquestrianDash.Prefix + "§dCreated new §bItem Box at §a" + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ() + "§b.");
                     }
                     else
                     {
-                        Main.getItemBoxRegistry().deregister(locb, true);
+                        EquestrianDash.getItemBoxRegistry().deregister(locb, true);
                         ItemBox ib = new ItemBox(loc, (EnderCrystal) loc.getWorld().spawnEntity(loc, EntityType.ENDER_CRYSTAL));
-                        Main.getItemBoxRegistry().register(ib, true);
-                        p.sendMessage(Main.Prefix + "§dOverwrote old §bItem Box at §a" + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ() + "§b.");
+                        EquestrianDash.getItemBoxRegistry().register(ib, true);
+                        p.sendMessage(EquestrianDash.Prefix + "§dOverwrote old §bItem Box at §a" + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ() + "§b.");
                     }
                 }
                 else
                 {
-                    sender.sendMessage(Main.Prefix + "§cYou must be a player to use this command.");
+                    sender.sendMessage(EquestrianDash.Prefix + "§cYou must be a player to use this command.");
                 }
             }
             else if (args[0].equalsIgnoreCase("reload"))
             {
                 plugin.reloadConfig();
-                Main.getItemBoxRegistry().reloadBoxData();
-                for(Track t : Main.getTrackRegistry().getTracks())
+                EquestrianDash.getItemBoxRegistry().reloadBoxData();
+                for(Track t : EquestrianDash.getTrackRegistry().getTracks())
                 {
                     t.reloadTrackData();
                 }
 
                 for(World w : Bukkit.getWorlds())
                 {
-                    for (ItemBox ib : Main.getItemBoxRegistry().getByWorld(w))
+                    for (ItemBox ib : EquestrianDash.getItemBoxRegistry().getByWorld(w))
                     {
                         ib.despawn();
                     }
@@ -357,16 +357,16 @@ public class EDCmd implements CommandExecutor
                     }
                 }
 
-                Main.getInstance().setupItemBoxes();
+                EquestrianDash.getInstance().setupItemBoxes();
 
                 for (World w : Bukkit.getWorlds())
                 {
-                    for (ItemBox ib : Main.getItemBoxRegistry().getByWorld(w))
+                    for (ItemBox ib : EquestrianDash.getItemBoxRegistry().getByWorld(w))
                     {
                         ib.spawn(false);
                     }
                 }
-                sender.sendMessage(Main.Prefix + "§aAll configs were reloaded.");
+                sender.sendMessage(EquestrianDash.Prefix + "§aAll configs were reloaded.");
             }
             else
             {
@@ -386,7 +386,7 @@ public class EDCmd implements CommandExecutor
         }
         else
         {
-            sender.sendMessage(Main.Prefix + "§4Error: §6Too few arguments! Do §a/ed help §6for help.");
+            sender.sendMessage(EquestrianDash.Prefix + "§4Error: §6Too few arguments! Do §a/ed help §6for help.");
         }
         return false;
     }

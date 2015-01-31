@@ -1,6 +1,6 @@
 package com.ColonelHedgehog.Dash.API.Powerup.ItemBox;
 
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -170,7 +170,7 @@ public class ItemBoxRegistry
     {
         if (boxDataFile == null)
         {
-            boxDataFile = new File(Main.plugin.getDataFolder(), "ItemBoxes.yml");
+            boxDataFile = new File(EquestrianDash.plugin.getDataFolder(), "ItemBoxes.yml");
         }
 
         boxData = YamlConfiguration.loadConfiguration(boxDataFile);
@@ -179,7 +179,7 @@ public class ItemBoxRegistry
         Reader defConfigStream = null;
         try
         {
-            defConfigStream = new InputStreamReader(Main.plugin.getResource("ItemBoxes.yml"), "UTF8");
+            defConfigStream = new InputStreamReader(EquestrianDash.plugin.getResource("ItemBoxes.yml"), "UTF8");
         }
         catch (UnsupportedEncodingException e)
         {
@@ -213,7 +213,7 @@ public class ItemBoxRegistry
         }
         catch (IOException ex)
         {
-            Main.plugin.getLogger().log(Level.SEVERE, "Could not save config to " + boxData, ex);
+            EquestrianDash.plugin.getLogger().log(Level.SEVERE, "Could not save config to " + boxData, ex);
         }
     }
 }

@@ -11,7 +11,7 @@ import com.ColonelHedgehog.Dash.API.Lang.TooFewPowerupsException;
 import com.ColonelHedgehog.Dash.API.Powerup.ItemBox.ItemBox;
 import com.ColonelHedgehog.Dash.API.Powerup.Powerup;
 import com.ColonelHedgehog.Dash.Assets.Ranking;
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.*;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -33,7 +33,7 @@ import java.util.Random;
  */
 public class PlayerInteractEntityListener implements Listener
 {
-    public static Main plugin = Main.plugin;
+    public static EquestrianDash plugin = EquestrianDash.plugin;
 
     public static void giveReward(final Player p, final ItemBox ib, boolean rop)
     {
@@ -51,7 +51,7 @@ public class PlayerInteractEntityListener implements Listener
 
             p.getInventory().clear();
             List<Powerup> pl = new ArrayList<>();
-            for (Powerup pow : Main.getPowerupsRegistry().getPowerups())
+            for (Powerup pow : EquestrianDash.getPowerupsRegistry().getPowerups())
             {
                 if (pow.getChance(new Racer(p).getRank()) >= 1)
                 {
@@ -115,7 +115,7 @@ public class PlayerInteractEntityListener implements Listener
     String rewardname = "a Fermented Spider Eye";
     setName(it, "§7§l§oBecome a Ghost!");
     p.getInventory().setItemInHand(it);
-    p.sendMessage(Main.Prefix + "§6You got " + ChatColor.GREEN + "" + rewardname + "§6!");
+    p.sendMessage(EquestrianDash.Prefix + "§6You got " + ChatColor.GREEN + "" + rewardname + "§6!");
     }
     else if(random == 5)
     {
@@ -159,7 +159,7 @@ public class PlayerInteractEntityListener implements Listener
     setName(it, "§4§l§oMake 'em go §c§l§o§nBOOM§4§l§o!");
     p.getInventory().setItemInHand(it);
     String rewardname = "some TNT";
-    p.sendMessage(Main.Prefix + "§6You got " + ChatColor.GREEN + "" + rewardname + "§6!");
+    p.sendMessage(EquestrianDash.Prefix + "§6You got " + ChatColor.GREEN + "" + rewardname + "§6!");
     }
     else if(random == 10)
     {
@@ -320,7 +320,7 @@ public class PlayerInteractEntityListener implements Listener
     @EventHandler
     public void onBox(final PlayerInteractEntityEvent event)
     {
-        /*if (event.getRightClicked() instanceof EnderCrystal && !Main.getCooldownHandler().isCooling(event.getPlayer()) && !new Racer(event.getPlayer()).inventoryIsSpinning())
+        /*if (event.getRightClicked() instanceof EnderCrystal && !EquestrianDash.getCooldownHandler().isCooling(event.getPlayer()) && !new Racer(event.getPlayer()).inventoryIsSpinning())
         {
             event.getPlayer().getInventory().clear();
             giveReward(event.getPlayer(), event.getRightClicked(), event.getRightClicked().getLocation().getBlockX(), event.getRightClicked().getLocation().getBlockY(), event.getRightClicked().getLocation().getBlockZ());
@@ -336,9 +336,9 @@ public class PlayerInteractEntityListener implements Listener
 
             if (hurter.getItemInHand() != null)
             {
-                for (Powerup pow : Main.getPowerupsRegistry().getPowerups())
+                for (Powerup pow : EquestrianDash.getPowerupsRegistry().getPowerups())
                 {
-                    if (pow.getItem().equals(hurter.getItemInHand()))
+                    if (pow.getItem().getType() == hurter.getItemInHand().getType() && pow.getItem().getDurability() == hurter.getItemInHand().getDurability())
                     {
                         pow.doOnRightClickRacer(new Racer(hurter), new Racer(victim));
                         if (pow.cancelledEvents().contains(Powerup.ActionType.ALL) || pow.cancelledEvents().contains(Powerup.ActionType.RIGHT_CLICK_ENTITY))

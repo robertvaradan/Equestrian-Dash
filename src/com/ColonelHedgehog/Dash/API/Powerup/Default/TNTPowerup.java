@@ -2,7 +2,7 @@ package com.ColonelHedgehog.Dash.API.Powerup.Default;
 
 import com.ColonelHedgehog.Dash.API.Entity.Racer;
 import com.ColonelHedgehog.Dash.API.Powerup.Powerup;
-import com.ColonelHedgehog.Dash.Core.Main;
+import com.ColonelHedgehog.Dash.Core.EquestrianDash;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -26,16 +26,16 @@ public class TNTPowerup implements Powerup
     @Override
     public ItemStack getItem()
     {
-        ItemStack icon = new ItemStack(Material.getMaterial(Main.plugin.getConfig().getString("Powerups.TNT.Material"))); // The powerup's icon.
+        ItemStack icon = new ItemStack(Material.getMaterial(EquestrianDash.plugin.getConfig().getString("Powerups.TNT.Material"))); // The powerup's icon.
         ItemMeta iconMeta = icon.getItemMeta(); // Getting its meta.
-        iconMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("Powerups.TNT.Title"))); // Setting its display name to a predefined string in the config.
+        iconMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', EquestrianDash.plugin.getConfig().getString("Powerups.TNT.Title"))); // Setting its display name to a predefined string in the config.
         icon.setItemMeta(iconMeta); // Now we set all the meta.
         return icon;
     }
 
     private String getMessage()
     {
-        return Main.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
+        return EquestrianDash.Prefix + "§aYou used a " + this.getItem().getItemMeta().getDisplayName() + "§a!";
     }
 
     @Override
@@ -43,12 +43,12 @@ public class TNTPowerup implements Powerup
     {
         racer.getPlayer().sendMessage(getMessage());
         // This will be performed in the event that you right-click with the item.
-        if (Main.plugin.getConfig().getBoolean("Powerups.TNT.ThrowDirections.ThrowBehindEnabled"))
+        if (EquestrianDash.plugin.getConfig().getBoolean("Powerups.TNT.ThrowDirections.ThrowBehindEnabled"))
         {
             Player p = racer.getPlayer();
             p.playSound(p.getLocation(), Sound.FUSE, 7, 1);
             TNTPrimed tnt = p.getWorld().spawn(p.getLocation(), TNTPrimed.class);
-            tnt.setFuseTicks(Main.plugin.getConfig().getInt("Powerups.TNT.ThrowDirections.ThrowBehindTicks"));
+            tnt.setFuseTicks(EquestrianDash.plugin.getConfig().getInt("Powerups.TNT.ThrowDirections.ThrowBehindTicks"));
 
             racer.getPlayer().getInventory().clear();
         }
@@ -58,14 +58,14 @@ public class TNTPowerup implements Powerup
     public void doOnLeftClick(Racer racer, Action action)
     {
         // This will be performed in the event that you left-click with the item.
-        if(Main.plugin.getConfig().getBoolean("Powerups.TNT.ThrowDirections.ThrowAheadEnabled"))
+        if(EquestrianDash.plugin.getConfig().getBoolean("Powerups.TNT.ThrowDirections.ThrowAheadEnabled"))
         {
             Player p = racer.getPlayer();
 
             p.playSound(p.getLocation(), Sound.FUSE, 7, 1);
             TNTPrimed tnt = p.getWorld().spawn(p.getLocation(), TNTPrimed.class);
-            tnt.setVelocity(p.getLocation().getDirection().normalize().multiply(Main.plugin.getConfig().getDouble("Powerups.TNT.ThrowDirections.ThrowAheadMultiplier")));
-            tnt.setFuseTicks(Main.plugin.getConfig().getInt("Powerups.TNT.ThrowDirections.ThrowAheadTicks"));
+            tnt.setVelocity(p.getLocation().getDirection().normalize().multiply(EquestrianDash.plugin.getConfig().getDouble("Powerups.TNT.ThrowDirections.ThrowAheadMultiplier")));
+            tnt.setFuseTicks(EquestrianDash.plugin.getConfig().getInt("Powerups.TNT.ThrowDirections.ThrowAheadTicks"));
 
             racer.getPlayer().getInventory().clear();
         }
@@ -101,13 +101,13 @@ public class TNTPowerup implements Powerup
     public String getMessage()
     {
         // This is executed when a message needs to be sent to the racer.
-        return Main.Prefix + "§aYou used a §cTNT Powerup§a!"; // Consistancy is cool, yo.
+        return EquestrianDash.Prefix + "§aYou used a §cTNT Powerup§a!"; // Consistancy is cool, yo.
     }*/
 
     @Override
     public double getChance(int rank)
     {
-        return (rank / Main.plugin.getConfig().getDouble("Powerups.TNT.Chance")); // Chance that when we hit an item-box, this will be an option.
+        return (rank / EquestrianDash.plugin.getConfig().getDouble("Powerups.TNT.Chance")); // Chance that when we hit an item-box, this will be an option.
     }
 
     @Override
