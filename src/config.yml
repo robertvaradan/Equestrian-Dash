@@ -7,8 +7,12 @@ MetricsEnabled: true
 # Are we editing the level now or playing it? (By default, this is "true" so you can edit stuff.)
 EditMode: true
 
-# -- End-of-race settings.
+# What should we do if someone is not playing?
+NotPlaying:
+  ForceSpectate: true
+  ForceKick: false
 
+# -- End-of-race settings.
 RaceOver:
   EndAfter: 2 # After how many racers should we end the game?
   Restart:
@@ -21,7 +25,7 @@ RaceOver:
 # Players can always vote for the "random" option.
 # Also choose when the players should be told the time before the race start
 # with "WarnAt. "StartTime" is NOT to be confused with "CountTo" because "StartTime"
-# refers to the time that eslapses between the player mounting a horse and then the race beginning.
+# refers to the time that elapses between the player mounting a horse and then the race beginning.
 Countdown:
   RandomPick: false
   CountTo: 30
@@ -44,18 +48,22 @@ Players:
 # Where should our lobby be? (world,x,y,z,pitch,yaw)
 Lobby: world,0,128,0,0.00000,0.00000
 
-# Should we tell everyone who has voted for what map?
+# Should we avoid telling everyone who has voted for what map?
 AnonymousVotes: false
 
-# When the player hits an Item Box, should his old powerup be removed?
-ReplaceOldPowerup: false
-
+InvSpinSound: NOTE_PLING # Also try NOTE_PIANO. Check out the full list of SOUNDs: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
 # Powerup config.
+
+PowerupSettings:
+  ReplaceOld: false
+  PickupCooldown: 100 # How long should you wait to be able to pick up another powerup? Miliseconds (1s = 1000ms) not ticks.
+
 Powerups:
-  Launcher:
+  Jump:
     Enabled: true # Should this be used as a default powerup?
-    Title: '&d&lLauncher Powerup' # The powerup's name (will shop up in the item's title)
-    Material: 'DIAMOND' # The material for the powerup. Full list of Materials: http://jd.bukkit.org/rb/apidocs/org/bukkit/Material.html
+    Title: '&d&lJump Powerup' # The powerup's name (will shop up in the item's title)
+    Material: 'RABBIT_FOOT' # The material for the powerup. Full list of Materials: http://jd.bukkit.org/rb/apidocs/org/bukkit/Material.html
+    Amount: 3
     Chance: 2 # The amount of times the powerup is entered into the powerup chooser. Higher = less frequent. For math nerds: Frequency = rank / chance.
     Velocity:
       MultiplyX: 2
@@ -66,9 +74,9 @@ Powerups:
     Enabled: true
     Title: '&f&lSpeed Powerup'
     Material: 'SUGAR'
-    Chance: 1
-    Length: 100 # NOTE: Length is in ticks. 20 ticks = 1 second.
-    Amplifier: 4 # i.e "2" would be the equivelant to "Speed II"
+    Chance: 2
+    Length: 60 # NOTE: Length is in ticks. 20 ticks = 1 second.
+    Amplifier: 2 # i.e "2" would be the equivelant to "Speed II" - If NMS is enabled, this can have a decimal (i.e. 1.5)
   TNT:
     Enabled: true
     Title: '&c&lTNT Powerup'
@@ -96,15 +104,16 @@ Powerups:
     Title: '&b&lIce Powerup'
     Material: 'PACKED_ICE'
     Chance: 3
-    DelayInTicks: 60 # Detonation delay in ticks. 1 second = 20 ticks.
-    DespawnTime: 200 # How long until the ice despawns.
+    DelayInTicks: 30 # Detonation delay in ticks. 1 second = 20 ticks.
+    DespawnTime: 70  # How long until the ice despawns.
+    Breakable: true # Should the ice sphere be breakable with r/l click?
     Sphere:
-      Height: 5 # How tall should the ice sphere be in blocks?
+      Height: 5 # How tall should the ice sphere be in blocks? ...This doesn't exactly work that well
       Radius: 5 # How tall should the radius be?
     ThrowAhead:
       Enabled: true
       Multiplier: 2
-      DelayInTicks: 60
+      DelayInTicks: 30
   Wither:
     Enabled: true
     Title: '&8&lWither Powerup'
@@ -116,11 +125,10 @@ Powerups:
     Material: 'BLAZE_ROD'
     Chance: 4
     Title: '&f&lLightning Powerup'
-    Amount: 3
     Force: 1 # Explosion size.
-    Speed: 5 # 20 ticks = 1 lightning strike per second.
-    Range: 15 # How many blocks out should this reach?
+    Range: 5 # How many blocks out should this reach?
     YOffset: -3
+    ThrowAheadMultiplier: 2.5 # Go ahead and set it to 0 if you want to disable it. I won't.
   Thief:
     Enabled: true
     Title: '&7&lThief Powerup'
@@ -135,6 +143,17 @@ Powerups:
       Length: 200
       Power: 5
       PumpkinHelmet: true
+  FireCharge:
+    Enabled: true
+    Title: '&c&lFire Charge Powerup'
+    Material: 'FIREBALL'
+    Chance: 2
+    FireTrail:
+      FirePerTick: 5 # The amount of time between each fire block placed
+      Speed: 1.5 # Change to 1 for default speed.
+      DespawnAfter: 20 # Amount of time fire should last after all have been placed.
+      MaxPlaced: 10 # How many blocks of fire to place
+
 
 
 # --- CONFIG END --- #

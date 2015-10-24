@@ -25,14 +25,35 @@ TrackName: 'My Track'
 # update. :( If you don't care about the horse's
 # speeds, you can go ahead and leave this disabled.
 
+# !! NOTE: This issue has been "fixed" for v1.2.
+# EquestrianDash now uses Reflection, a system that
+# allows the plugin to adapt to the version with
+# some simple version checks. Please note, it is
+# not a guaranteed fix. Sometimes, major things
+# are changed in the structure of NMS that may
+# require some changes.
+
 NMS:
   Enabled: true
   MaxHorseSpeed: 0.225
+
+# What is the number of the marker with the LARGEST number?
+# If 0, the game will count the number of markers instead.
+Markers: 0
+
+# Actually it's more like a cube but whatever.
+MarkerCheckRadius: 7 # Blocks
 
 # You can set the raceline ingame with the /ed line1
 # and /ed line2 commands. But if you'd like to do
 # some extra tweaking, go ahead and modify these
 # fields. The X, Y, and Z fields can all be decimals.
+
+Schedulers:
+  # The Location Task checks to see if a player is in a raceline, in water, or hitting an item box.
+  # The less ticks per check, the more accurate readings are.
+  LocationTask:
+    TicksPerCheck: 3
 
 Raceline:
   # Set with /ed line1
@@ -46,16 +67,21 @@ Raceline:
     Y: 0
     Z: 0
 
+# Should the map be reset automatically when it shuts
+# down?
+
+ResetAutomatically: true
+
 # The "NoJumpRange" setting is how far away the player
 # must be to NOT be able to jump. There is an exploit
 # that lets some players jump with their horse and
 # walk through the raceline (ono). While it is found
 # that if the player tries to abuse this and get laps
 # he will simply be forced out again, this is still a
-# gray area. Better safe than sorry, but the higehr
+# gray area. Better safe than sorry, but the higher
 # the no-jump range, the more lag you may find.
 
-  NoJumpRange: 10
+NoJumpRange: 10
 
 # At the start of the race, a firework will, well, fire
 # up to the sky. This can be set with /ed spawn flarespawn
@@ -68,11 +94,11 @@ Fw:
 
 # How many laps does this level have?
 Laps: 3
-# Editor settings.
-Editor:
-  # How many markers does this level have? (IMPORTANT!)
-  Markers: 0
+
+# Editor settings. These are auto-updated by the game.
+# You probably don't need to worry about these.
 # The following are spawnpoint location settings.
+
 Spawn1:
   X: 0
   Y: 0
